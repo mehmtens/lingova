@@ -422,7 +422,7 @@
     </div>
 
   </div>
-
+  
   <script>
     /* ==========================================================================
        1. FIREBASE KONFİGÜRASYONU (Firebase Console'dan Kendi Bilgilerinizi Alın)
@@ -567,7 +567,8 @@
     document.getElementById('user-xp').innerText = `${userXP} XP`;
   }
 
-
+  const levelSequence = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+  const unlockedLevels = { A1: true, A2: false, B1: false, B2: false, C1: false, C2: false };
     /* ==========================================================================
        2. ZENGİN VE ZORLAYICI SORU BANKASI (A1 - C2 SEVİYELERİ)
        ========================================================================== */
@@ -760,14 +761,33 @@
     const levelThresholds = { A1: 220, A2: 220, B1: 220, B2: 220, C1: 440, C2: 440 };
 
     function changeLevel(level, element) {
+      if (!unlockedLevels[level]) {
+        alert(`🔒 Bu seviye kilitli! Kilidi açmak için önceki seviyenin barajını geçmelisin.`);
+        return;
+      }
+
       document.querySelectorAll('.level-card').forEach(card => card.classList.remove('active'));
       element.classList.add('active');
-      
+
       currentLevel = level;
       currentQuestionIndex = 0;
-      currentLevelXP = 0; // Yeni bölüme geçince o bölümün XP'si sıfırlanır
+      currentLevelXP = 0;
       document.getElementById('level-badge').innerText = `${level} SEVİYESİ`;
       loadQuestion();
+    }
+    function unlockNextLevel(current) {
+      const currentIndex = levelSequence.indexOf(current);
+      if (currentIndex !== -1 && currentIndex < levelSequence.length - 1) {
+        const nextLevelName = levelSequence[currentIndex + 1];
+        unlockedLevels[nextLevelName] = true;
+
+        const nextCard = document.getElementById(`card-${nextLevelName}`);
+        if (nextCard) {
+          nextCard.classList.remove('locked');
+          const lockIcon = nextCard.querySelector('.lock-icon');
+          if (lockIcon) lockIcon.className = 'fa-solid fa-unlock-keyhole lock-icon';
+        }
+      }
     }
 
     function loadQuestion() {
@@ -848,10 +868,11 @@
       if (currentQuestionIndex >= questions.length) {
         const threshold = levelThresholds[currentLevel];
         if (currentLevelXP >= threshold) {
+            unlockNextLevel(currentLevel);
+
             alert(`🔥 TEBRİKLER! ${currentLevelXP} XP topladın ve barajı (${threshold} XP) başarıyla geçtin. Sonraki seviyenin kilidi açıldı!`);
             currentQuestionIndex = 0;
             currentLevelXP = 0;
-            // Burada istersen bir sonraki seviyeye otomatik atlatabilirsin
             loadQuestion();
         } else {
             alert(`💀 BAŞARISIZ! Barajı geçemedin.\nGereken: ${threshold} XP\nSenin Puanın: ${currentLevelXP} XP\nBu seviyeyi tekrar çözmek zorundasın!`);
