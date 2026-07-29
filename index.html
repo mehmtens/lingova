@@ -3,61 +3,882 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lingova</title>
+  <title>Lingova - AI Destekli İngilizce Öğrenme Platformu</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
   <style>
-    body {
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --accent-cyan: #38bdf8;
+      --accent-purple: #a855f7;
+      --success-green: #22c55e;
+      --error-red: #ef4444;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #3a3a7a);
-      color: white;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.12) 0px, transparent 50%);
+      color: var(--text-main);
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: 100vh;
+      padding: 20px;
     }
 
-    .card {
-      background: rgba(255,255,255,0.1);
-      padding: 40px;
+    /* Navbar Header */
+    header {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
       border-radius: 16px;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
-    h1 {
-      font-size: 36px;
-      margin-bottom: 10px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--accent-cyan);
     }
 
-    p {
-      opacity: 0.8;
+    .user-panel {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
 
-    button {
-      margin-top: 20px;
-      padding: 12px 24px;
+    .xp-badge {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(168, 85, 247, 0.2));
+      border: 1px solid var(--accent-cyan);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      color: #7dd3fc;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-auth {
+      background: #ffffff;
+      color: #0f172a;
       border: none;
-      border-radius: 8px;
-      background: #00d4ff;
-      color: black;
-      font-weight: bold;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 700;
       cursor: pointer;
-      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
     }
 
-    button:hover {
-      transform: scale(1.05);
+    .btn-auth:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .user-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-cyan);
+    }
+
+    /* Ana Konteyner */
+    .app-container {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Seviye Seçimi GRID */
+    .level-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px;
+    }
+
+    .level-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .level-card:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-3px);
+    }
+
+    .level-card.active {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(168, 85, 247, 0.25));
+      border: 2px solid var(--accent-cyan);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+    }
+
+    .level-card h3 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+    }
+
+    .level-card p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Soru Kartı */
+    .quiz-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 36px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .question-tracker {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+      transition: width 0.3s ease;
+    }
+
+    .question-title {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 640px) {
+      .options-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .option-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateX(4px);
+    }
+
+    /* Animasyonlu Geri Bildirim Sınıfları */
+    .option-btn.correct-anim {
+      background: rgba(34, 197, 94, 0.25) !important;
+      border: 2px solid var(--success-green) !important;
+      color: #86efac !important;
+      animation: pulseGreen 0.5s ease-in-out;
+    }
+
+    .option-btn.wrong-anim {
+      background: rgba(239, 68, 68, 0.25) !important;
+      border: 2px solid var(--error-red) !important;
+      color: #fca5a5 !important;
+      animation: shakeRed 0.4s ease-in-out;
+    }
+
+    @keyframes pulseGreen {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); box-shadow: 0 0 25px rgba(34, 197, 94, 0.6); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shakeRed {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+
+    /* Açıklama Kutusu */
+    .explanation-box {
+      margin-top: 24px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      display: none;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .explanation-box.success {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid var(--success-green);
+      color: #86efac;
+    }
+
+    .explanation-box.error {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid var(--error-red);
+      color: #fca5a5;
+    }
+
+    .next-btn {
+      margin-top: 24px;
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      transition: transform 0.2s;
+    }
+
+    .next-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Yüzen XP Animasyon Etiketi */
+    .floating-xp {
+      position: absolute;
+      font-size: 28px;
+      font-weight: 800;
+      color: #4ade80;
+      pointer-events: none;
+      animation: floatUp 1s forwards ease-out;
+      z-index: 99;
+    }
+
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-60px) scale(1.3); }
+    }
+
+    /* Modal / Bilgilendirme Banner */
+    .firebase-alert {
+      background: rgba(234, 179, 8, 0.15);
+      border: 1px solid #eab308;
+      color: #fef08a;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
   </style>
 </head>
-
 <body>
-  <div class="card">
-    <h1>🚀 Lingova</h1>
-    <p>AI destekli dil öğrenme platformu</p>
-    <button onclick="alert('Yakında geliyor 🔥')">Başla</button>
+
+  <header>
+    <div class="brand">
+      <i class="fa-solid fa-rocket"></i>
+      <span>Lingova</span>
+    </div>
+    <div class="user-panel">
+      <div class="xp-badge">
+        <i class="fa-solid fa-bolt" style="color: #facc15;"></i>
+        <span id="user-xp">0 XP</span>
+      </div>
+      <div id="auth-container">
+        <button class="btn-auth" id="btn-login" onclick="loginWithGoogle()">
+          <i class="fa-brands fa-google"></i>
+          <span>Google ile Giriş</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-container">
+
+    <div class="firebase-alert" id="demo-alert">
+      <i class="fa-solid fa-circle-info"></i>
+      <span><strong>Giriş durumu:</strong> Google girişini kullanmak için localhost/HTTPS ve Firebase Authentication ayarları gerekir.</span>
+    </div>
+
+    <div class="level-selector">
+      <div class="level-card active" onclick="changeLevel('A1', this)">
+        <h3>A1</h3>
+        <p>Beginner</p>
+      </div>
+      <div class="level-card" onclick="changeLevel('A2', this)">
+        <h3>A2</h3>
+        <p>Elementary</p>
+      </div>
+      <div class="level-card" onclick="changeLevel('B1', this)">
+        <h3>B1</h3>
+        <p>Intermediate</p>
+      </div>
+      <div class="level-card" onclick="changeLevel('B2', this)">
+        <h3>B2</h3>
+        <p>Upper-Int</p>
+      </div>
+      <div class="level-card" onclick="changeLevel('C1', this)">
+        <h3>C1</h3>
+        <p>Advanced</p>
+      </div>
+      <div class="level-card" onclick="changeLevel('C2', this)">
+        <h3>C2</h3>
+        <p>Mastery</p>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="quiz-card">
+      <div class="quiz-header">
+        <span class="question-tracker" id="question-tracker">Soru 1 / 20</span>
+        <span class="question-tracker" id="level-badge" style="color: var(--accent-cyan); font-weight:700;">A1 SEVİYESİ</span>
+      </div>
+
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+
+      <div class="question-title" id="question-text">Soru yükleniyor...</div>
+
+      <div class="options-grid" id="options-container">
+        </div>
+
+      <div class="explanation-box" id="explanation-box"></div>
+
+      <button class="next-btn" id="btn-next" onclick="nextQuestion()">Sonraki Soruya Geç <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
   </div>
+
+  <script>
+    /* ==========================================================================
+       1. FIREBASE KONFİGÜRASYONU (Firebase Console'dan Kendi Bilgilerinizi Alın)
+       ========================================================================== */
+    const firebaseConfig = {
+    apiKey: "AIzaSyCyuUhh0pPgJXdrR3VM2UcCJIrzFrJPsnI",
+    authDomain: "lingova-af826.firebaseapp.com",
+    projectId: "lingova-af826",
+    storageBucket: "lingova-af826.firebasestorage.app",
+    messagingSenderId: "701514749856",
+    appId: "1:701514749856:web:5f8efb0a6c5531790fb6c5",
+    measurementId: "G-W11TE6GFHH"
+  };
+
+  let isFirebaseInitialized = false;
+  let currentUser = null;
+  let userXP = 0;
+
+  function showAuthStatus(message, type = 'warning') {
+    const alertBox = document.getElementById('demo-alert');
+    if (!alertBox) return;
+
+    alertBox.style.display = 'flex';
+    alertBox.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-circle-xmark' : 'fa-circle-info'}"></i><span>${message}</span>`;
+    alertBox.style.borderColor = type === 'error' ? '#ef4444' : '#eab308';
+    alertBox.style.color = type === 'error' ? '#fca5a5' : '#fef08a';
+    alertBox.style.background = type === 'error' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(234, 179, 8, 0.15)';
+  }
+
+  function initializeFirebase() {
+    const isSecureOrigin = window.location.protocol === 'https:' || ['localhost', '127.0.0.1'].includes(window.location.hostname);
+
+    if (!isSecureOrigin) {
+      showAuthStatus('Google girişi yalnızca localhost veya HTTPS üzerinden çalışır. Lütfen bir sunucu üzerinden açın.', 'error');
+      return false;
+    }
+
+    if (typeof firebase === 'undefined' || !firebase.apps) {
+      showAuthStatus('Firebase kütüphanesi yüklenemedi. İnternet bağlantısını kontrol edin.', 'error');
+      return false;
+    }
+
+    try {
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+      isFirebaseInitialized = true;
+
+      const alertBox = document.getElementById('demo-alert');
+      if (alertBox) {
+        alertBox.style.display = 'none';
+      }
+
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          currentUser = user;
+          renderUserInfo(user);
+          loadUserData(user.uid);
+        } else {
+          currentUser = null;
+          renderLoggedOutUI();
+        }
+      });
+      return true;
+    } catch (err) {
+      console.error('Firebase başlatma hatası:', err);
+      showAuthStatus(`Firebase başlatılamadı: ${err.message}`, 'error');
+      return false;
+    }
+  }
+
+  initializeFirebase();
+
+  function loginWithGoogle() {
+    if (!isFirebaseInitialized) {
+      showAuthStatus('Firebase hazır değil. Lütfen localhost/HTTPS üzerinden tekrar açın.', 'error');
+      return;
+    }
+
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider).catch(err => {
+      console.error('Giriş Hatası:', err);
+
+      if (err.code === 'auth/popup-blocked') {
+        showAuthStatus('Pop-up engellendi. Lütfen tarayıcı pop-up izinlerini açın.', 'error');
+      } else if (err.code === 'auth/unauthorized-domain') {
+        showAuthStatus('Bu alan Firebase Authentication için yetkilendirilmemiş. Firebase konsolundaki Authorized Domains alanına ekleyin.', 'error');
+      } else {
+        showAuthStatus(`Giriş yapılırken bir hata oluştu: ${err.message}`, 'error');
+      }
+    });
+  }
+
+  function logout() {
+    if (isFirebaseInitialized) {
+      firebase.auth().signOut();
+    }
+  }
+
+  function renderUserInfo(user) {
+    const authContainer = document.getElementById('auth-container');
+    authContainer.innerHTML = `
+      <img src="${user.photoURL}" class="user-avatar" title="${user.displayName}">
+      <button class="btn-auth" onclick="logout()" style="padding: 8px 12px; font-size:12px;">Çıkış</button>
+    `;
+  }
+
+  function renderLoggedOutUI() {
+    const authContainer = document.getElementById('auth-container');
+    authContainer.innerHTML = `
+      <button class="btn-auth" id="btn-login" onclick="loginWithGoogle()">
+        <i class="fa-brands fa-google"></i>
+        <span>Google ile Giriş</span>
+      </button>
+    `;
+  }
+
+  function loadUserData(uid) {
+    const db = firebase.firestore();
+    db.collection('users').doc(uid).get().then(doc => {
+      if (doc.exists) {
+        userXP = doc.data().xp || 0;
+        updateXPUI();
+      } else {
+        db.collection('users').doc(uid).set({ xp: 0, createdAt: new Date() });
+      }
+    });
+  }
+
+  function saveUserXP(addedXP) {
+    userXP += addedXP;
+    updateXPUI();
+    if (isFirebaseInitialized && currentUser) {
+      const db = firebase.firestore();
+      db.collection('users').doc(currentUser.uid).update({
+        xp: firebase.firestore.FieldValue.increment(addedXP)
+      });
+    }
+  }
+
+  function updateXPUI() {
+    document.getElementById('user-xp').innerText = `${userXP} XP`;
+  }
+
+
+    /* ==========================================================================
+       2. ZENGİN VE ZORLAYICI SORU BANKASI (A1 - C2 SEVİYELERİ)
+       ========================================================================== */
+    const questionBank = {
+      A1: [
+        { q: "'______ is your name?' - 'My name is Ali.'", options: ["What", "Where", "Who", "How"], correct: 0, exp: "İsim sorarken 'What' (Ne) kullanılır." },
+        { q: "She ______ from Turkey. She lives in Istanbul.", options: ["are", "am", "is", "be"], correct: 2, exp: "He/She/It özneleri ile 'is' yardımcı fiili kullanılır." },
+        { q: "I ______ a red car.", options: ["has got", "have got", "am got", "having"], correct: 1, exp: "I/You/We/They için sahiplik bildirirken 'have got' kullanılır." },
+        { q: "______ you like apples?", options: ["Are", "Does", "Is", "Do"], correct: 3, exp: "Geniş zamanda (Simple Present) I/You/We/They için soru kelimesi 'Do'dur." },
+        { q: "There ______ a book on the table.", options: ["is", "are", "have", "am"], correct: 0, exp: "Tekil nesnelerin varlığını belirtmek için 'There is' kullanılır." },
+        { q: "He ______ playing football right now.", options: ["are", "am", "is", "be"], correct: 2, exp: "Şimdiki zamanda (Present Continuous) 'He' öznesi 'is' alır." },
+        { q: "They ______ to the cinema yesterday.", options: ["go", "goes", "went", "going"], correct: 2, exp: "Geçmiş zamanda (Simple Past) 'go' fiilinin 2. hali olan 'went' kullanılır." },
+        { q: "I usually wake up ______ 7 o'clock.", options: ["in", "on", "at", "by"], correct: 2, exp: "Saatlerden önce daima 'at' edatı (preposition) kullanılır." },
+        { q: "My sister is ______ than me.", options: ["old", "older", "oldest", "more old"], correct: 1, exp: "Kısa heceli sıfatlarda karşılaştırma (comparative) yapılırken '-er' takısı gelir." },
+        { q: "Can you ______ English?", options: ["speak", "speaks", "speaking", "to speak"], correct: 0, exp: "'Can' modal fiilinden sonra gelen asıl fiil hiçbir ek almaz (yalın hal)." },
+        { q: "She doesn't ______ meat. She is a vegetarian.", options: ["eats", "ate", "eat", "eating"], correct: 2, exp: "Geniş zamanda olumsuz cümlelerde 'doesn't' kullanıldığı için asıl fiil yalın kalır." },
+        { q: "Look! It ______ raining outside.", options: ["is", "was", "are", "be"], correct: 0, exp: "'Look!' (Bak!) kelimesi eylemin şu an gerçekleştiğini (Present Continuous) gösterir." },
+        { q: "I bought ______ apples from the market.", options: ["any", "some", "a", "an"], correct: 1, exp: "Olumlu cümlelerde sayılabilen çoğul veya sayılamayan isimlerle 'some' (biraz/birkaç) kullanılır." },
+        { q: "Is there ______ milk in the fridge?", options: ["some", "a", "any", "an"], correct: 2, exp: "Soru ve olumsuz cümlelerde 'hiç' anlamında 'any' kullanılır." },
+        { q: "Whose pen is this? It's ______.", options: ["my", "mine", "me", "I"], correct: 1, exp: "İsmin yerini tutan iyelik zamiri (Possessive Pronoun) 'mine' (benimki) şeklindedir." },
+        { q: "Where ______ you born?", options: ["was", "were", "are", "did"], correct: 1, exp: "'Born' (doğmak) edilgen bir yapı olduğu için 'You' öznesiyle geçmiş zamanda 'were' kullanılır." },
+        { q: "I am ______ to school now.", options: ["go", "goes", "went", "going"], correct: 3, exp: "Şimdiki zamanda (now) fiile '-ing' takısı eklenir." },
+        { q: "______ are you? - I'm fine, thanks.", options: ["Who", "How", "What", "Where"], correct: 1, exp: "Durum ve hal sormak için 'How' (Nasıl) kullanılır." },
+        { q: "What time is it? It's half ______ two. (02:30)", options: ["to", "past", "at", "in"], correct: 1, exp: "Saatlerde 'buçuk' demek için 'half past' ifadesi kullanılır." },
+        { q: "Please, ______ the door. It's cold.", options: ["close", "closes", "closing", "closed"], correct: 0, exp: "Emir cümleleri doğrudan fiilin yalın haliyle başlar." }
+      ],
+      A2: [
+        { q: "While I ______ TV, the phone rang.", options: ["watched", "was watching", "am watching", "watch"], correct: 1, exp: "Geçmişte devam eden bir eylem sırasında (Past Continuous) araya giren kısa olaylar 'While' ile bağlanır." },
+        { q: "I have lived in this city ______ 2010.", options: ["for", "since", "in", "ago"], correct: 1, exp: "Başlangıç noktası belli olan zaman dilimlerinde (Present Perfect) 'since' kullanılır." },
+        { q: "This is ______ movie I have ever seen.", options: ["good", "better", "the best", "best"], correct: 2, exp: "'Ever seen' kalıbı en üstünlük derecesi (Superlative) gerektirir. 'Good' sıfatı 'the best' olur." },
+        { q: "Look at those black clouds! It ______ rain.", options: ["will", "is going to", "can", "must"], correct: 1, exp: "Gözle görülür bir kanıt (kara bulutlar) olduğunda gelecekle ilgili tahminlerde 'be going to' kullanılır." },
+        { q: "I promise I ______ help you with your homework.", options: ["will", "am going to", "would", "do"], correct: 0, exp: "Söz verirken, anlık kararlarda veya umut belirtirken 'will' kullanılır." },
+        { q: "You ______ wear a uniform in this school. It's a strict rule.", options: ["can", "should", "must", "might"], correct: 2, exp: "Dışarıdan gelen zorunluluklar ve katı kurallar için 'must' veya 'have to' kullanılır." },
+        { q: "If it rains tomorrow, we ______ stay at home.", options: ["stay", "stayed", "will stay", "would stay"], correct: 2, exp: "First Conditional (Tip 1): 'If' kısmı Present Simple, sonuç kısmı 'will + V1' olur." },
+        { q: "He drives very ______. He should be careful.", options: ["fastly", "fast", "quick", "slow"], correct: 1, exp: "'Fast' kelimesinin zarf hali (adverb) yine 'fast'tir. 'Fastly' diye bir kelime yoktur." },
+        { q: "How ______ sugar do you put in your tea?", options: ["many", "much", "some", "any"], correct: 1, exp: "Sayılamayan isimler (sugar) için miktar sorulurken 'How much' kullanılır." },
+        { q: "I have ______ friends in this city. I'm not lonely.", options: ["a little", "a few", "much", "any"], correct: 1, exp: "Sayılabilen çoğul isimlerle olumlu anlam katan 'birkaç' için 'a few' kullanılır." },
+        { q: "I went to the supermarket ______ buy some milk.", options: ["for", "to", "because", "so"], correct: 1, exp: "Amaç bildirmek için fiilden önce 'to' (infinitive of purpose) kullanılır." },
+        { q: "The man ______ is talking to the teacher is my uncle.", options: ["which", "where", "who", "when"], correct: 2, exp: "İnsanları niteleyen ilgi cümleciklerinde (Relative Clauses) 'who' kullanılır." },
+        { q: "I was very tired, ______ I went to bed early.", options: ["because", "but", "so", "although"], correct: 2, exp: "Sonuç bildirmek için 'so' (bu yüzden) bağlacı kullanılır." },
+        { q: "This book is not yours. It is ______.", options: ["my", "mine", "me", "I"], correct: 1, exp: "Sahiplik bildiren iyelik zamiri 'mine' (benimki) tek başına kullanılır." },
+        { q: "Have you finished your homework ______?", options: ["just", "already", "yet", "ever"], correct: 2, exp: "Present Perfect Tense'te soru ve olumsuz cümlelerin sonunda 'henüz/daha' anlamında 'yet' kullanılır." },
+        { q: "She has worked here ______ five years.", options: ["since", "for", "in", "from"], correct: 1, exp: "Geçen toplam süreyi (5 yıl) belirtmek için 'for' edatı kullanılır." },
+        { q: "When I arrived at the party, they ______ dancing.", options: ["were", "are", "was", "did"], correct: 0, exp: "Geçmişte ben vardığımda devam etmekte olan eylem için 'were dancing' (Past Continuous) kullanılır." },
+        { q: "The tea is ______ hot for me to drink.", options: ["enough", "too", "very", "much"], correct: 1, exp: "Aşırılık ve olumsuz bir yapı ('içemeyeceğim kadar sıcak') bildirmek için 'too' kullanılır." },
+        { q: "I enjoy ______ books in my free time.", options: ["to read", "read", "reading", "reads"], correct: 2, exp: "'Enjoy' fiilinden sonra gelen eylem '-ing' takısı alır (Gerund)." },
+        { q: "She isn't tall ______ to play basketball.", options: ["too", "enough", "very", "much"], correct: 1, exp: "'Yeterli' anlamındaki 'enough' kelimesi sıfatlardan (tall) sonra gelir." }
+      ],
+      B1: [
+        { q: "If I ______ a million dollars, I would buy a big house.", options: ["have", "had", "will have", "would have"], correct: 1, exp: "Type 2 Conditional (hayali durumlar): 'If' kısmı Past Simple (had), sonuç kısmı 'would + V1' olur." },
+        { q: "The Mona Lisa ______ by Leonardo da Vinci in the 16th century.", options: ["painted", "was painting", "was painted", "is painted"], correct: 2, exp: "Eylem geçmişte başkası tarafından yapıldığı için geçmiş zaman edilgen (Past Simple Passive: was + V3) kullanılır." },
+        { q: "I have been ______ English for three hours. I'm so tired.", options: ["study", "studied", "studying", "studies"], correct: 2, exp: "Geçmişte başlayıp hala devam eden eylemler için Present Perfect Continuous (have been + V-ing) kullanılır." },
+        { q: "He drives a Ferrari. He ______ be very rich.", options: ["can", "should", "must", "might"], correct: 2, exp: "Güçlü bir kanıta dayanarak (Ferrari sürmesi) mantıksal çıkarım yaparken 'must' kullanılır." },
+        { q: "Please ______ your shoes before entering the house.", options: ["take off", "put on", "look after", "give up"], correct: 0, exp: "'Take off' kıyafet veya ayakkabı çıkarmak anlamına gelen bir phrasal verb'dür." },
+        { q: "I ______ smoke a lot, but I quit five years ago.", options: ["am used to", "used to", "get used to", "was used to"], correct: 1, exp: "Geçmişte alışkanlık olan ama artık yapılmayan eylemler için 'used to + V1' kullanılır." },
+        { q: "It was ______ a beautiful day that we decided to go for a picnic.", options: ["so", "such", "very", "too"], correct: 1, exp: "Sıfat tamlamalarından (a beautiful day) önce aşırılık/vurgu bildirmek için 'such' kullanılır." },
+        { q: "He told me that he ______ tired.", options: ["is", "was", "will be", "has been"], correct: 1, exp: "Reported Speech (Dolaylı Anlatım): Ana fiil geçmişteyse (told), aktarılan cümlenin zamanı bir derece geçmişe (was) alınır." },
+        { q: "You like eating pizza, ______?", options: ["do you", "don't you", "are you", "aren't you"], correct: 1, exp: "Question Tags (Eklenti Soruları): Cümle olumluysa eklenti olumsuz (don't) ve aynı yardımcı fiille yapılır." },
+        { q: "My brother, ______ lives in New York, is a software engineer.", options: ["which", "who", "that", "whose"], correct: 1, exp: "İnsanları niteleyen ve ekstra bilgi veren virgüllü (Non-defining) Relative Clause'larda 'who' kullanılır." },
+        { q: "She decided ______ a new laptop for her studies.", options: ["buy", "buying", "to buy", "bought"], correct: 2, exp: "'Decide' (karar vermek) fiilinden sonra gelen ikinci fiil her zaman 'to + V1' (Infinitive) alır." },
+        { q: "When we arrived at the cinema, the film ______.", options: ["started", "has started", "had started", "starts"], correct: 2, exp: "Geçmişte olan iki olaydan daha önce gerçekleşeni belirtmek için Past Perfect (had + V3) kullanılır." },
+        { q: "My current car is not as fast ______ my old one.", options: ["than", "like", "as", "to"], correct: 2, exp: "Eşitlik veya benzerlik karşılaştırmalarında 'as + sıfat + as' kalıbı kullanılır." },
+        { q: "______ you study hard, you will fail the exam.", options: ["If", "When", "Unless", "Because"], correct: 2, exp: "'Unless', 'if not' (medikçe/madıkça) anlamına gelir. Kendisinden sonraki cümle yapıca olumlu, anlamca olumsuzdur." },
+        { q: "I am ______ my keys, but I can't find them anywhere.", options: ["looking for", "looking forward to", "looking after", "looking at"], correct: 0, exp: "'Look for' bir şeyi aramak anlamına gelir." },
+        { q: "I didn't see ______ in the dark room.", options: ["somebody", "nobody", "anybody", "everybody"], correct: 2, exp: "Olumsuz cümlelerde 'hiç kimse' anlamını vermek için 'anybody' veya 'anyone' kullanılır." },
+        { q: "You ______ to see a dentist about that toothache.", options: ["should", "ought", "must", "had better"], correct: 1, exp: "'Ought to', 'should' ile aynı anlama (tavsiye) gelir ancak her zaman 'to' ile kullanılır." },
+        { q: "Could you please ______ me a favor?", options: ["make", "do", "have", "take"], correct: 1, exp: "İyilik yapmak, İngilizcede kalıplaşmış olarak 'do a favor' şeklinde kullanılır." },
+        { q: "She is very interested ______ learning Japanese.", options: ["on", "at", "in", "about"], correct: 2, exp: "'Interested' sıfatı her zaman 'in' edatı (preposition) ile birlikte kullanılır." },
+        { q: "English ______ all over the world.", options: ["speaks", "is speaking", "is spoken", "has spoken"], correct: 2, exp: "Genel bir gerçekten bahsederken edilgen yapı (Present Simple Passive: am/is/are + V3) kullanılır." }
+      ],
+      B2: [
+        { q: "If you had studied harder, you ______ passed the exam.", options: ["would pass", "will pass", "would have passed", "had passed"], correct: 2, exp: "Type 3 Conditional (geçmişteki pişmanlıklar): 'If' kısmı Past Perfect, sonuç kısmı 'would have + V3' alır." },
+        { q: "You ______ brought an umbrella; it didn't rain at all. What a waste of effort!", options: ["mustn't have", "needn't have", "couldn't have", "shouldn't"], correct: 1, exp: "Geçmişte yapılmış ama gereksiz olmuş (boşuna yapılmış) eylemler için 'needn't have + V3' kullanılır." },
+        { q: "It is ______ that the CEO will resign next week.", options: ["believing", "believed", "believe", "believes"], correct: 1, exp: "Resmi veya genel kabulleri aktarırken 'It is believed/said/thought that...' (İnanılıyor ki...) pasif kalıbı kullanılır." },
+        { q: "I wish I ______ more free time these days.", options: ["have", "will have", "had", "am having"], correct: 2, exp: "Şu anki bir durumdan duyulan memnuniyetsizliği (Wish Clause) belirtmek için fiil bir derece geçmişe (Past Simple) alınır." },
+        { q: "I had my computer ______ by a technician yesterday.", options: ["repair", "repaired", "repairing", "to repair"], correct: 1, exp: "Causative (Ettirgen) yapı: 'have + nesne + V3' kalıbı, bir işi başkasına yaptırdığımızı belirtir." },
+        { q: "The outdoor concert was ______ due to the heavy storm.", options: ["put off", "called off", "taken off", "given off"], correct: 1, exp: "'Call off' iptal etmek, 'Put off' ise ertelemek demektir. Genelde fırtına yüzünden tamamen iptal (called off) edilir." },
+        { q: "The company ______ which she works has gone bankrupt.", options: ["in", "at", "for", "to"], correct: 2, exp: "Bir şirket 'için' çalışmak 'work for' ile ifade edildiğinden, Relative Clause'da preposition başa gelerek 'for which' olur." },
+        { q: "______ the heavy rain, we really enjoyed the football match.", options: ["Although", "Even though", "Despite", "However"], correct: 2, exp: "Arkasından cümle değil de sadece bir isim öbeği (the heavy rain) geldiği için 'Despite' veya 'In spite of' kullanılır." },
+        { q: "______ around the corner, I suddenly saw my old friend from high school.", options: ["Turn", "Turned", "Turning", "To turn"], correct: 2, exp: "Participle Clause: Öznesi aynı olan iki cümleyi birleştirirken, aktif eylemler '-ing' (Turning) ile kısaltılır." },
+        { q: "He was entirely ______ of the negative consequences of his actions.", options: ["unaware", "unknown", "ignorant", "unconscious"], correct: 0, exp: "Bir durumun farkında olmamak 'unaware of' sıfat kalıbıyla ifade edilir." },
+        { q: "By this time next year, I ______ my master's degree.", options: ["will finish", "am going to finish", "will have finished", "will be finishing"], correct: 2, exp: "Gelecekte belirli bir noktadan önce tamamlanmış olacak eylemler için Future Perfect Tense (will have + V3) kullanılır." },
+        { q: "If I had taken that job in London, I ______ rich now.", options: ["would have been", "will be", "am", "would be"], correct: 3, exp: "Mixed Conditional: Geçmişteki bir eylemin (had taken) günümüze (now) olan etkisi 'would + V1' ile ifade edilir." },
+        { q: "I recently moved to a cold country, so I am not used to ______ up in the snow.", options: ["wake", "woke", "waking", "to wake"], correct: 2, exp: "Bir şeye alışkın olmak anlamındaki 'be used to' kalıbından sonra gelen fiil her zaman '-ing' alır (Gerund)." },
+        { q: "I would rather you ______ smoke in this room.", options: ["don't", "didn't", "not", "won't"], correct: 1, exp: "Bir başkasının bir şey yapmasını istemediğimizde 'would rather + özne + Past Simple' kalıbı kullanılır." },
+        { q: "She deeply regrets ______ out of university when she was 19.", options: ["to drop", "drop", "dropping", "dropped"], correct: 2, exp: "Geçmişte yapılan bir eylemden duyulan pişmanlığı belirtmek için 'regret + V-ing' kalıbı kullanılır." },
+        { q: "He walked right past me without saying hello. He ______ not have seen me.", options: ["must", "should", "might", "could"], correct: 2, exp: "Geçmişte olmuş olabilecek zayıf bir ihtimalden bahsederken 'might have + V3' kullanılır." },
+        { q: "We need to ______ a viable solution to this financial crisis.", options: ["make up", "come up with", "get away with", "look down on"], correct: 1, exp: "'Come up with', bir fikir veya çözüm bulmak/üretmek anlamına gelen ileri seviye bir phrasal verb'dür." },
+        { q: "No sooner had I left the house ______ it started to pour with rain.", options: ["when", "than", "then", "that"], correct: 1, exp: "Devrik bir yapı olan 'No sooner... than' kalıbı, 'yapar yapmaz' (tam çıkmıştım ki) anlamı verir." },
+        { q: "It is high time you ______ taking your responsibilities seriously.", options: ["start", "started", "will start", "have started"], correct: 1, exp: "Artık zamanı geldi de geçiyor anlamındaki 'It is high time' kalıbından sonra her zaman Past Simple (started) kullanılır." },
+        { q: "This new smartphone is vastly ______ to the older version.", options: ["better", "superior", "greater", "higher"], correct: 1, exp: "'Superior', 'daha üstün' anlamına gelir ve 'than' yerine her zaman 'to' edatı ile birlikte kullanılır." }
+      ],
+      C1: [
+        { q: "Not until the board members reviewed the financial reports ______ the magnitude of the crisis.", options: ["they realized", "did they realize", "they had realized", "realized they"], correct: 1, exp: "'Not until' ile başlayan cümlelerde ana cümle Inversion (did + subject + verb) alır." },
+        { q: "The new tax policy is believed ______ a detrimental impact on small businesses last year.", options: ["to have", "to have had", "having", "to having"], correct: 1, exp: "Geçmişte olan bir eylemi pasif fiille (is believed) bağlarken 'to have + V3' (Perfect Infinitive) kullanılır." },
+        { q: "______ that the weather would be so severe, we would have postponed the expedition.", options: ["If we knew", "Had we known", "Knowing", "Were we to know"], correct: 1, exp: "Type 3 Conditional'da 'If' atıldığında cümle devrik yapıya (Had + subject + V3) dönüşür." },
+        { q: "She has a tendency to ______ under pressure, making her unsuitable for the managerial role.", options: ["pull through", "fall apart", "catch on", "step down"], correct: 1, exp: "'Fall apart', baskı altında duygusal veya zihinsel olarak çökmek anlamına gelir." },
+        { q: "The politician's speech was ______ with inconsistencies and logical fallacies.", options: ["replete", "deprived", "devoid", "lacking"], correct: 0, exp: "'Replete with', bir şeyle (genellikle olumsuz/soyut şeylerle) tamamen dolu olmak demektir." },
+        { q: "I would rather you ______ the client directly without consulting me first.", options: ["don't contact", "not contact", "didn't contact", "hadn't contacted"], correct: 2, exp: "Bir başkasının bir şey yapmasını istemediğimizde 'would rather + Subject + Past Simple' kullanılır." },
+        { q: "The manager demanded that the new software ______ installed across all departments immediately.", options: ["is", "be", "will be", "was"], correct: 1, exp: "Subjunctive yapı: 'Demand/insist' gibi fiillerden sonraki 'that' cümleciğinde fiil yalın (be) kalır." },
+        { q: "Hardly ______ the presentation when the fire alarm went off.", options: ["he had started", "did he start", "had he started", "he started"], correct: 2, exp: "'Hardly' cümlenin başındaysa zorunlu Inversion (had + subject + V3) yapılır." },
+        { q: "His refusal to compromise is ______ to a declaration of war within the company.", options: ["equivalent", "tantamount", "synonymous", "identical"], correct: 1, exp: "'Tantamount to', olumsuz durumlarda 'neredeyse eşdeğer, -ile aynı anlama gelen' demektir." },
+        { q: "By the end of this decade, scientists ______ a cure for this rare disease.", options: ["will discover", "are discovering", "will have discovered", "would discover"], correct: 2, exp: "Gelecekte belirli bir tarihten (By the end of...) önce bitecek eylemler için Future Perfect Tense kullanılır." },
+        { q: "It's imperative that everyone ______ aware of the safety protocols.", options: ["is", "are", "be", "to be"], correct: 2, exp: "'It is imperative that...' yapısı da Subjunctive'dir ve fiilin yalın (be) kullanılmasını gerektirir." },
+        { q: "Only after the audit was completed ______ the discrepancies to light.", options: ["did they bring", "were brought", "did the discrepancies come", "the discrepancies came"], correct: 2, exp: "'Only after' başa geldiğinde ana cümlede Inversion (did + subject + verb) yapılır." },
+        { q: "The professor's lecture was so convoluted that I couldn't ______ what he was trying to say.", options: ["make out", "take in", "get over", "put across"], correct: 0, exp: "'Make out', zor anlaşılan bir şeyi güçlükle idrak etmek manasına gelir." },
+        { q: "He was accused of ______ corporate secrets to a rival firm.", options: ["leak", "leaked", "leaking", "to leak"], correct: 2, exp: "Edatlardan (of) sonra gelen eylemler daima '-ing' (Gerund) takısı alır." },
+        { q: "But for your generous financial support, our startup ______ bankrupt months ago.", options: ["would go", "had gone", "went", "would have gone"], correct: 3, exp: "'But for' (olmasaydı) yapısı Type 3 Conditional'dır, ana cümlede 'would have + V3' gerektirir." },
+        { q: "He is bound ______ some resistance when he proposes these drastic changes.", options: ["encountering", "to encounter", "encounter", "having encountered"], correct: 1, exp: "'Be bound to + V1', bir şeyin gerçekleşmesinin çok muhtemel, kaçınılmaz olduğunu ifade eder." },
+        { q: "No matter ______ you try to explain it, he simply won't change his mind.", options: ["what", "how hard", "how", "whatever"], correct: 1, exp: "Zarf/sıfatın derecesini belirtmek için 'No matter how + adjective/adverb' kalıbı kullanılır." },
+        { q: "The company's profits have ______ over the last quarter due to inflation.", options: ["plummeted", "surged", "soared", "escalated"], correct: 0, exp: "'Plummet', aniden ve hızla düşmek, çakılmak anlamına gelir." },
+        { q: "I have no objection ______ to the meeting if my schedule allows it.", options: ["to come", "coming", "to coming", "come"], correct: 2, exp: "'Objection to' yapısındaki 'to' bir edattır, dolayısıyla fiil '-ing' alır." },
+        { q: "Seldom ______ such a remarkable display of talent in modern sports.", options: ["we have seen", "have we seen", "did we see", "we see"], correct: 1, exp: "Olumsuz zarflar (Seldom, Rarely) başa gelirse Inversion (Yardımcı Fiil + Özne) yapılır." },
+        { q: "She is highly regarded in her field, ______ her relatively young age.", options: ["although", "despite", "even though", "whereas"], correct: 1, exp: "Arkasından cümle değil isim (her young age) geldiği için 'despite' kullanılır." },
+        { q: "The new regulations will be phased ______ over a period of three years.", options: ["in", "out", "up", "off"], correct: 0, exp: "'Phase in', bir kuralı veya sistemi yavaş yavaş uygulamaya koymak demektir." },
+        { q: "______ having prepared extensively, he blanked out during the interview.", options: ["In spite", "Although", "Despite", "Even"], correct: 2, exp: "'Despite' ardından Gerund (-ing) alabilir, 'Although' ise tam cümle gerektirir." },
+        { q: "The building was evacuated ______ a bomb threat.", options: ["owing", "because", "on account of", "since"], correct: 2, exp: "'On account of', '-den dolayı / yüzünden' anlamında resmi bir bağlaçtır." },
+        { q: "He provided a ______ argument that convinced the entire jury.", options: ["cogent", "flimsy", "tenuous", "feeble"], correct: 0, exp: "'Cogent', mantıklı, inandırıcı ve güçlü (argüman) anlamına gelir." },
+        { q: "We must get to the ______ of this problem before it escalates further.", options: ["root", "base", "core", "stem"], correct: 0, exp: "'Get to the root of a problem', sorunun asıl kaynağına/köküne inmek deyimidir." },
+        { q: "The artist's style is heavily ______ by classical Renaissance paintings.", options: ["derived", "influenced", "attributed", "originated"], correct: 1, exp: "Bir şeyden etkilenmek 'influenced by' ile ifade edilir." },
+        { q: "She has been working relentlessly, hence ______ exhaustion.", options: ["her", "she is", "of her", "that her"], correct: 0, exp: "'Hence' (bu yüzden/dolayısıyla) ardından doğrudan isim veya isim öbeği (her exhaustion) alabilir." },
+        { q: "The suspect denied ______ any involvement in the robbery.", options: ["to have", "have", "having", "had"], correct: 2, exp: "'Deny' (inkar etmek) fiilinden sonra gelen eylem Gerund (-ing) alır." },
+        { q: "It is crucial to strike a ______ between work and personal life.", options: ["balance", "chord", "deal", "match"], correct: 0, exp: "'Strike a balance', denge kurmak/sağlamak anlamına gelen bir kolokasyondur." },
+        { q: "The country's economy is on the ______ of collapse.", options: ["edge", "verge", "brink", "rim"], correct: 2, exp: "Kötü bir durumun (çöküş, savaş vb.) eşiğinde olmak 'on the brink of' kalıbıyla söylenir." },
+        { q: "He has a ______ memory and can recall events from his early childhood vividly.", options: ["meticulous", "tenacious", "photographic", "scrupulous"], correct: 2, exp: "Görsel detayları kusursuz hatırlama yeteneğine 'photographic memory' denir." },
+        { q: "The government has implemented strict measures to ______ tax evasion.", options: ["curb", "propel", "foster", "ignite"], correct: 0, exp: "'Curb', zararlı bir şeyi (vergi kaçakçılığı gibi) kontrol altına almak, frenlemek demektir." },
+        { q: "I found his remarks highly offensive, ______ to say the least.", options: ["to say", "saying", "said", "say"], correct: 0, exp: "'To say the least' (en hafif tabirle) kalıplaşmış bir ifadedir." },
+        { q: "The team is ______ composed of senior engineers with decades of experience.", options: ["predominantly", "marginally", "scarcely", "frivolously"], correct: 0, exp: "'Predominantly', ağırlıklı olarak, büyük çoğunlukla demektir." },
+        { q: "She went out of her ______ to make the new employees feel welcome.", options: ["path", "way", "route", "track"], correct: 1, exp: "'Go out of one's way', birine yardım etmek için özel bir çaba göstermek, zahmete girmektir." },
+        { q: "The proposal was rejected ______ because it lacked funding.", options: ["outright", "outwards", "outbound", "outset"], correct: 0, exp: "'Reject outright', tartışmasız, anında ve kesin bir dille reddetmek demektir." },
+        { q: "He is well-versed ______ modern architectural trends.", options: ["with", "about", "in", "on"], correct: 2, exp: "Bir konuda yetkin, bilgili olmak 'well-versed in' edatıyla kullanılır." },
+        { q: "The decision was made ______ closed doors to prevent media interference.", options: ["behind", "beyond", "under", "within"], correct: 0, exp: "'Behind closed doors', kapalı kapılar ardında, gizlice demektir." },
+        { q: "Her explanation was so ______ that nobody fully understood the procedure.", options: ["lucid", "ambiguous", "coherent", "explicit"], correct: 1, exp: "'Ambiguous', belirsiz, birden fazla anlama gelebilen (kötü/anlaşılmaz) demektir." }
+      ],
+
+      C2: [
+        { q: "The elusive artist's work is characterized by its ______ beauty, vanishing almost as soon as it is perceived.", options: ["ubiquitous", "ephemeral", "perpetual", "resilient"], correct: 1, exp: "'Ephemeral', fani, çok kısa süren, geçici güzellikler/olaylar için kullanılan C2 kelimedir." },
+        { q: "Under no circumstances ______ allowed to access the highly classified database.", options: ["employees are", "are employees", "employees will be", "must employees be"], correct: 1, exp: "'Under no circumstances' başa gelince zorunlu Inversion (Yardımcı fiil + Özne) yapılır." },
+        { q: "The negotiations were completely ______; neither side was willing to concede an inch.", options: ["lucrative", "amicable", "deadlocked", "expedient"], correct: 2, exp: "'Deadlocked', görüşmelerin tamamen çıkmaza girmesi, kilitlenmesi demektir." },
+        { q: "He may seem arrogant, but ______ his rough exterior, he is remarkably empathetic.", options: ["underneath", "beneath", "beyond", "behind"], correct: 1, exp: "'Beneath one's exterior', birinin dış görünüşünün veya tavrının altında yatan asıl karakteri ifade eder." },
+        { q: "She took exception ______ the way she was treated by the hostile press.", options: ["with", "for", "at", "to"], correct: 3, exp: "'Take exception to', bir şeye şiddetle itiraz etmek, gücenmek demektir." },
+        { q: "The overarching theme of the novel is the ______ conflict between tradition and modernity.", options: ["perennial", "transient", "sporadic", "mitigated"], correct: 0, exp: "'Perennial', yıllar boyu süren, kalıcı ve sürekli tekrarlayan demektir." },
+        { q: "So ______ was the storm that entire coastal villages were obliterated.", options: ["ferocious", "ferociously", "ferocity", "ferocious nature"], correct: 0, exp: "Vurgu için 'So + Adjective + Be + Subject' devrik yapısında sıfat olan 'ferocious' kullanılır." },
+        { q: "He gave a ______ answer, cleverly avoiding the journalist's direct question.", options: ["candid", "blunt", "evasive", "forthright"], correct: 2, exp: "'Evasive', kaçamak, net bir cevap vermekten ustalıkla kaçınan anlamına gelir." },
+        { q: "I would be ______ to deny that the thought of resigning hadn't crossed my mind.", options: ["hypocritical", "ingenuous", "disingenuous", "frank"], correct: 2, exp: "'Disingenuous', samimiyetsiz, içten pazarlıklı manasında ileri düzey bir kelimedir." },
+        { q: "It is essential to ______ the risks before implementing the new experimental procedure.", options: ["instigate", "mitigate", "exacerbate", "obfuscate"], correct: 1, exp: "'Mitigate', bir sorunun/riskin şiddetini veya zararını hafifletmek, azaltmak demektir." },
+        { q: "The lawyer tried to cast ______ on the reliability of the star witness.", options: ["aspersions", "doubts", "shadows", "criticisms"], correct: 0, exp: "'Cast aspersions on', birinin itibarına leke sürmek, iftira atmak deyimidir." },
+        { q: "Given the precarious economic climate, investing in real estate now is a ______ endeavor.", options: ["prudent", "foolhardy", "sagacious", "judicious"], correct: 1, exp: "Tehlikeli bir ortamda yatırım yapmak için 'foolhardy' (tedbirsiz, aptalca cesur) kelimesi uygundur." },
+        { q: "The diplomat's speech was a masterpiece of ______, conveying strong warnings without using offensive language.", options: ["rhetoric", "circumlocution", "diplomacy", "bluntness"], correct: 1, exp: "'Circumlocution', doğrudan söylemek yerine lafı dolandırarak ifade etme sanatıdır." },
+        { q: "She has always been ______ in her belief that hard work ultimately pays off.", options: ["vacillating", "fickle", "steadfast", "ambivalent"], correct: 2, exp: "'Steadfast', bir inançta sarsılmaz, sabit ve kararlı olmak demektir." },
+        { q: "The corruption scandal was merely the tip of the ______, hinting at much deeper systemic issues.", options: ["iceberg", "mountain", "problem", "dilemma"], correct: 0, exp: "'Tip of the iceberg' (Buzdağının görünen kısmı), C2 metinlerde sıklıkla görülür." },
+        { q: "His ______ knowledge of Renaissance art astounded even the university professors.", options: ["superficial", "cursory", "profound", "rudimentary"], correct: 2, exp: "'Profound', son derece derin, engin ve kapsamlı (bilgi) manasındadır." },
+        { q: "We must ensure that the transition to the new system is as ______ as possible.", options: ["seamless", "disruptive", "turbulent", "haphazard"], correct: 0, exp: "'Seamless', dikişsiz, kesintisiz, pürüzsüz ve sorunsuz geçiş ifade eder." },
+        { q: "The author’s prose is highly ______, requiring the reader to pay close attention to every nuance.", options: ["lucid", "transparent", "opaque", "straightforward"], correct: 2, exp: "'Opaque', mecazi olarak anlaşılması güç, kapalı ve şeffaf olmayan metinler içindir." },
+        { q: "In the wake of the disaster, the community showed incredible ______, rebuilding their lives quickly.", options: ["apathy", "resilience", "vulnerability", "trepidation"], correct: 1, exp: "'Resilience', zorluklar ve yıkımlar karşısında çabuk toparlanabilme, psikolojik esneklik gücüdür." },
+        { q: "He was completely ______ by her sudden outburst of anger during the meeting.", options: ["taken aback", "taken over", "taken down", "taken in"], correct: 0, exp: "'Take aback', pasif (be taken aback) kullanıldığında afallamak, çok şaşırmak demektir." },
+        { q: "The CEO’s decision was entirely ______, based on personal whims rather than concrete data.", options: ["pragmatic", "arbitrary", "methodical", "judicious"], correct: 1, exp: "'Arbitrary', mantıksal bir temele dayanmayan, keyfi ve rastgele demektir." },
+        { q: "To suggest that he committed the crime intentionally is a gross ______ of justice.", options: ["miscarriage", "abortion", "deviation", "violation"], correct: 0, exp: "'A miscarriage of justice', adaletin tecelli etmemesi, adli hata anlamına gelen yasal bir kolokasyondur." },
+        { q: "The project was doomed from the ______, plagued by poor management and underfunding.", options: ["outset", "climax", "finale", "summit"], correct: 0, exp: "'From the outset', en başından beri, başlangıçtan itibaren demektir." },
+        { q: "Her sudden departure left a ______ in the department that will be hard to fill.", options: ["chasm", "void", "crevice", "fissure"], correct: 1, exp: "'Leave a void', doldurulması zor bir boşluk/eksiklik bırakmak demektir." },
+        { q: "The sheer ______ of the task ahead left the inexperienced team feeling overwhelmed.", options: ["magnitude", "triviality", "insignificance", "dearth"], correct: 0, exp: "'Sheer magnitude', görevin devasa büyüklüğünü ve ağırlığını vurgular." },
+        { q: "The critics ______ the film for its lack of originality and wooden acting.", options: ["lauded", "extolled", "panned", "venerated"], correct: 2, exp: "'Pan', bir filmi veya eseri ağır şekilde eleştirmek, yerden yere vurmak demektir." },
+        { q: "He managed to ______ a living by selling handmade crafts online.", options: ["eke out", "bring about", "set off", "turn up"], correct: 0, exp: "'Eke out a living', ucu ucuna, zar zor geçimini sağlamak anlamına gelir." },
+        { q: "The evidence presented by the prosecution was entirely ______ and circumstantial.", options: ["incontestable", "flimsy", "robust", "irrefutable"], correct: 1, exp: "'Flimsy evidence', zayıf, ikna edici olmayan ve temelsiz kanıt demektir." },
+        { q: "Despite his ______ wealth, he lives a remarkably frugal lifestyle.", options: ["ostentatious", "modest", "immense", "meager"], correct: 2, exp: "Devasa zenginliği belirtmek için 'immense wealth' kullanılır." },
+        { q: "The dictator ruled the country with an iron ______, suppressing all opposition.", options: ["fist", "hand", "grip", "glove"], correct: 0, exp: "'Rule with an iron fist', demir yumrukla, acımasızca yönetmek deyimidir." },
+        { q: "The antique grandfather clock has been ticking ______ for over two centuries.", options: ["intermittently", "incessantly", "sporadically", "erratically"], correct: 1, exp: "'Incessantly', aralıksız, durmaksızın devam eden eylemler için kullanılır." },
+        { q: "His argument was so full of holes it completely fell ______ under cross-examination.", options: ["through", "apart", "out", "away"], correct: 1, exp: "'Fall apart', bir argümanın/planın parçalanması, çökmesi anlamına da gelir." },
+        { q: "She has an ______ appetite for knowledge, reading five books a week.", options: ["insatiable", "apathetic", "indifferent", "lethargic"], correct: 0, exp: "'Insatiable appetite', doyurulamaz, bitmek tükenmek bilmeyen açlık/istek demektir." },
+        { q: "The politician was forced to eat ______ when his earlier predictions proved completely wrong.", options: ["humble pie", "his words", "sour grapes", "the dust"], correct: 0, exp: "'Eat humble pie', hatasını kabullenmek ve aşağılanmaya katlanmak deyimidir." },
+        { q: "The new disease is highly ______, spreading rapidly through the population.", options: ["contagious", "contiguous", "contingent", "congenial"], correct: 0, exp: "'Contagious', bulaşıcı (hastalık veya gülümseme vb. için) demektir." },
+        { q: "It is widely believed that the CEO was the ______ behind the corporate merger.", options: ["mastermind", "scapegoat", "figurehead", "pawn"], correct: 0, exp: "'Mastermind', büyük bir planın/olayın arkasındaki beyin, asıl planlayıcı demektir." },
+        { q: "The constant noise from the construction site is driving me up the ______.", options: ["wall", "ceiling", "tree", "roof"], correct: 0, exp: "'Drive someone up the wall', birini çıldırtmak, delirtmek deyimidir." },
+        { q: "He was caught ______ trying to steal the confidential documents.", options: ["red-handed", "black-handed", "bare-handed", "empty-handed"], correct: 0, exp: "'Catch red-handed', suçüstü (eli kanlı) yakalamak deyimidir." },
+        { q: "The sudden influx of refugees put a severe ______ on the country's resources.", options: ["strain", "sprain", "stain", "drain"], correct: 0, exp: "'Put a strain on', kaynaklar üzerinde ağır bir baskı/yük yaratmak demektir." },
+        { q: "In the highly competitive market, companies must innovate or fall by the ______.", options: ["wayside", "roadside", "curbside", "riverside"], correct: 0, exp: "'Fall by the wayside', rekabet edemeyip elenmek, yolda kalmak deyimidir." }
+      ]
+    };
+
+
+    /* ==========================================================================
+       3. UYGULAMA MANTIĞI VE INTERAKTİF MOTOR
+       ========================================================================== */
+    let currentLevel = 'A1';
+    let currentQuestionIndex = 0;
+    let isAnswered = false;
+    
+    // YENİ: Bölüm içi XP takibi ve Barajlar
+    let currentLevelXP = 0; 
+    const levelThresholds = { A1: 220, A2: 220, B1: 220, B2: 220, C1: 440, C2: 440 };
+
+    function changeLevel(level, element) {
+      document.querySelectorAll('.level-card').forEach(card => card.classList.remove('active'));
+      element.classList.add('active');
+      
+      currentLevel = level;
+      currentQuestionIndex = 0;
+      currentLevelXP = 0; // Yeni bölüme geçince o bölümün XP'si sıfırlanır
+      document.getElementById('level-badge').innerText = `${level} SEVİYESİ`;
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      isAnswered = false;
+      const questions = questionBank[currentLevel];
+      
+      // UI Güncelleme
+      document.getElementById('question-tracker').innerText = `Soru ${currentQuestionIndex + 1} / ${questions.length} | Bölüm Puanı: ${currentLevelXP}`;
+      document.getElementById('question-text').innerText = questions[currentQuestionIndex].q;
+      
+      const progressPercent = ((currentQuestionIndex + 1) / questions.length) * 100;
+      document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+
+      questions[currentQuestionIndex].options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle"></i>`;
+        btn.onclick = (e) => handleAnswer(idx, btn, e);
+        optionsContainer.appendChild(btn);
+      });
+
+      document.getElementById('explanation-box').style.display = 'none';
+      document.getElementById('btn-next').style.display = 'none';
+    }
+
+    function handleAnswer(selectedIndex, btnElement, event) {
+      if (isAnswered) return;
+      isAnswered = true;
+
+      const questions = questionBank[currentLevel];
+      const qData = questions[currentQuestionIndex];
+      const allButtons = document.querySelectorAll('.option-btn');
+
+      allButtons.forEach(btn => btn.disabled = true);
+      const expBox = document.getElementById('explanation-box');
+
+      if (selectedIndex === qData.correct) {
+        // DOĞRU CEVAP: +15 XP
+        currentLevelXP += 15;
+        saveUserXP(15);
+        btnElement.classList.add('correct-anim');
+        btnElement.querySelector('i').className = 'fa-solid fa-circle-check';
+        expBox.className = 'explanation-box success';
+        expBox.innerHTML = `<strong>Tebrikler! +15 XP 🎉</strong><br>${qData.exp}`;
+        triggerFloatingXP(event.clientX, event.clientY, `+15 XP`);
+      } else {
+        // YANLIŞ CEVAP: -5 XP (Ceza)
+        currentLevelXP -= 5;
+        saveUserXP(-5);
+        btnElement.classList.add('wrong-anim');
+        btnElement.querySelector('i').className = 'fa-solid fa-circle-xmark';
+        allButtons[qData.correct].classList.add('correct-anim');
+        expBox.className = 'explanation-box error';
+        expBox.innerHTML = `<strong>Yanlış Cevap! -5 XP ❌</strong><br>${qData.exp}`;
+        triggerFloatingXP(event.clientX, event.clientY, `-5 XP`, '#ef4444');
+      }
+
+      expBox.style.display = 'block';
+      
+      // Soru butonunun metnini duruma göre değiştir
+      const nextBtn = document.getElementById('btn-next');
+      if (currentQuestionIndex === questions.length - 1) {
+        nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
+      } else {
+        nextBtn.innerHTML = 'Sonraki Soruya Geç <i class="fa-solid fa-arrow-right"></i>';
+      }
+      nextBtn.style.display = 'block';
+    }
+
+    function nextQuestion() {
+      const questions = questionBank[currentLevel];
+      currentQuestionIndex++;
+      
+      // Bölüm Bitti mi Kontrolü
+      if (currentQuestionIndex >= questions.length) {
+        const threshold = levelThresholds[currentLevel];
+        if (currentLevelXP >= threshold) {
+            alert(`🔥 TEBRİKLER! ${currentLevelXP} XP topladın ve barajı (${threshold} XP) başarıyla geçtin. Sonraki seviyenin kilidi açıldı!`);
+            currentQuestionIndex = 0;
+            currentLevelXP = 0;
+            // Burada istersen bir sonraki seviyeye otomatik atlatabilirsin
+            loadQuestion();
+        } else {
+            alert(`💀 BAŞARISIZ! Barajı geçemedin.\nGereken: ${threshold} XP\nSenin Puanın: ${currentLevelXP} XP\nBu seviyeyi tekrar çözmek zorundasın!`);
+            currentQuestionIndex = 0;
+            currentLevelXP = 0; // Ceza olarak bölüm puanı sıfırlanır
+            loadQuestion();
+        }
+        return;
+      }
+      loadQuestion();
+    }
+
+    function triggerFloatingXP(x, y, text, color = '#4ade80') {
+      const floatEl = document.createElement('div');
+      floatEl.className = 'floating-xp';
+      floatEl.innerText = text;
+      floatEl.style.color = color;
+      floatEl.style.left = `${x - 20}px`;
+      floatEl.style.top = `${y - 40}px`;
+      document.body.appendChild(floatEl);
+      setTimeout(() => { floatEl.remove(); }, 1000);
+    }
+
+    // Başlangıç Yüklemesi
+    window.onload = () => {
+      loadQuestion();
+    };
+  </script>
 </body>
 </html>
