@@ -59,7 +59,7 @@
       backdrop-filter: blur(16px);
       border: 1px solid var(--card-border);
       border-radius: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
@@ -125,6 +125,40 @@
       gap: 20px;
     }
 
+    /* Mod Seçici (Quiz / Drag & Match) */
+    .mode-switcher {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .mode-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 12px 24px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .mode-btn:hover {
+      border-color: var(--accent-cyan);
+      color: var(--text-main);
+    }
+
+    .mode-btn.active {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(168, 85, 247, 0.25));
+      border: 2px solid var(--accent-cyan);
+      color: var(--accent-cyan);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+    }
+
     /* Seviye Seçimi GRID */
     .level-selector {
       display: grid;
@@ -140,6 +174,7 @@
       text-align: center;
       cursor: pointer;
       transition: all 0.2s ease;
+      position: relative;
     }
 
     .level-card:hover {
@@ -151,6 +186,11 @@
       background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(168, 85, 247, 0.25));
       border: 2px solid var(--accent-cyan);
       box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+    }
+
+    .level-card.locked {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
 
     .level-card h3 {
@@ -165,7 +205,7 @@
       margin-top: 4px;
     }
 
-    /* Soru Kartı */
+    /* Soru / Eşleştirme Kartı */
     .quiz-card {
       background: var(--card-bg);
       backdrop-filter: blur(20px);
@@ -196,7 +236,7 @@
       background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
       overflow: hidden;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .progress-bar-fill {
@@ -272,6 +312,104 @@
       0%, 100% { transform: translateX(0); }
       20%, 60% { transform: translateX(-8px); }
       40%, 80% { transform: translateX(8px); }
+    }
+
+    /* Drag & Match Özel Stiller */
+    .match-instruction {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #7dd3fc;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .match-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .match-grid {
+        gap: 10px;
+      }
+    }
+
+    .match-column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .match-column-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .match-card-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+      cursor: grab;
+      user-select: none;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      word-break: break-word;
+    }
+
+    .match-card-item:hover:not(.matched) {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .match-card-item.selected {
+      background: rgba(168, 85, 247, 0.25) !important;
+      border: 2px solid var(--accent-purple) !important;
+      color: #e9d5ff !important;
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+      transform: scale(1.02);
+    }
+
+    .match-card-item.matched {
+      background: rgba(34, 197, 94, 0.2) !important;
+      border: 2px solid var(--success-green) !important;
+      color: #86efac !important;
+      cursor: default;
+      opacity: 0.85;
+      transform: scale(0.98);
+      pointer-events: none;
+    }
+
+    .match-card-item.wrong {
+      background: rgba(239, 68, 68, 0.25) !important;
+      border: 2px solid var(--error-red) !important;
+      color: #fca5a5 !important;
+      animation: shakeRed 0.4s ease-in-out;
+    }
+
+    .match-card-item.drag-over {
+      background: rgba(56, 189, 248, 0.25) !important;
+      border: 2px dashed var(--accent-cyan) !important;
     }
 
     /* Açıklama Kutusu */
@@ -374,33 +512,44 @@
       <span><strong>Giriş durumu:</strong> Google girişini kullanmak için localhost/HTTPS ve Firebase Authentication ayarları gerekir.</span>
     </div>
 
+    <!-- Mod Seçici -->
+    <div class="mode-switcher">
+      <button class="mode-btn active" id="btn-mode-quiz" onclick="switchMode('quiz')">
+        <i class="fa-solid fa-list-check"></i> Çoktan Seçmeli Test
+      </button>
+      <button class="mode-btn" id="btn-mode-match" onclick="switchMode('match')">
+        <i class="fa-solid fa-puzzle-piece"></i> Drag & Match (Eşleştirme)
+      </button>
+    </div>
+
     <div class="level-selector">
-      <div class="level-card active" onclick="changeLevel('A1', this)">
+      <div class="level-card active" id="card-A1" onclick="changeLevel('A1', this)">
         <h3>A1</h3>
         <p>Beginner</p>
       </div>
-      <div class="level-card" onclick="changeLevel('A2', this)">
+      <div class="level-card" id="card-A2" onclick="changeLevel('A2', this)">
         <h3>A2</h3>
         <p>Elementary</p>
       </div>
-      <div class="level-card" onclick="changeLevel('B1', this)">
+      <div class="level-card" id="card-B1" onclick="changeLevel('B1', this)">
         <h3>B1</h3>
         <p>Intermediate</p>
       </div>
-      <div class="level-card" onclick="changeLevel('B2', this)">
+      <div class="level-card" id="card-B2" onclick="changeLevel('B2', this)">
         <h3>B2</h3>
         <p>Upper-Int</p>
       </div>
-      <div class="level-card" onclick="changeLevel('C1', this)">
+      <div class="level-card" id="card-C1" onclick="changeLevel('C1', this)">
         <h3>C1</h3>
         <p>Advanced</p>
       </div>
-      <div class="level-card" onclick="changeLevel('C2', this)">
+      <div class="level-card" id="card-C2" onclick="changeLevel('C2', this)">
         <h3>C2</h3>
         <p>Mastery</p>
       </div>
     </div>
 
+    <!-- Soru Kartı (Quiz Modu) -->
     <div class="quiz-card" id="quiz-card">
       <div class="quiz-header">
         <span class="question-tracker" id="question-tracker">Soru 1 / 20</span>
@@ -413,164 +562,257 @@
 
       <div class="question-title" id="question-text">Soru yükleniyor...</div>
 
-      <div class="options-grid" id="options-container">
-        </div>
+      <div class="options-grid" id="options-container"></div>
 
       <div class="explanation-box" id="explanation-box"></div>
 
       <button class="next-btn" id="btn-next" onclick="nextQuestion()">Sonraki Soruya Geç <i class="fa-solid fa-arrow-right"></i></button>
     </div>
 
+    <!-- Drag & Match Kartı -->
+    <div class="quiz-card" id="match-card" style="display: none;">
+      <div class="quiz-header">
+        <span class="question-tracker" id="match-tracker">Eşleştirme Seti 1 / 10 | Bölüm Puanı: 0 XP</span>
+        <span class="question-tracker" id="match-level-badge" style="color: var(--accent-cyan); font-weight:700;">A1 SEVİYESİ</span>
+      </div>
+
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="match-progress-fill"></div>
+      </div>
+
+      <div class="match-instruction">
+        <i class="fa-solid fa-hand-pointer"></i> Sol taraftaki Türkçe kelimelere tıklayıp sağdaki İngilizce karşılığıyla eşleştirin ya da üzerine sürükleyin.
+      </div>
+
+      <div class="match-grid">
+        <div class="match-column">
+          <div class="match-column-title"><i class="fa-solid fa-flag"></i> Türkçe</div>
+          <div id="tr-column" style="display: flex; flex-direction: column; gap: 10px;"></div>
+        </div>
+        <div class="match-column">
+          <div class="match-column-title"><i class="fa-solid fa-earth-americas"></i> İngilizce</div>
+          <div id="en-column" style="display: flex; flex-direction: column; gap: 10px;"></div>
+        </div>
+      </div>
+
+      <div class="explanation-box" id="match-explanation-box"></div>
+
+      <button class="next-btn" id="btn-next-match" onclick="nextMatchSet()">Sonraki Eşleştirmeye Geç <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
   </div>
   
   <script>
     /* ==========================================================================
-       1. FIREBASE KONFİGÜRASYONU (Firebase Console'dan Kendi Bilgilerinizi Alın)
+       1. FIREBASE KONFİGÜRASYONU
        ========================================================================== */
     const firebaseConfig = {
-    apiKey: "AIzaSyCyuUhh0pPgJXdrR3VM2UcCJIrzFrJPsnI",
-    authDomain: "lingova-af826.firebaseapp.com",
-    projectId: "lingova-af826",
-    storageBucket: "lingova-af826.firebasestorage.app",
-    messagingSenderId: "701514749856",
-    appId: "1:701514749856:web:5f8efb0a6c5531790fb6c5",
-    measurementId: "G-W11TE6GFHH"
-  };
+      apiKey: "AIzaSyCyuUhh0pPgJXdrR3VM2UcCJIrzFrJPsnI",
+      authDomain: "lingova-af826.firebaseapp.com",
+      projectId: "lingova-af826",
+      storageBucket: "lingova-af826.firebasestorage.app",
+      messagingSenderId: "701514749856",
+      appId: "1:701514749856:web:5f8efb0a6c5531790fb6c5",
+      measurementId: "G-W11TE6GFHH"
+    };
 
-  let isFirebaseInitialized = false;
-  let currentUser = null;
-  let userXP = 0;
+    let isFirebaseInitialized = false;
+    let currentUser = null;
+    let userXP = 0;
 
-  function showAuthStatus(message, type = 'warning') {
-    const alertBox = document.getElementById('demo-alert');
-    if (!alertBox) return;
-
-    alertBox.style.display = 'flex';
-    alertBox.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-circle-xmark' : 'fa-circle-info'}"></i><span>${message}</span>`;
-    alertBox.style.borderColor = type === 'error' ? '#ef4444' : '#eab308';
-    alertBox.style.color = type === 'error' ? '#fca5a5' : '#fef08a';
-    alertBox.style.background = type === 'error' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(234, 179, 8, 0.15)';
-  }
-
-  function initializeFirebase() {
-    const isSecureOrigin = window.location.protocol === 'https:' || ['localhost', '127.0.0.1'].includes(window.location.hostname);
-
-    if (!isSecureOrigin) {
-      showAuthStatus('Google girişi yalnızca localhost veya HTTPS üzerinden çalışır. Lütfen bir sunucu üzerinden açın.', 'error');
-      return false;
-    }
-
-    if (typeof firebase === 'undefined' || !firebase.apps) {
-      showAuthStatus('Firebase kütüphanesi yüklenemedi. İnternet bağlantısını kontrol edin.', 'error');
-      return false;
-    }
-
-    try {
-      if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-      }
-      isFirebaseInitialized = true;
-
+    function showAuthStatus(message, type = 'warning') {
       const alertBox = document.getElementById('demo-alert');
-      if (alertBox) {
-        alertBox.style.display = 'none';
+      if (!alertBox) return;
+
+      alertBox.style.display = 'flex';
+      alertBox.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-circle-xmark' : 'fa-circle-info'}"></i><span>${message}</span>`;
+      alertBox.style.borderColor = type === 'error' ? '#ef4444' : '#eab308';
+      alertBox.style.color = type === 'error' ? '#fca5a5' : '#fef08a';
+      alertBox.style.background = type === 'error' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(234, 179, 8, 0.15)';
+    }
+
+    function initializeFirebase() {
+      const isSecureOrigin = window.location.protocol === 'https:' || ['localhost', '127.0.0.1'].includes(window.location.hostname);
+
+      if (!isSecureOrigin) {
+        showAuthStatus('Google girişi yalnızca localhost veya HTTPS üzerinden çalışır. Lütfen bir sunucu üzerinden açın.', 'error');
+        return false;
       }
 
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          currentUser = user;
-          renderUserInfo(user);
-          loadUserData(user.uid);
+      if (typeof firebase === 'undefined' || !firebase.apps) {
+        showAuthStatus('Firebase kütüphanesi yüklenemedi. İnternet bağlantısını kontrol edin.', 'error');
+        return false;
+      }
+
+      try {
+        if (!firebase.apps.length) {
+          firebase.initializeApp(firebaseConfig);
+        }
+        isFirebaseInitialized = true;
+
+        const alertBox = document.getElementById('demo-alert');
+        if (alertBox) {
+          alertBox.style.display = 'none';
+        }
+
+        firebase.auth().onAuthStateChanged(user => {
+          if (user) {
+            currentUser = user;
+            renderUserInfo(user);
+            loadUserData(user.uid);
+          } else {
+            currentUser = null;
+            renderLoggedOutUI();
+          }
+        });
+        return true;
+      } catch (err) {
+        console.error('Firebase başlatma hatası:', err);
+        showAuthStatus(`Firebase başlatılamadı: ${err.message}`, 'error');
+        return false;
+      }
+    }
+
+    initializeFirebase();
+
+    function loginWithGoogle() {
+      if (!isFirebaseInitialized) {
+        showAuthStatus('Firebase hazır değil. Lütfen localhost/HTTPS üzerinden tekrar açın.', 'error');
+        return;
+      }
+
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider).catch(err => {
+        console.error('Giriş Hatası:', err);
+
+        if (err.code === 'auth/popup-blocked') {
+          showAuthStatus('Pop-up engellendi. Lütfen tarayıcı pop-up izinlerini açın.', 'error');
+        } else if (err.code === 'auth/unauthorized-domain') {
+          showAuthStatus('Bu alan Firebase Authentication için yetkilendirilmemiş. Firebase konsolundaki Authorized Domains alanına ekleyin.', 'error');
         } else {
-          currentUser = null;
-          renderLoggedOutUI();
+          showAuthStatus(`Giriş yapılırken bir hata oluştu: ${err.message}`, 'error');
         }
       });
-      return true;
-    } catch (err) {
-      console.error('Firebase başlatma hatası:', err);
-      showAuthStatus(`Firebase başlatılamadı: ${err.message}`, 'error');
-      return false;
-    }
-  }
-
-  initializeFirebase();
-
-  function loginWithGoogle() {
-    if (!isFirebaseInitialized) {
-      showAuthStatus('Firebase hazır değil. Lütfen localhost/HTTPS üzerinden tekrar açın.', 'error');
-      return;
     }
 
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider).catch(err => {
-      console.error('Giriş Hatası:', err);
-
-      if (err.code === 'auth/popup-blocked') {
-        showAuthStatus('Pop-up engellendi. Lütfen tarayıcı pop-up izinlerini açın.', 'error');
-      } else if (err.code === 'auth/unauthorized-domain') {
-        showAuthStatus('Bu alan Firebase Authentication için yetkilendirilmemiş. Firebase konsolundaki Authorized Domains alanına ekleyin.', 'error');
-      } else {
-        showAuthStatus(`Giriş yapılırken bir hata oluştu: ${err.message}`, 'error');
+    function logout() {
+      if (isFirebaseInitialized) {
+        firebase.auth().signOut();
       }
-    });
-  }
-
-  function logout() {
-    if (isFirebaseInitialized) {
-      firebase.auth().signOut();
     }
-  }
 
-  function renderUserInfo(user) {
-    const authContainer = document.getElementById('auth-container');
-    authContainer.innerHTML = `
-      <img src="${user.photoURL}" class="user-avatar" title="${user.displayName}">
-      <button class="btn-auth" onclick="logout()" style="padding: 8px 12px; font-size:12px;">Çıkış</button>
-    `;
-  }
+    function renderUserInfo(user) {
+      const authContainer = document.getElementById('auth-container');
+      authContainer.innerHTML = `
+        <img src="${user.photoURL}" class="user-avatar" title="${user.displayName}">
+        <button class="btn-auth" onclick="logout()" style="padding: 8px 12px; font-size:12px;">Çıkış</button>
+      `;
+    }
 
-  function renderLoggedOutUI() {
-    const authContainer = document.getElementById('auth-container');
-    authContainer.innerHTML = `
-      <button class="btn-auth" id="btn-login" onclick="loginWithGoogle()">
-        <i class="fa-brands fa-google"></i>
-        <span>Google ile Giriş</span>
-      </button>
-    `;
-  }
+    function renderLoggedOutUI() {
+      const authContainer = document.getElementById('auth-container');
+      authContainer.innerHTML = `
+        <button class="btn-auth" id="btn-login" onclick="loginWithGoogle()">
+          <i class="fa-brands fa-google"></i>
+          <span>Google ile Giriş</span>
+        </button>
+      `;
+    }
 
-  function loadUserData(uid) {
-    const db = firebase.firestore();
-    db.collection('users').doc(uid).get().then(doc => {
-      if (doc.exists) {
-        userXP = doc.data().xp || 0;
-        updateXPUI();
-      } else {
-        db.collection('users').doc(uid).set({ xp: 0, createdAt: new Date() });
-      }
-    });
-  }
-
-  function saveUserXP(addedXP) {
-    userXP += addedXP;
-    updateXPUI();
-    if (isFirebaseInitialized && currentUser) {
+    function loadUserData(uid) {
       const db = firebase.firestore();
-      db.collection('users').doc(currentUser.uid).update({
-        xp: firebase.firestore.FieldValue.increment(addedXP)
+      db.collection('users').doc(uid).get().then(doc => {
+        if (doc.exists) {
+          userXP = doc.data().xp || 0;
+          updateXPUI();
+        } else {
+          db.collection('users').doc(uid).set({ xp: 0, createdAt: new Date() });
+        }
       });
     }
-  }
 
-  function updateXPUI() {
-    document.getElementById('user-xp').innerText = `${userXP} XP`;
-  }
+    function saveUserXP(addedXP) {
+      userXP += addedXP;
+      if (userXP < 0) userXP = 0;
+      updateXPUI();
+      if (isFirebaseInitialized && currentUser) {
+        const db = firebase.firestore();
+        db.collection('users').doc(currentUser.uid).update({
+          xp: firebase.firestore.FieldValue.increment(addedXP)
+        });
+      }
+    }
 
-  const levelSequence = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-  const unlockedLevels = { A1: true, A2: false, B1: false, B2: false, C1: false, C2: false };
+    function updateXPUI() {
+      document.getElementById('user-xp').innerText = `${userXP} XP`;
+    }
+
+    const levelSequence = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+    const unlockedLevels = { A1: true, A2: false, B1: false, B2: false, C1: false, C2: false };
+    const levelThresholds = { A1: 220, A2: 220, B1: 220, B2: 220, C1: 440, C2: 440 };
+
+    let activeMode = 'quiz'; // 'quiz' or 'match'
+    let currentLevel = 'A1';
+
+    function switchMode(mode) {
+      activeMode = mode;
+      document.getElementById('btn-mode-quiz').classList.toggle('active', mode === 'quiz');
+      document.getElementById('btn-mode-match').classList.toggle('active', mode === 'match');
+
+      if (mode === 'quiz') {
+        document.getElementById('quiz-card').style.display = 'block';
+        document.getElementById('match-card').style.display = 'none';
+        loadQuestion();
+      } else {
+        document.getElementById('quiz-card').style.display = 'none';
+        document.getElementById('match-card').style.display = 'block';
+        currentMatchIndex = 0;
+        currentMatchXP = 0;
+        loadMatchSet();
+      }
+    }
+
+    function changeLevel(level, element) {
+      if (!unlockedLevels[level]) {
+        alert(`🔒 Bu seviye kilitli! Kilidi açmak için önceki seviyenin barajını geçmelisin.`);
+        return;
+      }
+
+      document.querySelectorAll('.level-card').forEach(card => card.classList.remove('active'));
+      element.classList.add('active');
+
+      currentLevel = level;
+      currentQuestionIndex = 0;
+      currentLevelXP = 0;
+
+      currentMatchIndex = 0;
+      currentMatchXP = 0;
+
+      document.getElementById('level-badge').innerText = `${level} SEVİYESİ`;
+      document.getElementById('match-level-badge').innerText = `${level} SEVİYESİ`;
+
+      if (activeMode === 'quiz') {
+        loadQuestion();
+      } else {
+        loadMatchSet();
+      }
+    }
+
+    function unlockNextLevel(current) {
+      const currentIndex = levelSequence.indexOf(current);
+      if (currentIndex !== -1 && currentIndex < levelSequence.length - 1) {
+        const nextLevelName = levelSequence[currentIndex + 1];
+        unlockedLevels[nextLevelName] = true;
+
+        const nextCard = document.getElementById(`card-${nextLevelName}`);
+        if (nextCard) {
+          nextCard.classList.remove('locked');
+        }
+      }
+    }
+
     /* ==========================================================================
-       2. ZENGİN VE ZORLAYICI SORU BANKASI (A1 - C2 SEVİYELERİ)
+       2. ZENGİN VE ZORLAYICI SORU BANKASI (QUIZ)
        ========================================================================== */
     const questionBank = {
       A1: [
@@ -681,29 +923,8 @@
         { q: "No matter ______ you try to explain it, he simply won't change his mind.", options: ["what", "how hard", "how", "whatever"], correct: 1, exp: "Zarf/sıfatın derecesini belirtmek için 'No matter how + adjective/adverb' kalıbı kullanılır." },
         { q: "The company's profits have ______ over the last quarter due to inflation.", options: ["plummeted", "surged", "soared", "escalated"], correct: 0, exp: "'Plummet', aniden ve hızla düşmek, çakılmak anlamına gelir." },
         { q: "I have no objection ______ to the meeting if my schedule allows it.", options: ["to come", "coming", "to coming", "come"], correct: 2, exp: "'Objection to' yapısındaki 'to' bir edattır, dolayısıyla fiil '-ing' alır." },
-        { q: "Seldom ______ such a remarkable display of talent in modern sports.", options: ["we have seen", "have we seen", "did we see", "we see"], correct: 1, exp: "Olumsuz zarflar (Seldom, Rarely) başa gelirse Inversion (Yardımcı Fiil + Özne) yapılır." },
-        { q: "She is highly regarded in her field, ______ her relatively young age.", options: ["although", "despite", "even though", "whereas"], correct: 1, exp: "Arkasından cümle değil isim (her young age) geldiği için 'despite' kullanılır." },
-        { q: "The new regulations will be phased ______ over a period of three years.", options: ["in", "out", "up", "off"], correct: 0, exp: "'Phase in', bir kuralı veya sistemi yavaş yavaş uygulamaya koymak demektir." },
-        { q: "______ having prepared extensively, he blanked out during the interview.", options: ["In spite", "Although", "Despite", "Even"], correct: 2, exp: "'Despite' ardından Gerund (-ing) alabilir, 'Although' ise tam cümle gerektirir." },
-        { q: "The building was evacuated ______ a bomb threat.", options: ["owing", "because", "on account of", "since"], correct: 2, exp: "'On account of', '-den dolayı / yüzünden' anlamında resmi bir bağlaçtır." },
-        { q: "He provided a ______ argument that convinced the entire jury.", options: ["cogent", "flimsy", "tenuous", "feeble"], correct: 0, exp: "'Cogent', mantıklı, inandırıcı ve güçlü (argüman) anlamına gelir." },
-        { q: "We must get to the ______ of this problem before it escalates further.", options: ["root", "base", "core", "stem"], correct: 0, exp: "'Get to the root of a problem', sorunun asıl kaynağına/köküne inmek deyimidir." },
-        { q: "The artist's style is heavily ______ by classical Renaissance paintings.", options: ["derived", "influenced", "attributed", "originated"], correct: 1, exp: "Bir şeyden etkilenmek 'influenced by' ile ifade edilir." },
-        { q: "She has been working relentlessly, hence ______ exhaustion.", options: ["her", "she is", "of her", "that her"], correct: 0, exp: "'Hence' (bu yüzden/dolayısıyla) ardından doğrudan isim veya isim öbeği (her exhaustion) alabilir." },
-        { q: "The suspect denied ______ any involvement in the robbery.", options: ["to have", "have", "having", "had"], correct: 2, exp: "'Deny' (inkar etmek) fiilinden sonra gelen eylem Gerund (-ing) alır." },
-        { q: "It is crucial to strike a ______ between work and personal life.", options: ["balance", "chord", "deal", "match"], correct: 0, exp: "'Strike a balance', denge kurmak/sağlamak anlamına gelen bir kolokasyondur." },
-        { q: "The country's economy is on the ______ of collapse.", options: ["edge", "verge", "brink", "rim"], correct: 2, exp: "Kötü bir durumun (çöküş, savaş vb.) eşiğinde olmak 'on the brink of' kalıbıyla söylenir." },
-        { q: "He has a ______ memory and can recall events from his early childhood vividly.", options: ["meticulous", "tenacious", "photographic", "scrupulous"], correct: 2, exp: "Görsel detayları kusursuz hatırlama yeteneğine 'photographic memory' denir." },
-        { q: "The government has implemented strict measures to ______ tax evasion.", options: ["curb", "propel", "foster", "ignite"], correct: 0, exp: "'Curb', zararlı bir şeyi (vergi kaçakçılığı gibi) kontrol altına almak, frenlemek demektir." },
-        { q: "I found his remarks highly offensive, ______ to say the least.", options: ["to say", "saying", "said", "say"], correct: 0, exp: "'To say the least' (en hafif tabirle) kalıplaşmış bir ifadedir." },
-        { q: "The team is ______ composed of senior engineers with decades of experience.", options: ["predominantly", "marginally", "scarcely", "frivolously"], correct: 0, exp: "'Predominantly', ağırlıklı olarak, büyük çoğunlukla demektir." },
-        { q: "She went out of her ______ to make the new employees feel welcome.", options: ["path", "way", "route", "track"], correct: 1, exp: "'Go out of one's way', birine yardım etmek için özel bir çaba göstermek, zahmete girmektir." },
-        { q: "The proposal was rejected ______ because it lacked funding.", options: ["outright", "outwards", "outbound", "outset"], correct: 0, exp: "'Reject outright', tartışmasız, anında ve kesin bir dille reddetmek demektir." },
-        { q: "He is well-versed ______ modern architectural trends.", options: ["with", "about", "in", "on"], correct: 2, exp: "Bir konuda yetkin, bilgili olmak 'well-versed in' edatıyla kullanılır." },
-        { q: "The decision was made ______ closed doors to prevent media interference.", options: ["behind", "beyond", "under", "within"], correct: 0, exp: "'Behind closed doors', kapalı kapılar ardında, gizlice demektir." },
-        { q: "Her explanation was so ______ that nobody fully understood the procedure.", options: ["lucid", "ambiguous", "coherent", "explicit"], correct: 1, exp: "'Ambiguous', belirsiz, birden fazla anlama gelebilen (kötü/anlaşılmaz) demektir." }
+        { q: "Seldom ______ such a remarkable display of talent in modern sports.", options: ["we have seen", "have we seen", "did we see", "we see"], correct: 1, exp: "Olumsuz zarflar (Seldom, Rarely) başa gelirse Inversion (Yardımcı Fiil + Özne) yapılır." }
       ],
-
       C2: [
         { q: "The elusive artist's work is characterized by its ______ beauty, vanishing almost as soon as it is perceived.", options: ["ubiquitous", "ephemeral", "perpetual", "resilient"], correct: 1, exp: "'Ephemeral', fani, çok kısa süren, geçici güzellikler/olaylar için kullanılan C2 kelimedir." },
         { q: "Under no circumstances ______ allowed to access the highly classified database.", options: ["employees are", "are employees", "employees will be", "must employees be"], correct: 1, exp: "'Under no circumstances' başa gelince zorunlu Inversion (Yardımcı fiil + Özne) yapılır." },
@@ -724,78 +945,3400 @@
         { q: "We must ensure that the transition to the new system is as ______ as possible.", options: ["seamless", "disruptive", "turbulent", "haphazard"], correct: 0, exp: "'Seamless', dikişsiz, kesintisiz, pürüzsüz ve sorunsuz geçiş ifade eder." },
         { q: "The author’s prose is highly ______, requiring the reader to pay close attention to every nuance.", options: ["lucid", "transparent", "opaque", "straightforward"], correct: 2, exp: "'Opaque', mecazi olarak anlaşılması güç, kapalı ve şeffaf olmayan metinler içindir." },
         { q: "In the wake of the disaster, the community showed incredible ______, rebuilding their lives quickly.", options: ["apathy", "resilience", "vulnerability", "trepidation"], correct: 1, exp: "'Resilience', zorluklar ve yıkımlar karşısında çabuk toparlanabilme, psikolojik esneklik gücüdür." },
-        { q: "He was completely ______ by her sudden outburst of anger during the meeting.", options: ["taken aback", "taken over", "taken down", "taken in"], correct: 0, exp: "'Take aback', pasif (be taken aback) kullanıldığında afallamak, çok şaşırmak demektir." },
-        { q: "The CEO’s decision was entirely ______, based on personal whims rather than concrete data.", options: ["pragmatic", "arbitrary", "methodical", "judicious"], correct: 1, exp: "'Arbitrary', mantıksal bir temele dayanmayan, keyfi ve rastgele demektir." },
-        { q: "To suggest that he committed the crime intentionally is a gross ______ of justice.", options: ["miscarriage", "abortion", "deviation", "violation"], correct: 0, exp: "'A miscarriage of justice', adaletin tecelli etmemesi, adli hata anlamına gelen yasal bir kolokasyondur." },
-        { q: "The project was doomed from the ______, plagued by poor management and underfunding.", options: ["outset", "climax", "finale", "summit"], correct: 0, exp: "'From the outset', en başından beri, başlangıçtan itibaren demektir." },
-        { q: "Her sudden departure left a ______ in the department that will be hard to fill.", options: ["chasm", "void", "crevice", "fissure"], correct: 1, exp: "'Leave a void', doldurulması zor bir boşluk/eksiklik bırakmak demektir." },
-        { q: "The sheer ______ of the task ahead left the inexperienced team feeling overwhelmed.", options: ["magnitude", "triviality", "insignificance", "dearth"], correct: 0, exp: "'Sheer magnitude', görevin devasa büyüklüğünü ve ağırlığını vurgular." },
-        { q: "The critics ______ the film for its lack of originality and wooden acting.", options: ["lauded", "extolled", "panned", "venerated"], correct: 2, exp: "'Pan', bir filmi veya eseri ağır şekilde eleştirmek, yerden yere vurmak demektir." },
-        { q: "He managed to ______ a living by selling handmade crafts online.", options: ["eke out", "bring about", "set off", "turn up"], correct: 0, exp: "'Eke out a living', ucu ucuna, zar zor geçimini sağlamak anlamına gelir." },
-        { q: "The evidence presented by the prosecution was entirely ______ and circumstantial.", options: ["incontestable", "flimsy", "robust", "irrefutable"], correct: 1, exp: "'Flimsy evidence', zayıf, ikna edici olmayan ve temelsiz kanıt demektir." },
-        { q: "Despite his ______ wealth, he lives a remarkably frugal lifestyle.", options: ["ostentatious", "modest", "immense", "meager"], correct: 2, exp: "Devasa zenginliği belirtmek için 'immense wealth' kullanılır." },
-        { q: "The dictator ruled the country with an iron ______, suppressing all opposition.", options: ["fist", "hand", "grip", "glove"], correct: 0, exp: "'Rule with an iron fist', demir yumrukla, acımasızca yönetmek deyimidir." },
-        { q: "The antique grandfather clock has been ticking ______ for over two centuries.", options: ["intermittently", "incessantly", "sporadically", "erratically"], correct: 1, exp: "'Incessantly', aralıksız, durmaksızın devam eden eylemler için kullanılır." },
-        { q: "His argument was so full of holes it completely fell ______ under cross-examination.", options: ["through", "apart", "out", "away"], correct: 1, exp: "'Fall apart', bir argümanın/planın parçalanması, çökmesi anlamına da gelir." },
-        { q: "She has an ______ appetite for knowledge, reading five books a week.", options: ["insatiable", "apathetic", "indifferent", "lethargic"], correct: 0, exp: "'Insatiable appetite', doyurulamaz, bitmek tükenmek bilmeyen açlık/istek demektir." },
-        { q: "The politician was forced to eat ______ when his earlier predictions proved completely wrong.", options: ["humble pie", "his words", "sour grapes", "the dust"], correct: 0, exp: "'Eat humble pie', hatasını kabullenmek ve aşağılanmaya katlanmak deyimidir." },
-        { q: "The new disease is highly ______, spreading rapidly through the population.", options: ["contagious", "contiguous", "contingent", "congenial"], correct: 0, exp: "'Contagious', bulaşıcı (hastalık veya gülümseme vb. için) demektir." },
-        { q: "It is widely believed that the CEO was the ______ behind the corporate merger.", options: ["mastermind", "scapegoat", "figurehead", "pawn"], correct: 0, exp: "'Mastermind', büyük bir planın/olayın arkasındaki beyin, asıl planlayıcı demektir." },
-        { q: "The constant noise from the construction site is driving me up the ______.", options: ["wall", "ceiling", "tree", "roof"], correct: 0, exp: "'Drive someone up the wall', birini çıldırtmak, delirtmek deyimidir." },
-        { q: "He was caught ______ trying to steal the confidential documents.", options: ["red-handed", "black-handed", "bare-handed", "empty-handed"], correct: 0, exp: "'Catch red-handed', suçüstü (eli kanlı) yakalamak deyimidir." },
-        { q: "The sudden influx of refugees put a severe ______ on the country's resources.", options: ["strain", "sprain", "stain", "drain"], correct: 0, exp: "'Put a strain on', kaynaklar üzerinde ağır bir baskı/yük yaratmak demektir." },
-        { q: "In the highly competitive market, companies must innovate or fall by the ______.", options: ["wayside", "roadside", "curbside", "riverside"], correct: 0, exp: "'Fall by the wayside', rekabet edemeyip elenmek, yolda kalmak deyimidir." }
+        { q: "He was completely ______ by her sudden outburst of anger during the meeting.", options: ["taken aback", "taken over", "taken down", "taken in"], correct: 0, exp: "'Take aback', pasif (be taken aback) kullanıldığında afallamak, çok şaşırmak demektir." }
       ]
     };
 
+    /* ==========================================================================
+       3. DRAG & MATCH KELİME BANKASI (A1:10, A2:10, B1:10, B2:10, C1:20, C2:20 SET)
+       ========================================================================== */
+    const matchBank = {
+  "A1": [
+    [
+      [
+        "Merhaba",
+        "Hello"
+      ],
+      [
+        "Teşekkürler",
+        "Thanks"
+      ],
+      [
+        "Elma",
+        "Apple"
+      ],
+      [
+        "Su",
+        "Water"
+      ],
+      [
+        "Kedi",
+        "Cat"
+      ],
+      [
+        "Köpek",
+        "Dog"
+      ],
+      [
+        "Kitap",
+        "Book"
+      ],
+      [
+        "Araba",
+        "Car"
+      ],
+      [
+        "Ekmek",
+        "Bread"
+      ],
+      [
+        "Süt",
+        "Milk"
+      ]
+    ],
+    [
+      [
+        "Ev",
+        "House"
+      ],
+      [
+        "Okul",
+        "School"
+      ],
+      [
+        "Anne",
+        "Mother"
+      ],
+      [
+        "Baba",
+        "Father"
+      ],
+      [
+        "Erkek kardeş",
+        "Brother"
+      ],
+      [
+        "Kız kardeş",
+        "Sister"
+      ],
+      [
+        "Arkadaş",
+        "Friend"
+      ],
+      [
+        "Şehir",
+        "City"
+      ],
+      [
+        "Ülke",
+        "Country"
+      ],
+      [
+        "İsim",
+        "Name"
+      ]
+    ],
+    [
+      [
+        "Yemek",
+        "Food"
+      ],
+      [
+        "Çay",
+        "Tea"
+      ],
+      [
+        "Kahve",
+        "Coffee"
+      ],
+      [
+        "Elbise",
+        "Dress"
+      ],
+      [
+        "Ayakkabı",
+        "Shoe"
+      ],
+      [
+        "Gün",
+        "Day"
+      ],
+      [
+        "Gece",
+        "Night"
+      ],
+      [
+        "Güneş",
+        "Sun"
+      ],
+      [
+        "Ay",
+        "Moon"
+      ],
+      [
+        "Gökyüzü",
+        "Sky"
+      ]
+    ],
+    [
+      [
+        "Kırmızı",
+        "Red"
+      ],
+      [
+        "Mavi",
+        "Blue"
+      ],
+      [
+        "Yeşil",
+        "Green"
+      ],
+      [
+        "Büyük",
+        "Big"
+      ],
+      [
+        "Küçük",
+        "Small"
+      ],
+      [
+        "İyi",
+        "Good"
+      ],
+      [
+        "Kötü",
+        "Bad"
+      ],
+      [
+        "Mutlu",
+        "Happy"
+      ],
+      [
+        "Üzgün",
+        "Sad"
+      ],
+      [
+        "Yeni",
+        "New"
+      ]
+    ],
+    [
+      [
+        "Koşmak",
+        "Run"
+      ],
+      [
+        "Yürümek",
+        "Walk"
+      ],
+      [
+        "Yemek yemek",
+        "Eat"
+      ],
+      [
+        "İçmek",
+        "Drink"
+      ],
+      [
+        "Uyumak",
+        "Sleep"
+      ],
+      [
+        "Okumak",
+        "Read"
+      ],
+      [
+        "Yazmak",
+        "Write"
+      ],
+      [
+        "Görmek",
+        "See"
+      ],
+      [
+        "Duymak",
+        "Hear"
+      ],
+      [
+        "Konuşmak",
+        "Speak"
+      ]
+    ],
+    [
+      [
+        "Bir",
+        "One"
+      ],
+      [
+        "İki",
+        "Two"
+      ],
+      [
+        "Üç",
+        "Three"
+      ],
+      [
+        "Dört",
+        "Four"
+      ],
+      [
+        "Beş",
+        "Five"
+      ],
+      [
+        "Altı",
+        "Six"
+      ],
+      [
+        "Yedi",
+        "Seven"
+      ],
+      [
+        "Sekiz",
+        "Eight"
+      ],
+      [
+        "Dokuz",
+        "Nine"
+      ],
+      [
+        "On",
+        "Ten"
+      ]
+    ],
+    [
+      [
+        "Masa",
+        "Table"
+      ],
+      [
+        "Sandalye",
+        "Chair"
+      ],
+      [
+        "Kapı",
+        "Door"
+      ],
+      [
+        "Pencere",
+        "Window"
+      ],
+      [
+        "Yatak",
+        "Bed"
+      ],
+      [
+        "Kalem",
+        "Pen"
+      ],
+      [
+        "Çanta",
+        "Bag"
+      ],
+      [
+        "Saat",
+        "Clock"
+      ],
+      [
+        "Telefon",
+        "Phone"
+      ],
+      [
+        "Bilgisayar",
+        "Computer"
+      ]
+    ],
+    [
+      [
+        "Sabah",
+        "Morning"
+      ],
+      [
+        "Öğle",
+        "Noon"
+      ],
+      [
+        "Akşam",
+        "Evening"
+      ],
+      [
+        "Bugün",
+        "Today"
+      ],
+      [
+        "Yarın",
+        "Tomorrow"
+      ],
+      [
+        "Dün",
+        "Yesterday"
+      ],
+      [
+        "Hafta",
+        "Week"
+      ],
+      [
+        "Ay",
+        "Month"
+      ],
+      [
+        "Yıl",
+        "Year"
+      ],
+      [
+        "Zaman",
+        "Time"
+      ]
+    ],
+    [
+      [
+        "Aile",
+        "Family"
+      ],
+      [
+        "Çocuk",
+        "Child"
+      ],
+      [
+        "Kadın",
+        "Woman"
+      ],
+      [
+        "Adam",
+        "Man"
+      ],
+      [
+        "Öğretmen",
+        "Teacher"
+      ],
+      [
+        "Öğrenci",
+        "Student"
+      ],
+      [
+        "Doktor",
+        "Doctor"
+      ],
+      [
+        "Polis",
+        "Police"
+      ],
+      [
+        "Park",
+        "Park"
+      ],
+      [
+        "Sokak",
+        "Street"
+      ]
+    ],
+    [
+      [
+        "Sıcak",
+        "Hot"
+      ],
+      [
+        "Soğuk",
+        "Cold"
+      ],
+      [
+        "Hızlı",
+        "Fast"
+      ],
+      [
+        "Yavaş",
+        "Slow"
+      ],
+      [
+        "Kolay",
+        "Easy"
+      ],
+      [
+        "Zor",
+        "Hard"
+      ],
+      [
+        "Yağmur",
+        "Rain"
+      ],
+      [
+        "Kar",
+        "Snow"
+      ],
+      [
+        "Rüzgar",
+        "Wind"
+      ],
+      [
+        "Deniz",
+        "Sea"
+      ]
+    ]
+  ],
+  "A2": [
+    [
+      [
+        "Otobüs",
+        "Bus"
+      ],
+      [
+        "Tren",
+        "Train"
+      ],
+      [
+        "Uçak",
+        "Airplane"
+      ],
+      [
+        "Bilet",
+        "Ticket"
+      ],
+      [
+        "Seyahat",
+        "Travel"
+      ],
+      [
+        "Tatil",
+        "Holiday"
+      ],
+      [
+        "Otel",
+        "Hotel"
+      ],
+      [
+        "Havalimanı",
+        "Airport"
+      ],
+      [
+        "Harita",
+        "Map"
+      ],
+      [
+        "Valiz",
+        "Suitcase"
+      ]
+    ],
+    [
+      [
+        "Alışveriş",
+        "Shopping"
+      ],
+      [
+        "Mağaza",
+        "Store"
+      ],
+      [
+        "Fiyat",
+        "Price"
+      ],
+      [
+        "Para",
+        "Money"
+      ],
+      [
+        "Müşteri",
+        "Customer"
+      ],
+      [
+        "Satın almak",
+        "Buy"
+      ],
+      [
+        "Satmak",
+        "Sell"
+      ],
+      [
+        "Ucuz",
+        "Cheap"
+      ],
+      [
+        "Pahalı",
+        "Expensive"
+      ],
+      [
+        "İndirim",
+        "Discount"
+      ]
+    ],
+    [
+      [
+        "Kahvaltı",
+        "Breakfast"
+      ],
+      [
+        "Öğle yemeği",
+        "Lunch"
+      ],
+      [
+        "Akşam yemeği",
+        "Dinner"
+      ],
+      [
+        "Mutfak",
+        "Kitchen"
+      ],
+      [
+        "Tabak",
+        "Plate"
+      ],
+      [
+        "Çatal",
+        "Fork"
+      ],
+      [
+        "Kaşık",
+        "Spoon"
+      ],
+      [
+        "Bıçak",
+        "Knife"
+      ],
+      [
+        "Şeker",
+        "Sugar"
+      ],
+      [
+        "Tuz",
+        "Salt"
+      ]
+    ],
+    [
+      [
+        "Hobi",
+        "Hobby"
+      ],
+      [
+        "Müzik",
+        "Music"
+      ],
+      [
+        "Film",
+        "Movie"
+      ],
+      [
+        "Spor",
+        "Sport"
+      ],
+      [
+        "Yüzme",
+        "Swimming"
+      ],
+      [
+        "Dans etmek",
+        "Dance"
+      ],
+      [
+        "Şarkı söylemek",
+        "Sing"
+      ],
+      [
+        "Fotoğraf",
+        "Photo"
+      ],
+      [
+        "Oyun",
+        "Game"
+      ],
+      [
+        "Eğlence",
+        "Fun"
+      ]
+    ],
+    [
+      [
+        "Hastalık",
+        "Illness"
+      ],
+      [
+        "İlaç",
+        "Medicine"
+      ],
+      [
+        "Hastane",
+        "Hospital"
+      ],
+      [
+        "Ağrı",
+        "Pain"
+      ],
+      [
+        "Diş hekimi",
+        "Dentist"
+      ],
+      [
+        "Dinlenmek",
+        "Rest"
+      ],
+      [
+        "Sağlıklı",
+        "Healthy"
+      ],
+      [
+        "Yorgun",
+        "Tired"
+      ],
+      [
+        "Aç",
+        "Hungry"
+      ],
+      [
+        "Susamış",
+        "Thirsty"
+      ]
+    ],
+    [
+      [
+        "Bahçe",
+        "Garden"
+      ],
+      [
+        "Ağaç",
+        "Tree"
+      ],
+      [
+        "Çiçek",
+        "Flower"
+      ],
+      [
+        "Kuş",
+        "Bird"
+      ],
+      [
+        "Balık",
+        "Fish"
+      ],
+      [
+        "Orman",
+        "Forest"
+      ],
+      [
+        "Nehir",
+        "River"
+      ],
+      [
+        "Dağ",
+        "Mountain"
+      ],
+      [
+        "Hava durumu",
+        "Weather"
+      ],
+      [
+        "Ada",
+        "Island"
+      ]
+    ],
+    [
+      [
+        "İş",
+        "Job"
+      ],
+      [
+        "Ofis",
+        "Office"
+      ],
+      [
+        "Toplantı",
+        "Meeting"
+      ],
+      [
+        "Patron",
+        "Boss"
+      ],
+      [
+        "Çalışan",
+        "Employee"
+      ],
+      [
+        "Meslek",
+        "Profession"
+      ],
+      [
+        "Mektup",
+        "Letter"
+      ],
+      [
+        "E-posta",
+        "Email"
+      ],
+      [
+        "Mesaj",
+        "Message"
+      ],
+      [
+        "Adres",
+        "Address"
+      ]
+    ],
+    [
+      [
+        "İlkbahar",
+        "Spring"
+      ],
+      [
+        "Yaz",
+        "Summer"
+      ],
+      [
+        "Sonbahar",
+        "Autumn"
+      ],
+      [
+        "Kış",
+        "Winter"
+      ],
+      [
+        "Ocak",
+        "January"
+      ],
+      [
+        "Nisan",
+        "April"
+      ],
+      [
+        "Temmuz",
+        "July"
+      ],
+      [
+        "Ekim",
+        "October"
+      ],
+      [
+        "Doğum günü",
+        "Birthday"
+      ],
+      [
+        "Hediye",
+        "Gift"
+      ]
+    ],
+    [
+      [
+        "Başlamak",
+        "Start"
+      ],
+      [
+        "Bitirmek",
+        "Finish"
+      ],
+      [
+        "Unutmak",
+        "Forget"
+      ],
+      [
+        "Hatırlamak",
+        "Remember"
+      ],
+      [
+        "Anlamak",
+        "Understand"
+      ],
+      [
+        "Öğrenmek",
+        "Learn"
+      ],
+      [
+        "Öğretmek",
+        "Teach"
+      ],
+      [
+        "Davet etmek",
+        "Invite"
+      ],
+      [
+        "Karar vermek",
+        "Decide"
+      ],
+      [
+        "Değiştirmek",
+        "Change"
+      ]
+    ],
+    [
+      [
+        "Yakın",
+        "Near"
+      ],
+      [
+        "Uzak",
+        "Far"
+      ],
+      [
+        "Erken",
+        "Early"
+      ],
+      [
+        "Geç",
+        "Late"
+      ],
+      [
+        "Farklı",
+        "Different"
+      ],
+      [
+        "Aynı",
+        "Same"
+      ],
+      [
+        "Önemli",
+        "Important"
+      ],
+      [
+        "Mümkün",
+        "Possible"
+      ],
+      [
+        "Tehlikeli",
+        "Dangerous"
+      ],
+      [
+        "Güvenli",
+        "Safe"
+      ]
+    ]
+  ],
+  "B1": [
+    [
+      [
+        "Çevre",
+        "Environment"
+      ],
+      [
+        "Kirletmek",
+        "Pollute"
+      ],
+      [
+        "Geri dönüşüm",
+        "Recycling"
+      ],
+      [
+        "İklim",
+        "Climate"
+      ],
+      [
+        "Doğa",
+        "Nature"
+      ],
+      [
+        "Enerji",
+        "Energy"
+      ],
+      [
+        "Korumak",
+        "Protect"
+      ],
+      [
+        "Atık",
+        "Waste"
+      ],
+      [
+        "Küresel ısınma",
+        "Global warming"
+      ],
+      [
+        "Sürdürülebilir",
+        "Sustainable"
+      ]
+    ],
+    [
+      [
+        "Başarı",
+        "Success"
+      ],
+      [
+        "Başarısızlık",
+        "Failure"
+      ],
+      [
+        "Hedef",
+        "Goal"
+      ],
+      [
+        "Fırsat",
+        "Opportunity"
+      ],
+      [
+        "Deneyim",
+        "Experience"
+      ],
+      [
+        "Yetenek",
+        "Ability"
+      ],
+      [
+        "Geliştirmek",
+        "Improve"
+      ],
+      [
+        "Zorluk",
+        "Challenge"
+      ],
+      [
+        "Cesaret",
+        "Courage"
+      ],
+      [
+        "Çaba",
+        "Effort"
+      ]
+    ],
+    [
+      [
+        "Toplum",
+        "Society"
+      ],
+      [
+        "Kültür",
+        "Culture"
+      ],
+      [
+        "Gelenek",
+        "Tradition"
+      ],
+      [
+        "Özgürlük",
+        "Freedom"
+      ],
+      [
+        "Adalet",
+        "Justice"
+      ],
+      [
+        "Hükümet",
+        "Government"
+      ],
+      [
+        "Kanun",
+        "Law"
+      ],
+      [
+        "Vatandaş",
+        "Citizen"
+      ],
+      [
+        "Hak",
+        "Right"
+      ],
+      [
+        "Sorumluluk",
+        "Responsibility"
+      ]
+    ],
+    [
+      [
+        "Duygu",
+        "Emotion"
+      ],
+      [
+        "Güven",
+        "Trust"
+      ],
+      [
+        "Şüphe",
+        "Doubt"
+      ],
+      [
+        "Endişe",
+        "Anxiety"
+      ],
+      [
+        "Sabır",
+        "Patience"
+      ],
+      [
+        "Dürüstlük",
+        "Honesty"
+      ],
+      [
+        "Saygı",
+        "Respect"
+      ],
+      [
+        "Öfke",
+        "Anger"
+      ],
+      [
+        "Kıskançlık",
+        "Jealousy"
+      ],
+      [
+        "Yalnızlık",
+        "Loneliness"
+      ]
+    ],
+    [
+      [
+        "Araştırma",
+        "Research"
+      ],
+      [
+        "Keşif",
+        "Discovery"
+      ],
+      [
+        "İcat",
+        "Invention"
+      ],
+      [
+        "Bilim",
+        "Science"
+      ],
+      [
+        "Cihaz",
+        "Device"
+      ],
+      [
+        "Veri",
+        "Data"
+      ],
+      [
+        "Ağ",
+        "Network"
+      ],
+      [
+        "Güvenlik",
+        "Security"
+      ],
+      [
+        "Çözüm",
+        "Solution"
+      ],
+      [
+        "Gelişme",
+        "Development"
+      ]
+    ],
+    [
+      [
+        "Eğitim",
+        "Education"
+      ],
+      [
+        "Üniversite",
+        "University"
+      ],
+      [
+        "Mezun olmak",
+        "Graduate"
+      ],
+      [
+        "Sınav",
+        "Exam"
+      ],
+      [
+        "Burs",
+        "Scholarship"
+      ],
+      [
+        "Beceriler",
+        "Skills"
+      ],
+      [
+        "Bilgi",
+        "Knowledge"
+      ],
+      [
+        "Kurs",
+        "Course"
+      ],
+      [
+        "Sertifika",
+        "Certificate"
+      ],
+      [
+        "Bölüm",
+        "Department"
+      ]
+    ],
+    [
+      [
+        "Reklam",
+        "Advertisement"
+      ],
+      [
+        "Etki",
+        "Impact"
+      ],
+      [
+        "İkna etmek",
+        "Persuade"
+      ],
+      [
+        "Tüketici",
+        "Consumer"
+      ],
+      [
+        "Marka",
+        "Brand"
+      ],
+      [
+        "Kalite",
+        "Quality"
+      ],
+      [
+        "Tercih etmek",
+        "Prefer"
+      ],
+      [
+        "Şikayet",
+        "Complaint"
+      ],
+      [
+        "Tavsiye etmek",
+        "Recommend"
+      ],
+      [
+        "Hizmet",
+        "Service"
+      ]
+    ],
+    [
+      [
+        "Tartışmak",
+        "Discuss"
+      ],
+      [
+        "Anlaşma",
+        "Agreement"
+      ],
+      [
+        "Anlaşmazlık",
+        "Disagreement"
+      ],
+      [
+        "İletişim",
+        "Communication"
+      ],
+      [
+        "İfade etmek",
+        "Express"
+      ],
+      [
+        "Paylaşmak",
+        "Share"
+      ],
+      [
+        "Desteklemek",
+        "Support"
+      ],
+      [
+        "Eleştirmek",
+        "Criticize"
+      ],
+      [
+        "Reddetmek",
+        "Refuse"
+      ],
+      [
+        "Kabul etmek",
+        "Accept"
+      ]
+    ],
+    [
+      [
+        "Sağlık",
+        "Health"
+      ],
+      [
+        "Tedavi",
+        "Treatment"
+      ],
+      [
+        "Belirti",
+        "Symptom"
+      ],
+      [
+        "Önlemek",
+        "Prevent"
+      ],
+      [
+        "İyileşmek",
+        "Recover"
+      ],
+      [
+        "Salgın",
+        "Epidemic"
+      ],
+      [
+        "Beslenme",
+        "Nutrition"
+      ],
+      [
+        "Egzersiz",
+        "Exercise"
+      ],
+      [
+        "Bağımlılık",
+        "Addiction"
+      ],
+      [
+        "Akıl sağlığı",
+        "Mental health"
+      ]
+    ],
+    [
+      [
+        "Geçici",
+        "Temporary"
+      ],
+      [
+        "Kalıcı",
+        "Permanent"
+      ],
+      [
+        "Karmaşık",
+        "Complex"
+      ],
+      [
+        "Basit",
+        "Simple"
+      ],
+      [
+        "Muhtemel",
+        "Likely"
+      ],
+      [
+        "Kesin",
+        "Certain"
+      ],
+      [
+        "Uygun",
+        "Suitable"
+      ],
+      [
+        "Ciddi",
+        "Serious"
+      ],
+      [
+        "Rahat",
+        "Comfortable"
+      ],
+      [
+        "Yararlı",
+        "Useful"
+      ]
+    ]
+  ],
+  "B2": [
+    [
+      [
+        "Ekonomi",
+        "Economy"
+      ],
+      [
+        "Yatırım",
+        "Investment"
+      ],
+      [
+        "Bütçe",
+        "Budget"
+      ],
+      [
+        "Enflasyon",
+        "Inflation"
+      ],
+      [
+        "Gelir",
+        "Income"
+      ],
+      [
+        "Gider",
+        "Expense"
+      ],
+      [
+        "Borç",
+        "Debt"
+      ],
+      [
+        "Servet",
+        "Wealth"
+      ],
+      [
+        "Kar",
+        "Profit"
+      ],
+      [
+        "Zarar",
+        "Loss"
+      ]
+    ],
+    [
+      [
+        "Psikoloji",
+        "Psychology"
+      ],
+      [
+        "Davranış",
+        "Behavior"
+      ],
+      [
+        "Bilinç",
+        "Consciousness"
+      ],
+      [
+        "Algı",
+        "Perception"
+      ],
+      [
+        "Kişilik",
+        "Personality"
+      ],
+      [
+        "Mantık",
+        "Logic"
+      ],
+      [
+        "Ön Yargı",
+        "Prejudice"
+      ],
+      [
+        "Güdü",
+        "Motive"
+      ],
+      [
+        "Travma",
+        "Trauma"
+      ],
+      [
+        "Zihniyet",
+        "Mindset"
+      ]
+    ],
+    [
+      [
+        "Sanat",
+        "Art"
+      ],
+      [
+        "Eser",
+        "Artwork"
+      ],
+      [
+        "Yaratıcılık",
+        "Creativity"
+      ],
+      [
+        "İlham",
+        "Inspiration"
+      ],
+      [
+        "Tiyatro",
+        "Theater"
+      ],
+      [
+        "Sergi",
+        "Exhibition"
+      ],
+      [
+        "Mimar",
+        "Architect"
+      ],
+      [
+        "Sahne",
+        "Stage"
+      ],
+      [
+        "Şiir",
+        "Poetry"
+      ],
+      [
+        "Tasarım",
+        "Design"
+      ]
+    ],
+    [
+      [
+        "Küresel",
+        "Global"
+      ],
+      [
+        "Çeşitlilik",
+        "Diversity"
+      ],
+      [
+        "Göç",
+        "Migration"
+      ],
+      [
+        "Nüfus",
+        "Population"
+      ],
+      [
+        "Medeniyet",
+        "Civilization"
+      ],
+      [
+        "Sınır",
+        "Border"
+      ],
+      [
+        "Mülteci",
+        "Refugee"
+      ],
+      [
+        "Irkçılık",
+        "Racism"
+      ],
+      [
+        "Eşitlik",
+        "Equality"
+      ],
+      [
+        "Bütünleşme",
+        "Integration"
+      ]
+    ],
+    [
+      [
+        "Hukuk",
+        "Law"
+      ],
+      [
+        "Mahkeme",
+        "Court"
+      ],
+      [
+        "Yargıç",
+        "Judge"
+      ],
+      [
+        "Avukat",
+        "Lawyer"
+      ],
+      [
+        "Kanıt",
+        "Evidence"
+      ],
+      [
+        "Tanık",
+        "Witness"
+      ],
+      [
+        "Suç",
+        "Crime"
+      ],
+      [
+        "Ceza",
+        "Punishment"
+      ],
+      [
+        "Masum",
+        "Innocent"
+      ],
+      [
+        "Suçlu",
+        "Guilty"
+      ]
+    ],
+    [
+      [
+        "Teknoloji",
+        "Technology"
+      ],
+      [
+        "Yapay Zeka",
+        "Artificial Intelligence"
+      ],
+      [
+        "Yazılım",
+        "Software"
+      ],
+      [
+        "Donanım",
+        "Hardware"
+      ],
+      [
+        "Veri Tabanı",
+        "Database"
+      ],
+      [
+        "Algoritma",
+        "Algorithm"
+      ],
+      [
+        "Otomasyon",
+        "Automation"
+      ],
+      [
+        "Siber",
+        "Cyber"
+      ],
+      [
+        "Bulut",
+        "Cloud"
+      ],
+      [
+        "Kodlama",
+        "Coding"
+      ]
+    ],
+    [
+      [
+        "Medya",
+        "Media"
+      ],
+      [
+        "Gazetecilik",
+        "Journalism"
+      ],
+      [
+        "Sansür",
+        "Censorship"
+      ],
+      [
+        "Yayın",
+        "Broadcast"
+      ],
+      [
+        "Tarafsız",
+        "Unbiased"
+      ],
+      [
+        "Manipülasyon",
+        "Manipulation"
+      ],
+      [
+        "Manşet",
+        "Headline"
+      ],
+      [
+        "Dergi",
+        "Magazine"
+      ],
+      [
+        "Kaynak",
+        "Source"
+      ],
+      [
+        "İddia",
+        "Claim"
+      ]
+    ],
+    [
+      [
+        "Yönetim",
+        "Management"
+      ],
+      [
+        "Liderlik",
+        "Leadership"
+      ],
+      [
+        "Strateji",
+        "Strategy"
+      ],
+      [
+        "Verimlilik",
+        "Efficiency"
+      ],
+      [
+        "İş birliği",
+        "Collaboration"
+      ],
+      [
+        "Rekabet",
+        "Competition"
+      ],
+      [
+        "Müzakere",
+        "Negotiation"
+      ],
+      [
+        "İflas",
+        "Bankruptcy"
+      ],
+      [
+        "Genişleme",
+        "Expansion"
+      ],
+      [
+        "Kaynak",
+        "Resource"
+      ]
+    ],
+    [
+      [
+        "Felsefe",
+        "Philosophy"
+      ],
+      [
+        "Varoluş",
+        "Existence"
+      ],
+      [
+        "Ahlak",
+        "Ethics"
+      ],
+      [
+        "Gerçeklik",
+        "Reality"
+      ],
+      [
+        "Özgür İrade",
+        "Free will"
+      ],
+      [
+        "Bilgelik",
+        "Wisdom"
+      ],
+      [
+        "Teori",
+        "Theory"
+      ],
+      [
+        "İllüzyon",
+        "Illusion"
+      ],
+      [
+        "İnsanlık",
+        "Humanity"
+      ],
+      [
+        "Kavram",
+        "Concept"
+      ]
+    ],
+    [
+      [
+        "Muazzam",
+        "Immense"
+      ],
+      [
+        "Kaçınılmaz",
+        "Inevitable"
+      ],
+      [
+        "Derin",
+        "Profound"
+      ],
+      [
+        "Yüzeysel",
+        "Superficial"
+      ],
+      [
+        "Çelişkili",
+        "Contradictory"
+      ],
+      [
+        "Muğlak",
+        "Ambiguous"
+      ],
+      [
+        "Hayati",
+        "Vital"
+      ],
+      [
+        "Önemsiz",
+        "Trivial"
+      ],
+      [
+        "Kesintisiz",
+        "Continuous"
+      ],
+      [
+        "Üstün",
+        "Superior"
+      ]
+    ]
+  ],
+  "C1": [
+    [
+      [
+        "Miting/Ağır Düşüş",
+        "Plummet"
+      ],
+      [
+        "Engellemek/Frenlemek",
+        "Curb"
+      ],
+      [
+        "Hafifletmek",
+        "Mitigate"
+      ],
+      [
+        "Kapsamlı",
+        "Comprehensive"
+      ],
+      [
+        "Çıkmaz",
+        "Deadlock"
+      ],
+      [
+        "İnandırıcı",
+        "Cogent"
+      ],
+      [
+        "Bozulmamış",
+        "Pristine"
+      ],
+      [
+        "Aşikâr",
+        "Manifest"
+      ],
+      [
+        "Çelişki",
+        "Discrepancy"
+      ],
+      [
+        "Savunulamaz",
+        "Tenuous"
+      ]
+    ],
+    [
+      [
+        "Sarsılmaz",
+        "Steadfast"
+      ],
+      [
+        "Bulaşıcı",
+        "Contagious"
+      ],
+      [
+        "Aşırı",
+        "Exorbitant"
+      ],
+      [
+        "Eşdeğer",
+        "Tantamount"
+      ],
+      [
+        "Karmaşık",
+        "Convoluted"
+      ],
+      [
+        "Göstermelik",
+        "Ostensible"
+      ],
+      [
+        "Hızlı Yükseliş",
+        "Surge"
+      ],
+      [
+        "Aptalca Cesur",
+        "Foolhardy"
+      ],
+      [
+        "Geçici",
+        "Transient"
+      ],
+      [
+        "Gözden Kaçırma",
+        "Oversight"
+      ]
+    ],
+    [
+      [
+        "Gereksiz",
+        "Redundant"
+      ],
+      [
+        "Esneklik/Dayanıklılık",
+        "Resilience"
+      ],
+      [
+        "Yerini Almak",
+        "Supersede"
+      ],
+      [
+        "Kötüleşmek",
+        "Deteriorate"
+      ],
+      [
+        "Kavramak",
+        "Fathom"
+      ],
+      [
+        "Kötülemek",
+        "Disparage"
+      ],
+      [
+        "Kesintisiz",
+        "Relentless"
+      ],
+      [
+        "Gizli",
+        "Covert"
+      ],
+      [
+        "Kısıtlama",
+        "Constraint"
+      ],
+      [
+        "Çeşitli",
+        "Diverse"
+      ]
+    ],
+    [
+      [
+        "Girişim",
+        "Endeavor"
+      ],
+      [
+        "Hayati",
+        "Paramount"
+      ],
+      [
+        "Kaçınmak",
+        "Eschew"
+      ],
+      [
+        "Şüpheli",
+        "Dubious"
+      ],
+      [
+        "Sağlamlaştırmak",
+        "Consolidate"
+      ],
+      [
+        "Kandırmak",
+        "Beguile"
+      ],
+      [
+        "Bağlılık",
+        "Adherence"
+      ],
+      [
+        "Erişilebilir",
+        "Accessible"
+      ],
+      [
+        "Teşvik Etmek",
+        "Foster"
+      ],
+      [
+        "Birleşme",
+        "Merger"
+      ]
+    ],
+    [
+      [
+        "Tesadüf",
+        "Coincidence"
+      ],
+      [
+        "Doyurulamaz",
+        "Insatiable"
+      ],
+      [
+        "Yaklaşan",
+        "Imminent"
+      ],
+      [
+        "Açıklığa Kavuşturmak",
+        "Elucidate"
+      ],
+      [
+        "Meydana Gelmek",
+        "Transpire"
+      ],
+      [
+        "Kapsamak",
+        "Encompass"
+      ],
+      [
+        "Sağlamak",
+        "Yield"
+      ],
+      [
+        "Çok Yönlü",
+        "Versatile"
+      ],
+      [
+        "Tedbirli",
+        "Prudent"
+      ],
+      [
+        "Erişilemez",
+        "Inaccessible"
+      ]
+    ],
+    [
+      [
+        "Çürütmek",
+        "Refute"
+      ],
+      [
+        "Gerekçe",
+        "Rationale"
+      ],
+      [
+        "Görünürde",
+        "Seemingly"
+      ],
+      [
+        "Engellemek",
+        "Hinder"
+      ],
+      [
+        "Dağıtmak",
+        "Disperse"
+      ],
+      [
+        "Çözülme",
+        "Dissolution"
+      ],
+      [
+        "Öncü",
+        "Precursor"
+      ],
+      [
+        "Tamamen Dolu",
+        "Replete"
+      ],
+      [
+        "Desteklemek",
+        "Bolster"
+      ],
+      [
+        "Tarafsız",
+        "Impartial"
+      ]
+    ],
+    [
+      [
+        "Düşmanlık",
+        "Hostility"
+      ],
+      [
+        "Kararsızlık",
+        "Ambivalence"
+      ],
+      [
+        "Yetki",
+        "Jurisdiction"
+      ],
+      [
+        "Tetiklemek",
+        "Instigate"
+      ],
+      [
+        "Ahlaki",
+        "Ethical"
+      ],
+      [
+        "Değerlendirmek",
+        "Appraise"
+      ],
+      [
+        "Hafifletici",
+        "Extenuating"
+      ],
+      [
+        "Tarafsızlık",
+        "Neutrality"
+      ],
+      [
+        "Miras",
+        "Legacy"
+      ],
+      [
+        "Girişimci",
+        "Entrepreneur"
+      ]
+    ],
+    [
+      [
+        "Yaygın",
+        "Pervasive"
+      ],
+      [
+        "Emsalsiz",
+        "Unprecedented"
+      ],
+      [
+        "Kapsamlı",
+        "Overarching"
+      ],
+      [
+        "Eş Zamanlı",
+        "Simultaneous"
+      ],
+      [
+        "Değişken",
+        "Volatile"
+      ],
+      [
+        "Eğilim",
+        "Propensity"
+      ],
+      [
+        "Uyum",
+        "Coherence"
+      ],
+      [
+        "Kuşatma",
+        "Siege"
+      ],
+      [
+        "Kısmi",
+        "Partial"
+      ],
+      [
+        "Zorlama",
+        "Coercion"
+      ]
+    ],
+    [
+      [
+        "Büyüklük",
+        "Magnitude"
+      ],
+      [
+        "Sözde",
+        "Alleged"
+      ],
+      [
+        "Eşitlik",
+        "Equity"
+      ],
+      [
+        "Ayrımcılık",
+        "Discrimination"
+      ],
+      [
+        "Sürdürmek",
+        "Sustain"
+      ],
+      [
+        "Ödün Vermek",
+        "Compromise"
+      ],
+      [
+        "Yıkıcı",
+        "Devastating"
+      ],
+      [
+        "Uygulamak",
+        "Implement"
+      ],
+      [
+        "Varsayım",
+        "Hypothesis"
+      ],
+      [
+        "Belirsiz",
+        "Ambiguous"
+      ]
+    ],
+    [
+      [
+        "Anlaşmazlık",
+        "Friction"
+      ],
+      [
+        "Yetki Vermek",
+        "Empower"
+      ],
+      [
+        "Dönüştürmek",
+        "Convert"
+      ],
+      [
+        "Gerekli",
+        "Imperative"
+      ],
+      [
+        "Algılamak",
+        "Perceive"
+      ],
+      [
+        "Yenilikçi",
+        "Innovative"
+      ],
+      [
+        "Önemli Derecede",
+        "Substantially"
+      ],
+      [
+        "Öncelik",
+        "Priority"
+      ],
+      [
+        "Faktör",
+        "Factor"
+      ],
+      [
+        "Stratejik",
+        "Strategic"
+      ]
+    ],
+    [
+      [
+        "Bütünlük",
+        "Integrity"
+      ],
+      [
+        "Şeffaflık",
+        "Transparency"
+      ],
+      [
+        "Sorumluluk",
+        "Accountability"
+      ],
+      [
+        "Girişim",
+        "Initiative"
+      ],
+      [
+        "Uyumluluk",
+        "Compliance"
+      ],
+      [
+        "Denetim",
+        "Audit"
+      ],
+      [
+        "Öngörü",
+        "Foresight"
+      ],
+      [
+        "Müdahale Etmek",
+        "Intervene"
+      ],
+      [
+        "Dönüşüm",
+        "Transformation"
+      ],
+      [
+        "Direnç",
+        "Resistance"
+      ]
+    ],
+    [
+      [
+        "Ağır Sanayi",
+        "Heavy Industry"
+      ],
+      [
+        "Kira",
+        "Lease"
+      ],
+      [
+        "Teminat",
+        "Collateral"
+      ],
+      [
+        "Varlık",
+        "Asset"
+      ],
+      [
+        "Yükümlülük",
+        "Liability"
+      ],
+      [
+        "Likit",
+        "Liquid"
+      ],
+      [
+        "Hisse",
+        "Equity"
+      ],
+      [
+        "Getiri",
+        "Yield"
+      ],
+      [
+        "Portföy",
+        "Portfolio"
+      ],
+      [
+        "Durgunluk",
+        "Stagnation"
+      ]
+    ],
+    [
+      [
+        "Felsefi",
+        "Philosophical"
+      ],
+      [
+        "Mantıksal",
+        "Logical"
+      ],
+      [
+        "Diyalog",
+        "Dialogue"
+      ],
+      [
+        "Paradoks",
+        "Paradox"
+      ],
+      [
+        "Söylem",
+        "Discourse"
+      ],
+      [
+        "Ahlaki İlke",
+        "Dogma"
+      ],
+      [
+        "Yargı",
+        "Assertion"
+      ],
+      [
+        "Kavramsal",
+        "Conceptual"
+      ],
+      [
+        "Varsayımsal",
+        "Hypothetical"
+      ],
+      [
+        "Dilemma",
+        "Dilemma"
+      ]
+    ],
+    [
+      [
+        "Biyolojik Çeşitlilik",
+        "Biodiversity"
+      ],
+      [
+        "Ekosistem",
+        "Ecosystem"
+      ],
+      [
+        "Kirlilik",
+        "Pollution"
+      ],
+      [
+        "Koruma",
+        "Conservation"
+      ],
+      [
+        "Tükenme",
+        "Depletion"
+      ],
+      [
+        "Yenilenebilir",
+        "Renewable"
+      ],
+      [
+        "Karbon Ayak İzi",
+        "Carbon Footprint"
+      ],
+      [
+        "Habitat",
+        "Habitat"
+      ],
+      [
+        "Kutup",
+        "Polar"
+      ],
+      [
+        "Erozyon",
+        "Erosion"
+      ]
+    ],
+    [
+      [
+        "Hukuk Sistemi",
+        "Judiciary"
+      ],
+      [
+        "Anayasa",
+        "Constitution"
+      ],
+      [
+        "Dava",
+        "Lawsuit"
+      ],
+      [
+        "Hüküm",
+        "Verdict"
+      ],
+      [
+        "Tazminat",
+        "Compensation"
+      ],
+      [
+        "İhlal",
+        "Infringement"
+      ],
+      [
+        "Yasa",
+        "Statute"
+      ],
+      [
+        "Sözleşme",
+        "Contract"
+      ],
+      [
+        "Meşru",
+        "Legitimate"
+      ],
+      [
+        "Feshetmek",
+        "Rescind"
+      ]
+    ],
+    [
+      [
+        "Gelişmiş",
+        "Sophisticated"
+      ],
+      [
+        "Sezgi",
+        "Intuition"
+      ],
+      [
+        "Kullanılabilirlik",
+        "Usability"
+      ],
+      [
+        "Etkileşim",
+        "Interaction"
+      ],
+      [
+        "Arayüz",
+        "Interface"
+      ],
+      [
+        "Mimari",
+        "Architecture"
+      ],
+      [
+        "Süreç",
+        "Procedure"
+      ],
+      [
+        "Metodoloji",
+        "Methodology"
+      ],
+      [
+        "Sistem",
+        "Framework"
+      ],
+      [
+        "Entegrasyon",
+        "Integration"
+      ]
+    ],
+    [
+      [
+        "Diplomat",
+        "Diplomat"
+      ],
+      [
+        "Sözleşme",
+        "Treaty"
+      ],
+      [
+        "Müzakereci",
+        "Negotiator"
+      ],
+      [
+        "Sığınma",
+        "Asylum"
+      ],
+      [
+        "Egemenlik",
+        "Sovereignty"
+      ],
+      [
+        "Sözleşme",
+        "Pact"
+      ],
+      [
+        "Ambargo",
+        "Embargo"
+      ],
+      [
+        "Protokol",
+        "Protocol"
+      ],
+      [
+        "Taraf",
+        "Faction"
+      ],
+      [
+        "İttifak",
+        "Alliance"
+      ]
+    ],
+    [
+      [
+        "Genetik",
+        "Genetics"
+      ],
+      [
+        "Organizma",
+        "Organism"
+      ],
+      [
+        "Mutasyon",
+        "Mutation"
+      ],
+      [
+        "Hücre",
+        "Cell"
+      ],
+      [
+        "Doku",
+        "Tissue"
+      ],
+      [
+        "Klinik",
+        "Clinical"
+      ],
+      [
+        "Deney",
+        "Experiment"
+      ],
+      [
+        "Teşhis",
+        "Diagnosis"
+      ],
+      [
+        "Terapötik",
+        "Therapeutic"
+      ],
+      [
+        "Bulaşıcı",
+        "Infectious"
+      ]
+    ],
+    [
+      [
+        "Sosyoloji",
+        "Sociology"
+      ],
+      [
+        "Demografi",
+        "Demographics"
+      ],
+      [
+        "Hiyerarşi",
+        "Hierarchy"
+      ],
+      [
+        "Sınıf",
+        "Class"
+      ],
+      [
+        "Kültürleşme",
+        "Acculturation"
+      ],
+      [
+        "Sosyal Yapı",
+        "Infrastructure"
+      ],
+      [
+        "Nüfus Yoğunluğu",
+        "Density"
+      ],
+      [
+        "Hareketlilik",
+        "Mobility"
+      ],
+      [
+        "Azınlık",
+        "Minority"
+      ],
+      [
+        "Çoğunluk",
+        "Majority"
+      ]
+    ],
+    [
+      [
+        "Metin",
+        "Textual"
+      ],
+      [
+        "Eleştiri",
+        "Critique"
+      ],
+      [
+        "Literatür",
+        "Literature"
+      ],
+      [
+        "Anlatı",
+        "Narrative"
+      ],
+      [
+        "Mecaz",
+        "Metaphor"
+      ],
+      [
+        "Simge",
+        "Symbolism"
+      ],
+      [
+        "Üslup",
+        "Stylistics"
+      ],
+      [
+        "Derleme",
+        "Anthology"
+      ],
+      [
+        "Alıntı",
+        "Citation"
+      ],
+      [
+        "Özet",
+        "Abstract"
+      ]
+    ]
+  ],
+  "C2": [
+    [
+      [
+        "Geçici/Fani",
+        "Ephemeral"
+      ],
+      [
+        "Sürekli/Kalıcı",
+        "Perennial"
+      ],
+      [
+        "Yerinde/Uygun",
+        "Apposite"
+      ],
+      [
+        "Samimiyetsiz",
+        "Disingenuous"
+      ],
+      [
+        "Doyurulamaz",
+        "Insatiable"
+      ],
+      [
+        "Şeffaf Olmayan",
+        "Opaque"
+      ],
+      [
+        "Aksilik",
+        "Adversity"
+      ],
+      [
+        "Saygınlık",
+        "Prestige"
+      ],
+      [
+        "Tutarsızlık",
+        "Incongruity"
+      ],
+      [
+        "Kaçamak",
+        "Evasive"
+      ]
+    ],
+    [
+      [
+        "İftira Atmak",
+        "Cast aspersions"
+      ],
+      [
+        "Son Derece Derin",
+        "Profound"
+      ],
+      [
+        "Sorunsuz/Pürüzsüz",
+        "Seamless"
+      ],
+      [
+        "Afallamak",
+        "Be taken aback"
+      ],
+      [
+        "Keyfi",
+        "Arbitrary"
+      ],
+      [
+        "Demir Yumruk",
+        "Iron fist"
+      ],
+      [
+        "Adli Hata",
+        "Miscarriage of justice"
+      ],
+      [
+        "En Başından",
+        "From the outset"
+      ],
+      [
+        "Boşluk",
+        "Void"
+      ],
+      [
+        "Zor Geçinmek",
+        "Eke out a living"
+      ]
+    ],
+    [
+      [
+        "Yerden Yere Vurmak",
+        "Pan"
+      ],
+      [
+        "Zayıf Kanıt",
+        "Flimsy evidence"
+      ],
+      [
+        "Aralıksız",
+        "Incessantly"
+      ],
+      [
+        "Çıldırtmak",
+        "Drive up the wall"
+      ],
+      [
+        "Suçüstü",
+        "Red-handed"
+      ],
+      [
+        "Baskı Yapmak",
+        "Put a strain on"
+      ],
+      [
+        "Yolda Kalmak",
+        "Fall by the wayside"
+      ],
+      [
+        "Hata Kabullenmek",
+        "Eat humble pie"
+      ],
+      [
+        "Büyük Akıl",
+        "Mastermind"
+      ],
+      [
+        "Açıkça",
+        "Outright"
+      ]
+    ],
+    [
+      [
+        "Lafı Dolandırma",
+        "Circumlocution"
+      ],
+      [
+        "Aşırı Duyarlı",
+        "Fastidious"
+      ],
+      [
+        "Açıklanamaz",
+        "Inexplicable"
+      ],
+      [
+        "Zararsız",
+        "Innocuous"
+      ],
+      [
+        "Sarsılmaz",
+        "Indefatigable"
+      ],
+      [
+        "Acımasız",
+        "Ruthless"
+      ],
+      [
+        "Büyüleyici",
+        "Enthralling"
+      ],
+      [
+        "Doğuştan",
+        "Innate"
+      ],
+      [
+        "Eski/Kullanılmayan",
+        "Obsolete"
+      ],
+      [
+        "Şüpheli",
+        "Equivocal"
+      ]
+    ],
+    [
+      [
+        "Yerini Almak",
+        "Supplant"
+      ],
+      [
+        "Açık/Net",
+        "Unequivocal"
+      ],
+      [
+        "Cömertlik",
+        "Magnanimity"
+      ],
+      [
+        "Sessizce Kabul",
+        "Acquiesce"
+      ],
+      [
+        "Savurgan",
+        "Profligate"
+      ],
+      [
+        "Aşırı Yüceltme",
+        "Adulation"
+      ],
+      [
+        "Kaçınılmaz",
+        "Inexorable"
+      ],
+      [
+        "Utanç Verici",
+        "Ignominious"
+      ],
+      [
+        "Gevezelik",
+        "Garrulous"
+      ],
+      [
+        "Hızlı ve Yüzeyel",
+        "Cursory"
+      ]
+    ],
+    [
+      [
+        "Gereksiz Ayrıntı",
+        "Pedantry"
+      ],
+      [
+        "Saldırgan",
+        "Truculent"
+      ],
+      [
+        "Karanlık/Gizli",
+        "Esoteric"
+      ],
+      [
+        "Gizli/Sessiz",
+        "Tacit"
+      ],
+      [
+        "Çabuk Öfkelenen",
+        "Petulant"
+      ],
+      [
+        "Uyumsuzluk",
+        "Dissonance"
+      ],
+      [
+        "Etkisiz Hale Getirmek",
+        "Nullify"
+      ],
+      [
+        "Temizlemek/Arındırmak",
+        "Purge"
+      ],
+      [
+        "Çekingen",
+        "Reticent"
+      ],
+      [
+        "Son Derece",
+        "Utterly"
+      ]
+    ],
+    [
+      [
+        "Boş/Yetersiz",
+        "Fatuous"
+      ],
+      [
+        "Kötü Şöhretli",
+        "Nepharious"
+      ],
+      [
+        "Geçici Huzur",
+        "Respite"
+      ],
+      [
+        "Körü Körüne Bağlı",
+        "Zealot"
+      ],
+      [
+        "Cömert",
+        "Munificent"
+      ],
+      [
+        "Sert/İğneleyici",
+        "Caustic"
+      ],
+      [
+        "Tereddüt Etmek",
+        "Vacillate"
+      ],
+      [
+        "Huzursuzluk",
+        "Disquiet"
+      ],
+      [
+        "Açık/Akar",
+        "Fluent"
+      ],
+      [
+        "Tamamen",
+        "In its entirety"
+      ]
+    ],
+    [
+      [
+        "Hilekar",
+        "Devious"
+      ],
+      [
+        "Zararlı",
+        "Pernicious"
+      ],
+      [
+        "Şüpheci",
+        "Skeptical"
+      ],
+      [
+        "Zirve",
+        "Zenith"
+      ],
+      [
+        "En Alt Nokta",
+        "Nadir"
+      ],
+      [
+        "Coşkulu",
+        "Ebullient"
+      ],
+      [
+        "Bıkkınlık",
+        "Ennui"
+      ],
+      [
+        "Kötülemek",
+        "Vilify"
+      ],
+      [
+        "Sahte",
+        "Spurious"
+      ],
+      [
+        "Zeki/Kurnaz",
+        "Astute"
+      ]
+    ],
+    [
+      [
+        "Kusursuz",
+        "Impeccable"
+      ],
+      [
+        "Ilımlı",
+        "Temperate"
+      ],
+      [
+        "Kararlı",
+        "Resolut"
+      ],
+      [
+        "Cesur",
+        "Audacious"
+      ],
+      [
+        "Saldırgan",
+        "Belligerent"
+      ],
+      [
+        "Soğukkanlı",
+        "Phlegmatic"
+      ],
+      [
+        "Şüpheci",
+        "Incredulous"
+      ],
+      [
+        "Dindar/Dürüst",
+        "Pious"
+      ],
+      [
+        "Uysal",
+        "Docile"
+      ],
+      [
+        "Açık Sözlü",
+        "Candid"
+      ]
+    ],
+    [
+      [
+        "Geri Çekilmek",
+        "Recant"
+      ],
+      [
+        "Çözümlemek",
+        "Dissect"
+      ],
+      [
+        "Yatıştırmak",
+        "Placate"
+      ],
+      [
+        "Kınamak",
+        "Censure"
+      ],
+      [
+        "Yükseltmek",
+        "Exalt"
+      ],
+      [
+        "Saptırmak",
+        "Pervert"
+      ],
+      [
+        "Ayırt Etmek",
+        "Discern"
+      ],
+      [
+        "Sıkıntı Vermek",
+        "Afflict"
+      ],
+      [
+        "Onaylamak",
+        "Ratify"
+      ],
+      [
+        "Kışkırtmak",
+        "Foment"
+      ]
+    ],
+    [
+      [
+        "Yüce",
+        "Sublime"
+      ],
+      [
+        "Görkemli",
+        "Resplendent"
+      ],
+      [
+        "Cennet gibi",
+        "Ethereal"
+      ],
+      [
+        "Melankolik",
+        "Wistful"
+      ],
+      [
+        "Kasvetli",
+        "Somber"
+      ],
+      [
+        "Sakin",
+        "Placid"
+      ],
+      [
+        "Kasvetli",
+        "Bleak"
+      ],
+      [
+        "Göz Alıcı",
+        "Dazzling"
+      ],
+      [
+        "Muhteşem",
+        "Grandiose"
+      ],
+      [
+        "Doğal",
+        "Rustic"
+      ]
+    ],
+    [
+      [
+        "Ahlaki Yozlaşma",
+        "Depravity"
+      ],
+      [
+        "Ahlak Sistemi",
+        "Ethics framework"
+      ],
+      [
+        "Dürüstlük",
+        "Rectitude"
+      ],
+      [
+        "Bozzulma",
+        "Corruption"
+      ],
+      [
+        "Eylemsizlik",
+        "Inertia"
+      ],
+      [
+        "Bencil",
+        "Egoistical"
+      ],
+      [
+        "Bencil Olmayan",
+        "Altruistic"
+      ],
+      [
+        "Kurnazlık",
+        "Guile"
+      ],
+      [
+        "İyilikseverlik",
+        "Benevolence"
+      ],
+      [
+        "Tarafsızlık",
+        "Impartiality"
+      ]
+    ],
+    [
+      [
+        "Kanıtlanmamış",
+        "Unsubstantiated"
+      ],
+      [
+        "Gözden Geçirme",
+        "Reappraisal"
+      ],
+      [
+        "Sınırlama",
+        "Delimitation"
+      ],
+      [
+        "Tümdengelim",
+        "Deduction"
+      ],
+      [
+        "Tümevarım",
+        "Induction"
+      ],
+      [
+        "Sorgulama",
+        "Inquisition"
+      ],
+      [
+        "Bilişsel",
+        "Cognitive"
+      ],
+      [
+        "Hipotez",
+        "Hypothesis"
+      ],
+      [
+        "Korelasyon",
+        "Correlation"
+      ],
+      [
+        "Nedensellik",
+        "Causality"
+      ]
+    ],
+    [
+      [
+        "Ağır Eleştiri",
+        "Diatribe"
+      ],
+      [
+        "Hiciv",
+        "Satire"
+      ],
+      [
+        "Övgü Sözü",
+        "Eulogy"
+      ],
+      [
+        "Aforizma",
+        "Aphorism"
+      ],
+      [
+        "Mecazi Anlatım",
+        "Allegory"
+      ],
+      [
+        "Yansıma",
+        "Echo"
+      ],
+      [
+        "Sözcük Oyunu",
+        "Pun"
+      ],
+      [
+        "Deyimsel",
+        "Idiomatic"
+      ],
+      [
+        "Nüans",
+        "Nuance"
+      ],
+      [
+        "İroni",
+        "Irony"
+      ]
+    ],
+    [
+      [
+        "Kişisel Çıkar",
+        "Self-interest"
+      ],
+      [
+        "Veto Hakkı",
+        "Veto power"
+      ],
+      [
+        "Bürokrasi",
+        "Red tape"
+      ],
+      [
+        "Diplomatik Dokunulmazlık",
+        "Diplomatic immunity"
+      ],
+      [
+        "Egemence",
+        "Sovereignly"
+      ],
+      [
+        "Bölgesel",
+        "Territorial"
+      ],
+      [
+        "Silahsızlanma",
+        "Disarmament"
+      ],
+      [
+        "Ilımlılaşma",
+        "Detente"
+      ],
+      [
+        "Tazminat",
+        "Reparation"
+      ],
+      [
+        "Müttefik",
+        "Allied"
+      ]
+    ],
+    [
+      [
+        "Büyüklük",
+        "Magnitude"
+      ],
+      [
+        "Yörünge",
+        "Trajectory"
+      ],
+      [
+        "Yerçekimi",
+        "Gravitation"
+      ],
+      [
+        "Işıma",
+        "Radiation"
+      ],
+      [
+        "Görecelik",
+        "Relativity"
+      ],
+      [
+        "Süperiletken",
+        "Superconductor"
+      ],
+      [
+        "Kuantum",
+        "Quantum"
+      ],
+      [
+        "Astrofizik",
+        "Astrophysics"
+      ],
+      [
+        "Termodinamik",
+        "Thermodynamics"
+      ],
+      [
+        "Kırılma",
+        "Refraction"
+      ]
+    ],
+    [
+      [
+        "Nörolojik",
+        "Neurological"
+      ],
+      [
+        "Bilişsel Beceriler",
+        "Cognitive faculties"
+      ],
+      [
+        "Psikoz",
+        "Psychosis"
+      ],
+      [
+        "Nöroz",
+        "Neurosis"
+      ],
+      [
+        "Güdülenme",
+        "Motivation"
+      ],
+      [
+        "Bilinçaltı",
+        "Subconscious"
+      ],
+      [
+        "Şartlanma",
+        "Conditioning"
+      ],
+      [
+        "Bilişsel Çelişki",
+        "Cognitive dissonance"
+      ],
+      [
+        "Katarsis",
+        "Catharsis"
+      ],
+      [
+        "Narsisizm",
+        "Narcissistic"
+      ]
+    ],
+    [
+      [
+        "Makroekonomi",
+        "Macroeconomics"
+      ],
+      [
+        "Mikroekonomi",
+        "Microeconomics"
+      ],
+      [
+        "Tekel",
+        "Monopoly"
+      ],
+      [
+        "Oligopol",
+        "Oligopoly"
+      ],
+      [
+        "Durgunluk",
+        "Recession"
+      ],
+      [
+        "Deflasyon",
+        "Deflation"
+      ],
+      [
+        "Korumacılık",
+        "Protectionism"
+      ],
+      [
+        "Serbest Piyasa",
+        "Free market"
+      ],
+      [
+        "Sermaye",
+        "Capital"
+      ],
+      [
+        "Türev",
+        "Derivative"
+      ]
+    ],
+    [
+      [
+        "Estetik",
+        "Aesthetics"
+      ],
+      [
+        "Egzistansiyalizm",
+        "Existentialism"
+      ],
+      [
+        "Nihilizm",
+        "Nihilism"
+      ],
+      [
+        "Pragmatizm",
+        "Pragmatism"
+      ],
+      [
+        "Hümanizm",
+        "Humanism"
+      ],
+      [
+        "Rasyonalizm",
+        "Rationalism"
+      ],
+      [
+        "Empirizm",
+        "Empiricism"
+      ],
+      [
+        "Stoacılık",
+        "Stoicism"
+      ],
+      [
+        "Hedonizm",
+        "Hedonism"
+      ],
+      [
+        "Idealizm",
+        "Idealism"
+      ]
+    ],
+    [
+      [
+        "Tarihsel",
+        "Historiographical"
+      ],
+      [
+        "Kültürel Miras",
+        "Cultural heritage"
+      ],
+      [
+        "Arkeolojik",
+        "Archaeological"
+      ],
+      [
+        "Etnografik",
+        "Ethnographic"
+      ],
+      [
+        "Eski Yazı",
+        "Paleography"
+      ],
+      [
+        "Uygarlık",
+        "Civilization"
+      ],
+      [
+        "Sülale",
+        "Dynasty"
+      ],
+      [
+        "Restorasyon",
+        "Restoration"
+      ],
+      [
+        "Antik",
+        "Antiquity"
+      ],
+      [
+        "Tarihlendirme",
+        "Chronology"
+      ]
+    ]
+  ]
+};
 
     /* ==========================================================================
-       3. UYGULAMA MANTIĞI VE INTERAKTİF MOTOR
+       4. QUIZ MANTIĞI
        ========================================================================== */
-    let currentLevel = 'A1';
     let currentQuestionIndex = 0;
     let isAnswered = false;
-    
-    // YENİ: Bölüm içi XP takibi ve Barajlar
-    let currentLevelXP = 0; 
-    const levelThresholds = { A1: 220, A2: 220, B1: 220, B2: 220, C1: 440, C2: 440 };
-
-    function changeLevel(level, element) {
-      if (!unlockedLevels[level]) {
-        alert(`🔒 Bu seviye kilitli! Kilidi açmak için önceki seviyenin barajını geçmelisin.`);
-        return;
-      }
-
-      document.querySelectorAll('.level-card').forEach(card => card.classList.remove('active'));
-      element.classList.add('active');
-
-      currentLevel = level;
-      currentQuestionIndex = 0;
-      currentLevelXP = 0;
-      document.getElementById('level-badge').innerText = `${level} SEVİYESİ`;
-      loadQuestion();
-    }
-    function unlockNextLevel(current) {
-      const currentIndex = levelSequence.indexOf(current);
-      if (currentIndex !== -1 && currentIndex < levelSequence.length - 1) {
-        const nextLevelName = levelSequence[currentIndex + 1];
-        unlockedLevels[nextLevelName] = true;
-
-        const nextCard = document.getElementById(`card-${nextLevelName}`);
-        if (nextCard) {
-          nextCard.classList.remove('locked');
-          const lockIcon = nextCard.querySelector('.lock-icon');
-          if (lockIcon) lockIcon.className = 'fa-solid fa-unlock-keyhole lock-icon';
-        }
-      }
-    }
+    let currentLevelXP = 0;
 
     function loadQuestion() {
       isAnswered = false;
       const questions = questionBank[currentLevel];
       
-      // UI Güncelleme
-      document.getElementById('question-tracker').innerText = `Soru ${currentQuestionIndex + 1} / ${questions.length} | Bölüm Puanı: ${currentLevelXP}`;
+      document.getElementById('question-tracker').innerText = `Soru ${currentQuestionIndex + 1} / ${questions.length} | Bölüm Puanı: ${currentLevelXP} XP`;
       document.getElementById('question-text').innerText = questions[currentQuestionIndex].q;
       
       const progressPercent = ((currentQuestionIndex + 1) / questions.length) * 100;
@@ -828,7 +4371,6 @@
       const expBox = document.getElementById('explanation-box');
 
       if (selectedIndex === qData.correct) {
-        // DOĞRU CEVAP: +15 XP
         currentLevelXP += 15;
         saveUserXP(15);
         btnElement.classList.add('correct-anim');
@@ -837,7 +4379,6 @@
         expBox.innerHTML = `<strong>Tebrikler! +15 XP 🎉</strong><br>${qData.exp}`;
         triggerFloatingXP(event.clientX, event.clientY, `+15 XP`);
       } else {
-        // YANLIŞ CEVAP: -5 XP (Ceza)
         currentLevelXP -= 5;
         saveUserXP(-5);
         btnElement.classList.add('wrong-anim');
@@ -850,7 +4391,6 @@
 
       expBox.style.display = 'block';
       
-      // Soru butonunun metnini duruma göre değiştir
       const nextBtn = document.getElementById('btn-next');
       if (currentQuestionIndex === questions.length - 1) {
         nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
@@ -864,25 +4404,241 @@
       const questions = questionBank[currentLevel];
       currentQuestionIndex++;
       
-      // Bölüm Bitti mi Kontrolü
       if (currentQuestionIndex >= questions.length) {
         const threshold = levelThresholds[currentLevel];
         if (currentLevelXP >= threshold) {
             unlockNextLevel(currentLevel);
-
             alert(`🔥 TEBRİKLER! ${currentLevelXP} XP topladın ve barajı (${threshold} XP) başarıyla geçtin. Sonraki seviyenin kilidi açıldı!`);
             currentQuestionIndex = 0;
             currentLevelXP = 0;
             loadQuestion();
         } else {
-            alert(`💀 BAŞARISIZ! Barajı geçemedin.\nGereken: ${threshold} XP\nSenin Puanın: ${currentLevelXP} XP\nBu seviyeyi tekrar çözmek zorundasın!`);
+            alert(`💀 BAŞARISIZ! Barajı geçemedin.
+Gereken: ${threshold} XP
+Senin Puanın: ${currentLevelXP} XP
+Bu seviyeyi tekrar çözmek zorundasın!`);
             currentQuestionIndex = 0;
-            currentLevelXP = 0; // Ceza olarak bölüm puanı sıfırlanır
+            currentLevelXP = 0;
             loadQuestion();
         }
         return;
       }
       loadQuestion();
+    }
+
+    /* ==========================================================================
+       5. DRAG & MATCH MANTIĞI
+       ========================================================================== */
+    let currentMatchIndex = 0;
+    let currentMatchXP = 0;
+    let matchedPairsCount = 0;
+    let selectedTRCard = null;
+    let draggedPairId = null;
+
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function loadMatchSet() {
+      matchedPairsCount = 0;
+      selectedTRCard = null;
+
+      const sets = matchBank[currentLevel];
+      const setPairs = sets[currentMatchIndex]; // 10 pairs: [ [TR, EN], [TR, EN], ... ]
+
+      document.getElementById('match-tracker').innerText = `Eşleştirme Seti ${currentMatchIndex + 1} / ${sets.length} | Bölüm Puanı: ${currentMatchXP} XP`;
+      
+      const progressPercent = ((currentMatchIndex + 1) / sets.length) * 100;
+      document.getElementById('match-progress-fill').style.width = `${progressPercent}%`;
+
+      document.getElementById('match-explanation-box').style.display = 'none';
+      document.getElementById('btn-next-match').style.display = 'none';
+
+      const trContainer = document.getElementById('tr-column');
+      const enContainer = document.getElementById('en-column');
+
+      trContainer.innerHTML = '';
+      enContainer.innerHTML = '';
+
+      // Create list of items with unique pair ID
+      const trItems = setPairs.map((pair, idx) => ({ text: pair[0], id: idx }));
+      const enItems = setPairs.map((pair, idx) => ({ text: pair[1], id: idx }));
+
+      // Shuffle TR and EN lists independently
+      const shuffledTR = shuffleArray(trItems);
+      const shuffledEN = shuffleArray(enItems);
+
+      // Render TR Cards (Left)
+      shuffledTR.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'match-card-item';
+        card.setAttribute('draggable', 'true');
+        card.setAttribute('data-id', item.id);
+        card.setAttribute('data-side', 'tr');
+        card.innerText = item.text;
+
+        // Click handler
+        card.onclick = () => handleTRClick(card);
+
+        // Drag handlers
+        card.ondragstart = (e) => {
+          draggedPairId = item.id;
+          e.dataTransfer.setData('text/plain', item.id);
+          card.classList.add('selected');
+        };
+        card.ondragend = () => {
+          card.classList.remove('selected');
+        };
+
+        trContainer.appendChild(card);
+      });
+
+      // Render EN Cards (Right)
+      shuffledEN.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'match-card-item';
+        card.setAttribute('data-id', item.id);
+        card.setAttribute('data-side', 'en');
+        card.innerText = item.text;
+
+        // Click handler
+        card.onclick = () => handleENClick(card);
+
+        // Drop handlers
+        card.ondragover = (e) => {
+          e.preventDefault();
+          if (!card.classList.contains('matched')) {
+            card.classList.add('drag-over');
+          }
+        };
+        card.ondragleave = () => {
+          card.classList.remove('drag-over');
+        };
+        card.ondrop = (e) => {
+          e.preventDefault();
+          card.classList.remove('drag-over');
+          const droppedId = e.dataTransfer.getData('text/plain') || draggedPairId;
+          const trCard = document.querySelector(`.match-card-item[data-side="tr"][data-id="${droppedId}"]`);
+          if (trCard) {
+            evaluateMatch(trCard, card);
+          }
+        };
+
+        enContainer.appendChild(card);
+      });
+    }
+
+    function handleTRClick(card) {
+      if (card.classList.contains('matched')) return;
+
+      if (selectedTRCard) {
+        selectedTRCard.classList.remove('selected');
+      }
+
+      selectedTRCard = card;
+      card.classList.add('selected');
+    }
+
+    function handleENClick(card) {
+      if (card.classList.contains('matched')) return;
+
+      if (!selectedTRCard) {
+        const expBox = document.getElementById('match-explanation-box');
+        expBox.className = 'explanation-box error';
+        expBox.innerHTML = 'Önce sol taraftan bir Türkçe kelime seçin!';
+        expBox.style.display = 'block';
+        setTimeout(() => { expBox.style.display = 'none'; }, 1500);
+        return;
+      }
+
+      evaluateMatch(selectedTRCard, card);
+    }
+
+    function evaluateMatch(trCard, enCard) {
+      const trId = trCard.getAttribute('data-id');
+      const enId = enCard.getAttribute('data-id');
+
+      if (trId === enId) {
+        // CORRECT MATCH
+        trCard.classList.remove('selected');
+        trCard.classList.add('matched');
+        enCard.classList.add('matched');
+
+        trCard.innerHTML = `<i class="fa-solid fa-check" style="margin-right: 8px;"></i> ${trCard.innerText}`;
+        enCard.innerHTML = `<i class="fa-solid fa-check" style="margin-right: 8px;"></i> ${enCard.innerText}`;
+
+        currentMatchXP += 10;
+        saveUserXP(10);
+        triggerFloatingXP(window.innerWidth / 2, 250, '+10 XP');
+
+        matchedPairsCount++;
+        selectedTRCard = null;
+
+        if (matchedPairsCount === 10) {
+          // ALL MATCHED IN THIS SET
+          currentMatchXP += 50;
+          saveUserXP(50);
+
+          const expBox = document.getElementById('match-explanation-box');
+          expBox.className = 'explanation-box success';
+          expBox.innerHTML = `<strong>Tebrikler! Seti Başarıyla Tamamladın! 🎉 (+50 Bonus XP)</strong>`;
+          expBox.style.display = 'block';
+
+          const nextBtn = document.getElementById('btn-next-match');
+          const sets = matchBank[currentLevel];
+          if (currentMatchIndex === sets.length - 1) {
+            nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
+          } else {
+            nextBtn.innerHTML = 'Sonraki Eşleştirmeye Geç <i class="fa-solid fa-arrow-right"></i>';
+          }
+          nextBtn.style.display = 'block';
+        }
+      } else {
+        // WRONG MATCH
+        trCard.classList.add('wrong');
+        enCard.classList.add('wrong');
+
+        currentMatchXP -= 2;
+        saveUserXP(-2);
+        triggerFloatingXP(window.innerWidth / 2, 250, '-2 XP', '#ef4444');
+
+        setTimeout(() => {
+          trCard.classList.remove('wrong', 'selected');
+          enCard.classList.remove('wrong');
+          selectedTRCard = null;
+        }, 600);
+      }
+    }
+
+    function nextMatchSet() {
+      const sets = matchBank[currentLevel];
+      currentMatchIndex++;
+
+      if (currentMatchIndex >= sets.length) {
+        const threshold = levelThresholds[currentLevel];
+        if (currentMatchXP >= threshold) {
+          unlockNextLevel(currentLevel);
+          alert(`🔥 TEBRİKLER! ${currentMatchXP} XP topladın ve Eşleştirme Barajını (${threshold} XP) geçtin. Sonraki seviye açıldı!`);
+          currentMatchIndex = 0;
+          currentMatchXP = 0;
+          loadMatchSet();
+        } else {
+          alert(`💀 BAŞARISIZ! Barajı geçemedin.
+Gereken: ${threshold} XP
+Senin Puanın: ${currentMatchXP} XP
+Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
+          currentMatchIndex = 0;
+          currentMatchXP = 0;
+          loadMatchSet();
+        }
+        return;
+      }
+      loadMatchSet();
     }
 
     function triggerFloatingXP(x, y, text, color = '#4ade80') {
