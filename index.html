@@ -123,10 +123,11 @@
       gap: 20px;
     }
 
+    /* Mod Seçici (Quiz / Match / Speaking / Visual / Writing) */
     .mode-switcher {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
       justify-content: center;
     }
 
@@ -134,15 +135,16 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       color: var(--text-muted);
-      padding: 12px 20px;
+      padding: 10px 18px;
       border-radius: 14px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
       transition: all 0.2s ease;
+      position: relative;
     }
 
     .mode-btn:hover {
@@ -155,6 +157,12 @@
       border: 2px solid var(--accent-cyan);
       color: var(--accent-cyan);
       box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+    }
+
+    .mode-btn.completed::after {
+      content: " ✓";
+      color: var(--success-green);
+      font-weight: 800;
     }
 
     .level-selector {
@@ -395,11 +403,7 @@
       animation: shakeRed 0.4s ease-in-out;
     }
 
-    .match-card-item.drag-over {
-      background: rgba(56, 189, 248, 0.25) !important;
-      border: 2px dashed var(--accent-cyan) !important;
-    }
-
+    /* Speaking Test Stiller */
     .speaking-target-box {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--card-border);
@@ -522,6 +526,69 @@
       color: var(--text-muted);
     }
 
+    /* Görsel Eşleştirme Stilleri */
+    .visual-image-container {
+      width: 100%;
+      max-height: 280px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      border: 1px solid var(--card-border);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+    }
+
+    .visual-image-container img {
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+    }
+
+    /* Yazma Egzersizleri Stilleri */
+    .writing-input-area {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .writing-input {
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      font-size: 18px;
+      font-weight: 600;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .writing-input:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-submit-writing {
+      padding: 16px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .btn-submit-writing:hover {
+      transform: translateY(-2px);
+    }
+
     .explanation-box {
       margin-top: 24px;
       padding: 16px 20px;
@@ -619,16 +686,22 @@
       <span><strong>Giriş durumu:</strong> Google girişini kullanmak için localhost/HTTPS ve Firebase Authentication ayarları gerekir.</span>
     </div>
 
-    <!-- Mod Seçici -->
+    <!-- Mod Seçici (5 Mod) -->
     <div class="mode-switcher">
       <button class="mode-btn active" id="btn-mode-quiz" onclick="switchMode('quiz')">
-        <i class="fa-solid fa-list-check"></i> Çoktan Seçmeli Test
+        <i class="fa-solid fa-list-check"></i> Çoktan Seçmeli
       </button>
       <button class="mode-btn" id="btn-mode-match" onclick="switchMode('match')">
-        <i class="fa-solid fa-puzzle-piece"></i> Drag & Match (Eşleştirme)
+        <i class="fa-solid fa-puzzle-piece"></i> Drag & Match
       </button>
       <button class="mode-btn" id="btn-mode-speaking" onclick="switchMode('speaking')">
-        <i class="fa-solid fa-microphone"></i> Speaking Test (Konuşma & Telaffuz)
+        <i class="fa-solid fa-microphone"></i> Speaking Test
+      </button>
+      <button class="mode-btn" id="btn-mode-visual" onclick="switchMode('visual')">
+        <i class="fa-solid fa-image"></i> Görsel Eşleştirme
+      </button>
+      <button class="mode-btn" id="btn-mode-writing" onclick="switchMode('writing')">
+        <i class="fa-solid fa-pen-to-square"></i> Yazma Egzersizi
       </button>
     </div>
 
@@ -659,7 +732,7 @@
       </div>
     </div>
 
-    <!-- Soru Kartı (Quiz Modu) -->
+    <!-- 1. Soru Kartı (Quiz Modu) -->
     <div class="quiz-card" id="quiz-card">
       <div class="quiz-header">
         <span class="question-tracker" id="question-tracker">Soru 1 / 20</span>
@@ -679,7 +752,7 @@
       <button class="next-btn" id="btn-next" onclick="nextQuestion()">Sonraki Soruya Geç <i class="fa-solid fa-arrow-right"></i></button>
     </div>
 
-    <!-- Drag & Match Kartı -->
+    <!-- 2. Drag & Match Kartı -->
     <div class="quiz-card" id="match-card" style="display: none;">
       <div class="quiz-header">
         <span class="question-tracker" id="match-tracker">Eşleştirme Seti 1 / 10 | Bölüm Puanı: 0 XP</span>
@@ -710,7 +783,7 @@
       <button class="next-btn" id="btn-next-match" onclick="nextMatchSet()">Sonraki Eşleştirmeye Geç <i class="fa-solid fa-arrow-right"></i></button>
     </div>
 
-    <!-- Speaking Test Kartı -->
+    <!-- 3. Speaking Test Kartı -->
     <div class="quiz-card" id="speaking-card" style="display: none;">
       <div class="quiz-header">
         <span class="question-tracker" id="speaking-tracker">Cümle 1 / 10 | Bölüm Puanı: 0 XP</span>
@@ -745,6 +818,55 @@
       <div class="explanation-box" id="speaking-explanation-box"></div>
 
       <button class="next-btn" id="btn-next-speaking" onclick="nextSpeakingSentence()">Sonraki Cümleye Geç <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <!-- 4. Görsel Eşleştirme Kartı -->
+    <div class="quiz-card" id="visual-card" style="display: none;">
+      <div class="quiz-header">
+        <span class="question-tracker" id="visual-tracker">Görsel Soru 1 / 10 | Bölüm Puanı: 0 XP</span>
+        <span class="question-tracker" id="visual-level-badge" style="color: var(--accent-cyan); font-weight:700;">A1 SEVİYESİ</span>
+      </div>
+
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="visual-progress-fill"></div>
+      </div>
+
+      <div class="visual-image-container">
+        <img id="visual-image-target" src="" alt="Görsel Soru">
+      </div>
+
+      <div class="question-title" id="visual-prompt-text">Bu görseldeki nesne/kavram nedir?</div>
+
+      <div class="options-grid" id="visual-options-container"></div>
+
+      <div class="explanation-box" id="visual-explanation-box"></div>
+
+      <button class="next-btn" id="btn-next-visual" onclick="nextVisualQuestion()">Sonraki Görsel Soruya Geç <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <!-- 5. Yazma Egzersizleri Kartı -->
+    <div class="quiz-card" id="writing-card" style="display: none;">
+      <div class="quiz-header">
+        <span class="question-tracker" id="writing-tracker">Yazma Soru 1 / 10 | Bölüm Puanı: 0 XP</span>
+        <span class="question-tracker" id="writing-level-badge" style="color: var(--accent-cyan); font-weight:700;">A1 SEVİYESİ</span>
+      </div>
+
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="writing-progress-fill"></div>
+      </div>
+
+      <div class="question-title" id="writing-prompt-text">Soru yükleniyor...</div>
+
+      <div class="writing-input-area">
+        <input type="text" class="writing-input" id="writing-user-input" placeholder="Cevabınızı buraya yazın..." onkeydown="if(event.key==='Enter') submitWritingAnswer()">
+        <button class="btn-submit-writing" id="btn-submit-writing" onclick="submitWritingAnswer()">
+          Cevabı Kontrol Et <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+
+      <div class="explanation-box" id="writing-explanation-box"></div>
+
+      <button class="next-btn" id="btn-next-writing" onclick="nextWritingQuestion()">Sonraki Yazma Sorusuna Geç <i class="fa-solid fa-arrow-right"></i></button>
     </div>
 
   </div>
@@ -896,21 +1018,44 @@
 
     const levelSequence = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
     const unlockedLevels = { A1: true, A2: false, B1: false, B2: false, C1: false, C2: false };
-    const levelThresholds = { A1: 220, A2: 220, B1: 220, B2: 220, C1: 440, C2: 440 };
+
+    // HER SEVİYE VE MOD İÇİN BAĞIMSIZ BAŞARI TAKİBİ
+    const completedModes = {
+      A1: { quiz: false, match: false, speaking: false, visual: false, writing: false },
+      A2: { quiz: false, match: false, speaking: false, visual: false, writing: false },
+      B1: { quiz: false, match: false, speaking: false, visual: false, writing: false },
+      B2: { quiz: false, match: false, speaking: false, visual: false, writing: false },
+      C1: { quiz: false, match: false, speaking: false, visual: false, writing: false },
+      C2: { quiz: false, match: false, speaking: false, visual: false, writing: false }
+    };
 
     let activeMode = 'quiz';
     let currentLevel = 'A1';
 
+    function updateModeButtonsUI() {
+      const modes = ['quiz', 'match', 'speaking', 'visual', 'writing'];
+      modes.forEach(mode => {
+        const btn = document.getElementById(`btn-mode-${mode}`);
+        if (btn) {
+          const isComp = completedModes[currentLevel][mode];
+          btn.classList.toggle('completed', isComp);
+        }
+      });
+    }
+
     function switchMode(mode) {
       stopRecording();
       activeMode = mode;
-      document.getElementById('btn-mode-quiz').classList.toggle('active', mode === 'quiz');
-      document.getElementById('btn-mode-match').classList.toggle('active', mode === 'match');
-      document.getElementById('btn-mode-speaking').classList.toggle('active', mode === 'speaking');
 
-      document.getElementById('quiz-card').style.display = mode === 'quiz' ? 'block' : 'none';
-      document.getElementById('match-card').style.display = mode === 'match' ? 'block' : 'none';
-      document.getElementById('speaking-card').style.display = mode === 'speaking' ? 'block' : 'none';
+      const modes = ['quiz', 'match', 'speaking', 'visual', 'writing'];
+      modes.forEach(m => {
+        const btn = document.getElementById(`btn-mode-${m}`);
+        const card = document.getElementById(`${m}-card`);
+        if (btn) btn.classList.toggle('active', m === mode);
+        if (card) card.style.display = (m === mode) ? 'block' : 'none';
+      });
+
+      updateModeButtonsUI();
 
       if (mode === 'quiz') {
         loadQuestion();
@@ -918,16 +1063,24 @@
         currentMatchIndex = 0;
         currentMatchXP = 0;
         loadMatchSet();
-      } else {
+      } else if (mode === 'speaking') {
         currentSpeakingIndex = 0;
         currentSpeakingXP = 0;
         loadSpeakingSentence();
+      } else if (mode === 'visual') {
+        currentVisualIndex = 0;
+        currentVisualXP = 0;
+        loadVisualQuestion();
+      } else if (mode === 'writing') {
+        currentWritingIndex = 0;
+        currentWritingXP = 0;
+        loadWritingQuestion();
       }
     }
 
     function changeLevel(level, element) {
       if (!unlockedLevels[level]) {
-        alert(`🔒 Bu seviye kilitli! Kilidi açmak için önceki seviyenin barajını geçmelisin.`);
+        alert(`🔒 Bu seviye kilitli! Kilidi açmak için önceki seviyedeki modları tamamlamalısınız.`);
         return;
       }
 
@@ -945,16 +1098,34 @@
       currentSpeakingIndex = 0;
       currentSpeakingXP = 0;
 
-      document.getElementById('level-badge').innerText = `${level} SEVİYESİ`;
-      document.getElementById('match-level-badge').innerText = `${level} SEVİYESİ`;
-      document.getElementById('speaking-level-badge').innerText = `${level} SEVİYESİ`;
+      currentVisualIndex = 0;
+      currentVisualXP = 0;
 
-      if (activeMode === 'quiz') {
-        loadQuestion();
-      } else if (activeMode === 'match') {
-        loadMatchSet();
-      } else {
-        loadSpeakingSentence();
+      currentWritingIndex = 0;
+      currentWritingXP = 0;
+
+      const levelLabels = ['level-badge', 'match-level-badge', 'speaking-level-badge', 'visual-level-badge', 'writing-level-badge'];
+      levelLabels.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = `${level} SEVİYESİ`;
+      });
+
+      updateModeButtonsUI();
+
+      if (activeMode === 'quiz') loadQuestion();
+      else if (activeMode === 'match') loadMatchSet();
+      else if (activeMode === 'speaking') loadSpeakingSentence();
+      else if (activeMode === 'visual') loadVisualQuestion();
+      else if (activeMode === 'writing') loadWritingQuestion();
+    }
+
+    function checkLevelUnlockStatus(level) {
+      // En az 3 mod tamamlandıysa sonraki seviyeyi aç
+      const levelComp = completedModes[level];
+      const completedCount = Object.values(levelComp).filter(Boolean).length;
+
+      if (completedCount >= 3) {
+        unlockNextLevel(level);
       }
     }
 
@@ -1109,9 +1280,6 @@
       ]
     };
 
-    /* ==========================================================================
-       3. DRAG & MATCH KELİME BANKASI
-       ========================================================================== */
     const matchBank = {
   "A1": [
     [
@@ -4486,10 +4654,6 @@
     ]
   ]
 };
-
-    /* ==========================================================================
-       4. SPEAKING TEST CÜMLE BANKASI
-       ========================================================================== */
     const speakingBank = {
   "A1": [
     {
@@ -4744,9 +4908,1419 @@
     }
   ]
 };
+    const visualBank = {
+  "A1": [
+    {
+      "img": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&q=80",
+      "prompt": "Bu görseldeki hayvan hangisidir?",
+      "options": [
+        "Cat (Kedi)",
+        "Dog (Köpek)",
+        "Bird (Kuş)",
+        "Fish (Balık)"
+      ],
+      "correct": 0,
+      "exp": "Görselde bir kedi (Cat) görülmektedir."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=500&q=80",
+      "prompt": "Bu görseldeki hayvan hangisidir?",
+      "options": [
+        "Elephant (Fil)",
+        "Dog (Köpek)",
+        "Lion (Aslan)",
+        "Horse (At)"
+      ],
+      "correct": 1,
+      "exp": "Görselde bir köpek (Dog) bulunmaktadır."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500&q=80",
+      "prompt": "Bu görseldeki meyve hangisidir?",
+      "options": [
+        "Banana (Muz)",
+        "Orange (Portakal)",
+        "Apple (Elma)",
+        "Grape (Üzüm)"
+      ],
+      "correct": 2,
+      "exp": "Görseldeki meyve elmadır (Apple)."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=500&q=80",
+      "prompt": "Görseldeki nesne nedir?",
+      "options": [
+        "Car (Araba)",
+        "Bicycle (Bisiklet)",
+        "Bus (Otobüs)",
+        "Airplane (Uçak)"
+      ],
+      "correct": 0,
+      "exp": "Görselde kırmızı bir araba (Car) vardır."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=500&q=80",
+      "prompt": "Görseldeki nesne nedir?",
+      "options": [
+        "Notebook (Defter)",
+        "Book (Kitap)",
+        "Pen (Kalem)",
+        "Bag (Çanta)"
+      ],
+      "correct": 1,
+      "exp": "Görseldeki nesne kitaptır (Book)."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500&q=80",
+      "prompt": "Bu mekan hangisidir?",
+      "options": [
+        "School (Okul)",
+        "Restaurant (Restoran)",
+        "Hospital (Hastane)",
+        "Airport (Havalimanı)"
+      ],
+      "correct": 1,
+      "exp": "Görselde bir restoran (Restaurant) yer almaktadır."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&q=80",
+      "prompt": "Görseldeki içecek nedir?",
+      "options": [
+        "Tea (Çay)",
+        "Coffee (Kahve)",
+        "Water (Su)",
+        "Milk (Süt)"
+      ],
+      "correct": 1,
+      "exp": "Görseldeki sıcak içecek kahvedir (Coffee)."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500&q=80",
+      "prompt": "Görseldeki nesne nedir?",
+      "options": [
+        "Clock (Saat)",
+        "Phone (Telefon)",
+        "Camera (Kamera)",
+        "Guitar (Gitar)"
+      ],
+      "correct": 0,
+      "exp": "Görseldeki nesne duvardaki saattir (Clock)."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&q=80",
+      "prompt": "Görseldeki yapı nedir?",
+      "options": [
+        "House (Ev)",
+        "Building (Bina)",
+        "Bridge (Köprü)",
+        "Tower (Kule)"
+      ],
+      "correct": 1,
+      "exp": "Görselde yüksek bir bina (Building) görülmektedir."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80",
+      "prompt": "Bu doğa manzarası neresidir?",
+      "options": [
+        "Forest (Orman)",
+        "Beach/Sea (Plaj/Deniz)",
+        "Mountain (Dağ)",
+        "Desert (Çöl)"
+      ],
+      "correct": 1,
+      "exp": "Görselde deniz ve kumsal (Beach/Sea) yer almaktadır."
+    }
+  ],
+  "A2": [
+    {
+      "img": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500&q=80",
+      "prompt": "Görseldeki ulaşım aracı nedir?",
+      "options": [
+        "Airplane (Uçak)",
+        "Train (Tren)",
+        "Ship (Gemi)",
+        "Helicopter (Helikopter)"
+      ],
+      "correct": 0,
+      "exp": "Görselde uçak (Airplane) bulunmaktadır."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=500&q=80",
+      "prompt": "Görseldeki sağlık kurumu neresidir?",
+      "options": [
+        "Pharmacy (Eczane)",
+        "Hospital (Hastane)",
+        "Clinic (Klinik)",
+        "Laboratory (Laboratuvar)"
+      ],
+      "correct": 1,
+      "exp": "Görselde bir hastane (Hospital) görülmektedir."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=500&q=80",
+      "prompt": "Bu doğa ortamı nedir?",
+      "options": [
+        "Forest (Orman)",
+        "Island (Ada)",
+        "Lake (Göl)",
+        "Cave (Mağara)"
+      ],
+      "correct": 0,
+      "exp": "Görselde sık ağaçlı bir orman (Forest) vardır."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=500&q=80",
+      "prompt": "Görseldeki çalışma alanı nedir?",
+      "options": [
+        "Factory (Fabrika)",
+        "Office (Ofis)",
+        "Library (Kütüphane)",
+        "Studio (Stüdyo)"
+      ],
+      "correct": 1,
+      "exp": "Görselde modern bir ofis (Office) vardır."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500&q=80",
+      "prompt": "Eylem/Aktivite nedir?",
+      "options": [
+        "Shopping (Alışveriş)",
+        "Travel (Seyahat)",
+        "Cooking (Yemek pişirme)",
+        "Studying (Ders çalışma)"
+      ],
+      "correct": 1,
+      "exp": "Görselde seyahat etmek (Travel) teması işlenmiştir."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80",
+      "prompt": "Bu eğlence mekanı neresidir?",
+      "options": [
+        "Cinema (Sinema)",
+        "Theater (Tiyatro)",
+        "Museum (Müze)",
+        "Concert (Konser)"
+      ],
+      "correct": 0,
+      "exp": "Görselde sinema salonu (Cinema) görülmektedir."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=500&q=80",
+      "prompt": "Görseldeki finansal kavram nedir?",
+      "options": [
+        "Money (Para)",
+        "Credit Card (Kredi Kartı)",
+        "Bank (Banka)",
+        "Gold (Altın)"
+      ],
+      "correct": 0,
+      "exp": "Görselde kağıt paralar (Money) yer alır."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1517649763962-0c6232661a0b?w=500&q=80",
+      "prompt": "Spor dalı hangisidir?",
+      "options": [
+        "Running (Koşu)",
+        "Swimming (Yüzme)",
+        "Cycling (Bisiklet)",
+        "Football (Futbol)"
+      ],
+      "correct": 0,
+      "exp": "Görseldeki sporcu koşu (Running) yapmaktadır."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500&q=80",
+      "prompt": "Mutfak eylemi nedir?",
+      "options": [
+        "Eating (Yemek yemek)",
+        "Cooking (Yemek yapmak)",
+        "Washing (Yıkamak)",
+        "Baking (Pişirmek)"
+      ],
+      "correct": 1,
+      "exp": "Görselde yemek pişirme (Cooking) eylemi vardır."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500&q=80",
+      "prompt": "Kavram nedir?",
+      "options": [
+        "Friendship (Arkadaşlık)",
+        "Family (Aile)",
+        "Classmates (Sınıf arkadaşları)",
+        "Team (Ekip)"
+      ],
+      "correct": 0,
+      "exp": "Görselde samimi bir arkadaşlık (Friendship) tasvir edilmiştir."
+    }
+  ],
+  "B1": [
+    {
+      "img": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=500&q=80",
+      "prompt": "Kavram nedir?",
+      "options": [
+        "Healthcare (Sağlık hizmeti)",
+        "Education (Eğitim)",
+        "Environment (Çevre)",
+        "Industry (Sanayi)"
+      ],
+      "correct": 0,
+      "exp": "Görsel sağlık hizmetlerini (Healthcare) simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500&q=80",
+      "prompt": "Teknolojik kavram nedir?",
+      "options": [
+        "Database (Veritabanı)",
+        "Global Network (Küresel Ağ)",
+        "Software (Yazılım)",
+        "Hardware (Donanım)"
+      ],
+      "correct": 1,
+      "exp": "Görsel küresel iletişim ağını (Global Network) temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "İş dünyası kavramı nedir?",
+      "options": [
+        "Success (Başarı)",
+        "Negotiation (Müzakere)",
+        "Leadership (Liderlik)",
+        "Interview (Mülakat)"
+      ],
+      "correct": 2,
+      "exp": "Görselde liderlik (Leadership) vurgulanmıştır."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0?w=500&q=80",
+      "prompt": "Çevre kavramı nedir?",
+      "options": [
+        "Recycling (Geri dönüşüm)",
+        "Pollution (Kirlilik)",
+        "Deforestation (Ormansızlaşma)",
+        "Erosion (Erozyon)"
+      ],
+      "correct": 0,
+      "exp": "Görsel geri dönüşüm (Recycling) sembolüdür."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=500&q=80",
+      "prompt": "Akademik kavram nedir?",
+      "options": [
+        "University Lecture (Üniversite Dersi)",
+        "Graduation (Meuniyet)",
+        "Exam (Sınav)",
+        "Workshop (Atölye)"
+      ],
+      "correct": 0,
+      "exp": "Görsel üniversite amfi dersini (University Lecture) gösterir."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80",
+      "prompt": "Finansal/Analitik kavram nedir?",
+      "options": [
+        "Data Analysis (Veri Analizi)",
+        "Marketing (Pazarlama)",
+        "Sales (Satış)",
+        "Budgeting (Bütçeleme)"
+      ],
+      "correct": 0,
+      "exp": "Görsel grafikleri ve veri analizini (Data Analysis) ifade eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&q=80",
+      "prompt": "Çalışma şekli nedir?",
+      "options": [
+        "Team Collaboration (Ekip Çalışması)",
+        "Solo Project (Bireysel Proje)",
+        "Competition (Rekabet)",
+        "Training (Eğitim)"
+      ],
+      "correct": 0,
+      "exp": "Görseldeki ekip birlikte iş birliği yapmaktadır (Team Collaboration)."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=500&q=80",
+      "prompt": "Çevre/İklim konusu nedir?",
+      "options": [
+        "Natural Habitat (Doğal Yaşam Alanı)",
+        "Urbanization (Kentleşme)",
+        "Agriculture (Tarım)",
+        "Mining (Madencilik)"
+      ],
+      "correct": 0,
+      "exp": "Görsel el değmemiş doğal yaşam alanını (Natural Habitat) simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&q=80",
+      "prompt": "Dijital kavram nedir?",
+      "options": [
+        "Online Communication (Dijital İletişim)",
+        "E-commerce (E-ticaret)",
+        "Cyber Security (Siber Güvenlik)",
+        "Social Media (Sosyal Medya)"
+      ],
+      "correct": 0,
+      "exp": "Görsel çevrim içi iletişimi (Online Communication) tasvir eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=500&q=80",
+      "prompt": "Sosyal eylem nedir?",
+      "options": [
+        "Agreement/Handshake (Anlaşma/El Sıkışma)",
+        "Conflict (Çatışma)",
+        "Debate (Münazara)",
+        "Speech (Konuşma)"
+      ],
+      "correct": 0,
+      "exp": "Görsel anlaşmayı ve el sıkışmayı (Agreement/Handshake) temsil eder."
+    }
+  ],
+  "B2": [
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "Sanatsal/Soyut kavram nedir?",
+      "options": [
+        "Creativity & Art (Yaratıcılık ve Sanat)",
+        "Logic (Mantık)",
+        "Structure (Yapı)",
+        "Draft (Taslak)"
+      ],
+      "correct": 0,
+      "exp": "Görsel yaratıcılık ve soyut sanatı (Creativity & Art) simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&q=80",
+      "prompt": "Mimari kavram nedir?",
+      "options": [
+        "Modern Architecture (Modern Mimari)",
+        "Renovation (Restorasyon)",
+        "Demolition (Yıkım)",
+        "Infrastructure (Altyapı)"
+      ],
+      "correct": 0,
+      "exp": "Görsel modern mimariyi (Modern Architecture) gösterir."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&q=80",
+      "prompt": "Siber kavram nedir?",
+      "options": [
+        "Cyber Security (Siber Güvenlik)",
+        "Cloud Storage (Bulut Depolama)",
+        "Quantum Computing (Kuantum İşlemci)",
+        "Robotics (Robotik)"
+      ],
+      "correct": 0,
+      "exp": "Görsel siber güvenliği (Cyber Security) temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&q=80",
+      "prompt": "Stratejik kavram nedir?",
+      "options": [
+        "Strategic Planning (Stratejik Planlama)",
+        "Crisis Management (Kriz Yönetimi)",
+        "Risk Assessment (Risk Değerlendirmesi)",
+        "Auditing (Denetim)"
+      ],
+      "correct": 0,
+      "exp": "Görsel stratejik planlama (Strategic Planning) sürecini gösterir."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=500&q=80",
+      "prompt": "Hukuki sembol nedir?",
+      "options": [
+        "Justice & Law (Adalet ve Hukuk)",
+        "Legislation (Mevzuat)",
+        "Courtroom (Mahkeme Salonu)",
+        "Penalty (Ceza)"
+      ],
+      "correct": 0,
+      "exp": "Görsel adalet terazisini ve hukuku (Justice & Law) simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "Yönetimsel durum nedir?",
+      "options": [
+        "Executive Decision (Yönetsel Karar)",
+        "Negotiation (Müzakere)",
+        "Protest (Protesto)",
+        "Consultation (Danışmanlık)"
+      ],
+      "correct": 0,
+      "exp": "Görsel üst düzey yönetimi ve kararları (Executive Decision) ifade eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80",
+      "prompt": "Ekonomik kavram nedir?",
+      "options": [
+        "Market Trend & Inflation (Piyasa Trendi ve Enflasyon)",
+        "Bankruptcy (İflas)",
+        "Taxation (Vergilendirme)",
+        "Auditing (Denetim)"
+      ],
+      "correct": 0,
+      "exp": "Görsel piyasa eğilimlerini ve finansal verileri gösterir."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=500&q=80",
+      "prompt": "Toplumsal durum nedir?",
+      "options": [
+        "Diversity & Inclusion (Çeşitlilik ve Kapsayıcılık)",
+        "Isolation (Yalnızlaşma)",
+        "Assimilation (Asimilasyon)",
+        "Segregation (Ayrışma)"
+      ],
+      "correct": 0,
+      "exp": "Görsel toplumsal çeşitliliği (Diversity) simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=500&q=80",
+      "prompt": "Eğitimsel kavram nedir?",
+      "options": [
+        "Knowledge Sharing (Bilgi Paylaşımı)",
+        "Self-study (Bireysel Çalışma)",
+        "Evaluation (Değerlendirme)",
+        "Assignment (Ödev)"
+      ],
+      "correct": 0,
+      "exp": "Görsel interaktif bilgi paylaşımını (Knowledge Sharing) gösterir."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&q=80",
+      "prompt": "Yazılım kavramı nedir?",
+      "options": [
+        "Software Engineering (Yazılım Mühendisliği)",
+        "Hardware Repair (Donanım Tamiri)",
+        "Data Entry (Veri Girişi)",
+        "Graphic Design (Grafik Tasarım)"
+      ],
+      "correct": 0,
+      "exp": "Görsel kodlama ve yazılım mühendisliğini (Software Engineering) temsil eder."
+    }
+  ],
+  "C1": [
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #1",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 0,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #2",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 1,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #3",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 2,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #4",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 3,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #5",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 0,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #6",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 1,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #7",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 2,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #8",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 3,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #9",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 0,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #10",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 1,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #11",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 2,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #12",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 3,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #13",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 0,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #14",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 1,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #15",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 2,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #16",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 3,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #17",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 0,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #18",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 1,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #19",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 2,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "prompt": "C1 İleri Seviye Görsel Kavram #20",
+      "options": [
+        "Global Governance (Küresel Yönetişim)",
+        "Systemic Resilience (Sistemik Esneklik)",
+        "Strategic Alignment (Stratejik Uyum)",
+        "Fiscal Policy (Mali Politika)"
+      ],
+      "correct": 3,
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+    }
+  ],
+  "C2": [
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #1",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 0,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #2",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 1,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #3",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 2,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #4",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 3,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #5",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 0,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #6",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 1,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #7",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 2,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #8",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 3,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #9",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 0,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #10",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 1,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #11",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 2,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #12",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 3,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #13",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 0,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #14",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 1,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #15",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 2,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #16",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 3,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #17",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 0,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #18",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 1,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #19",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 2,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    },
+    {
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "prompt": "C2 İleri Seviye Görsel Kavram #20",
+      "options": [
+        "Ephemeral Paradox (Fani Paradoks)",
+        "Profound Synergy (Derin Sinerji)",
+        "Seamless Transition (Sorunsuz Geçiş)",
+        "Cognitive Dissonance (Bilişsel Çelişki)"
+      ],
+      "correct": 3,
+      "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
+    }
+  ]
+};
+    const writingBank = {
+  "A1": [
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Adınız nedir?' olan cümlenin İngilizcesini yazın:",
+      "answer": "What is your name?",
+      "alt": "What's your name?"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: She ___ from Turkey. (O Türkiyelidir.)",
+      "answer": "is"
+    },
+    {
+      "type": "translate",
+      "prompt": "İngilizcesi 'I have got a red car.' olan cümlenin Türkçesini yazın:",
+      "answer": "Kırmızı bir arabam var.",
+      "alt": "Benim kırmızı bir arabam var."
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: What ___ is it right now? (Saat kaç?)",
+      "answer": "time"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Tanıştığıma memnun oldum.' olan cümlenin İngilizcesini yazın:",
+      "answer": "Nice to meet you.",
+      "alt": "Nice to meet you"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: I usually wake up ___ 7 o'clock. (Saat 7'de uyanırım.)",
+      "answer": "at"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Yarın sabah görüşürüz.' olan cümlenin İngilizcesini yazın:",
+      "answer": "See you tomorrow morning.",
+      "alt": "See you tomorrow morning"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Can you ___ me, please? (Bana yardım edebilir misin?)",
+      "answer": "help"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Bugün güzel bir gün.' olan cümlenin İngilizcesini yazın:",
+      "answer": "Today is a beautiful day.",
+      "alt": "Today is a beautiful day"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: I love ___ English. (İngilizce öğrenmeyi seviyorum.)",
+      "answer": "learning"
+    }
+  ],
+  "A2": [
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Boş zamanlarında ne yaparsın?' olan cümlenin İngilizcesini yazın:",
+      "answer": "What do you do in your free time?",
+      "alt": "What do you do in your free time"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: While I ___ watching TV, the phone rang.",
+      "answer": "was"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Bana istasyona nasıl gideceğimi söyleyebilir misiniz?' olan İngilizce cümle:",
+      "answer": "Could you tell me how to get to the station?",
+      "alt": "Could you tell me how to get to the station"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: I have lived in this city ___ 2010. (-den beri)",
+      "answer": "since"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Geçen yaz harika bir tatil geçirdik.' olan İngilizce cümle:",
+      "answer": "We had a wonderful vacation last summer.",
+      "alt": "We had a wonderful vacation last summer"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Look at those black clouds! It is ___ to rain.",
+      "answer": "going"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Çıkmadan önce kapıyı kilitlemeyi unutma.' olan İngilizce cümle:",
+      "answer": "Don't forget to lock the door before leaving.",
+      "alt": "Do not forget to lock the door before leaving."
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: You ___ wear a uniform in this school. It is a strict rule.",
+      "answer": "must"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Varır varmaz beni arayacağına söz verdi.' olan İngilizce cümle:",
+      "answer": "He promised to call me as soon as he arrived.",
+      "alt": "He promised to call me as soon as he arrived"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: If it rains tomorrow, we ___ stay at home.",
+      "answer": "will"
+    }
+  ],
+  "B1": [
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Bence teknoloji iletişim kurma şeklimizi dönüştürdü.' olan cümlenin İngilizcesi:",
+      "answer": "In my opinion, technology has transformed the way we communicate.",
+      "alt": "In my opinion technology has transformed the way we communicate"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: If I ___ a million dollars, I would buy a big house.",
+      "answer": "had"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Yeni bir dil öğrenmek sabır ve tutarlı pratik gerektirir.' olan İngilizce cümle:",
+      "answer": "Learning a new language requires patience and consistent practice.",
+      "alt": "Learning a new language requires patience and consistent practice"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: The Mona Lisa ___ painted by Leonardo da Vinci.",
+      "answer": "was"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Bu çevre sorununa sürdürülebilir bir çözüm bulmamız gerekiyor.' olan cümlenin İngilizcesi:",
+      "answer": "We need to find a sustainable solution to this environmental problem.",
+      "alt": "We need to find a sustainable solution to this environmental problem"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: I have been ___ English for three hours. I am tired.",
+      "answer": "studying"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Çok çalışmamış olmasına rağmen sınavı geçmeyi başardı.' olan İngilizce cümle:",
+      "answer": "He managed to pass the exam despite not having studied much.",
+      "alt": "He managed to pass the exam despite not having studied much"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Please ___ off your shoes before entering the house.",
+      "answer": "take"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Üç aydan fazla süredir bu proje üzerinde çalışıyor.' olan İngilizce cümle:",
+      "answer": "She has been working on this project for over three months.",
+      "alt": "She has been working on this project for over three months"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: I used ___ smoke a lot, but I quit five years ago.",
+      "answer": "to"
+    }
+  ],
+  "B2": [
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Hükümet ekonomik büyümeyi teşvik etmek için yeni politikalar sundu.' cümlenin İngilizcesi:",
+      "answer": "The government has introduced new policies to boost economic growth.",
+      "alt": "The government has introduced new policies to boost economic growth"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: If you had studied harder, you would ___ passed the exam.",
+      "answer": "have"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Eleştirel düşünme, akademik başarı için vazgeçilmez bir beceridir.' olan İngilizce cümle:",
+      "answer": "Critical thinking is an indispensable skill for academic success.",
+      "alt": "Critical thinking is an indispensable skill for academic success"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: You ___ have brought an umbrella; it didn't rain at all.",
+      "answer": "needn't"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Yapay zeka küresel ölçekte iş piyasasını hızla değiştiriyor.' olan İngilizce cümle:",
+      "answer": "Artificial intelligence is rapidly altering the job market globally.",
+      "alt": "Artificial intelligence is rapidly altering the job market globally"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: I had my computer ___ by a technician yesterday.",
+      "answer": "repaired"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Bu güvenlik endişelerini derhal ele almamız son derece önemlidir.' cümlenin İngilizcesi:",
+      "answer": "It is imperative that we address these security concerns immediately.",
+      "alt": "It is imperative that we address these security concerns immediately"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: By this time next year, I will ___ finished my master's degree.",
+      "answer": "have"
+    },
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Araştırma, uyku ile verimlilik arasında güçlü bir ilişkiyi vurguluyor.' cümlenin İngilizcesi:",
+      "answer": "The study highlights a strong correlation between sleep and productivity.",
+      "alt": "The study highlights a strong correlation between sleep and productivity"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: We need to come ___ with a viable solution to this crisis.",
+      "answer": "up"
+    }
+  ],
+  "C1": [
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Denetim tamamlanana kadar mali tutarsızlıklar gün yüzüne çıkmadı.' olan C1 cümlesinin İngilizcesi:",
+      "answer": "Not until the audit was finalized did the financial discrepancies come to light.",
+      "alt": "Not until the audit was finalized did the financial discrepancies come to light"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #2",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #3",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #4",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #5",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #6",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #7",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #8",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #9",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #10",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #11",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #12",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #13",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #14",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #15",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #16",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #17",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #18",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #19",
+      "answer": "did"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Not until the board members reviewed the reports ___ they realize the crisis. #20",
+      "answer": "did"
+    }
+  ],
+  "C2": [
+    {
+      "type": "translate",
+      "prompt": "Türkçesi 'Fani güzelliği izleyicileri büyüledi ve silinmez bir iz bıraktı.' olan C2 cümlesinin İngilizcesi:",
+      "answer": "Her ephemeral beauty captivated the audience, leaving an indelible impression.",
+      "alt": "Her ephemeral beauty captivated the audience, leaving an indelible impression"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #2",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #3",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #4",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #5",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #6",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #7",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #8",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #9",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #10",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #11",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #12",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #13",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #14",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #15",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #16",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #17",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #18",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #19",
+      "answer": "are"
+    },
+    {
+      "type": "fill",
+      "prompt": "Boşluğu doldurun: Under no circumstances ___ employees allowed to access the database. #20",
+      "answer": "are"
+    }
+  ]
+};
 
     /* ==========================================================================
-       5. QUIZ MANTIĞI
+       QUIZ MODU MANTIĞI
        ========================================================================== */
     let currentQuestionIndex = 0;
     let isAnswered = false;
@@ -4823,29 +6397,27 @@
       currentQuestionIndex++;
       
       if (currentQuestionIndex >= questions.length) {
-        const threshold = levelThresholds[currentLevel];
+        const threshold = 180; // 300 üzerinden 180 XP barajı
         if (currentLevelXP >= threshold) {
-            unlockNextLevel(currentLevel);
-            alert(`🔥 TEBRİKLER! ${currentLevelXP} XP topladın ve barajı (${threshold} XP) başarıyla geçtin. Sonraki seviyenin kilidi açıldı!`);
-            currentQuestionIndex = 0;
-            currentLevelXP = 0;
-            loadQuestion();
+            completedModes[currentLevel]['quiz'] = true;
+            updateModeButtonsUI();
+            checkLevelUnlockStatus(currentLevel);
+            alert(`🎉 TEBRİKLER! Çoktan Seçmeli Testi başarıyla tamamladın! (${currentLevelXP} XP)
+${currentLevel} seviyesini tamamen geçmek için diğer testlere de (Drag & Match, Speaking, Görsel, Yazma) göz atın!`);
         } else {
-            alert(`💀 BAŞARISIZ! Barajı geçemedin.
-Gereken: ${threshold} XP
-Senin Puanın: ${currentLevelXP} XP
-Bu seviyeyi tekrar çözmek zorundasın!`);
-            currentQuestionIndex = 0;
-            currentLevelXP = 0;
-            loadQuestion();
+            alert(`❌ BARAJ GEÇİLEMEDİ! Çoktan Seçmeli Testte baraj puanına ulaşılamadı. (Senin Puanın: ${currentLevelXP} XP / Gereken: ${threshold} XP)
+İstediğiniz zaman tekrar deneyebilirsiniz!`);
         }
+        currentQuestionIndex = 0;
+        currentLevelXP = 0;
+        loadQuestion();
         return;
       }
       loadQuestion();
     }
 
     /* ==========================================================================
-       6. DRAG & MATCH MANTIĞI
+       DRAG & MATCH MODU MANTIĞI
        ========================================================================== */
     let currentMatchIndex = 0;
     let currentMatchXP = 0;
@@ -5025,29 +6597,27 @@ Bu seviyeyi tekrar çözmek zorundasın!`);
       currentMatchIndex++;
 
       if (currentMatchIndex >= sets.length) {
-        const threshold = levelThresholds[currentLevel];
+        const threshold = 400;
         if (currentMatchXP >= threshold) {
-          unlockNextLevel(currentLevel);
-          alert(`🔥 TEBRİKLER! ${currentMatchXP} XP topladın ve Eşleştirme Barajını (${threshold} XP) geçtin. Sonraki seviye açıldı!`);
-          currentMatchIndex = 0;
-          currentMatchXP = 0;
-          loadMatchSet();
+          completedModes[currentLevel]['match'] = true;
+          updateModeButtonsUI();
+          checkLevelUnlockStatus(currentLevel);
+          alert(`🎉 TEBRİKLER! Drag & Match egzersizini başarıyla tamamladın! (${currentMatchXP} XP)
+${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`);
         } else {
-          alert(`💀 BAŞARISIZ! Barajı geçemedin.
-Gereken: ${threshold} XP
-Senin Puanın: ${currentMatchXP} XP
-Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
-          currentMatchIndex = 0;
-          currentMatchXP = 0;
-          loadMatchSet();
+          alert(`❌ BARAJ GEÇİLEMEDİ! Drag & Match egzersizinde baraj puanına ulaşılamadı. (Senin Puanın: ${currentMatchXP} XP / Gereken: ${threshold} XP)
+İstediğiniz zaman tekrar deneyebilirsiniz!`);
         }
+        currentMatchIndex = 0;
+        currentMatchXP = 0;
+        loadMatchSet();
         return;
       }
       loadMatchSet();
     }
 
     /* ==========================================================================
-       7. GELİŞMİŞ SPEAKING TEST MANTIĞI & KISALTMA (CONTRACTIONS) DÖNÜŞTÜRÜCÜSÜ
+       SPEAKING TEST MANTIĞI
        ========================================================================== */
     let currentSpeakingIndex = 0;
     let currentSpeakingXP = 0;
@@ -5059,86 +6629,27 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
 
     const STOP_WORDS = new Set(["a", "an", "the", "to", "is", "are", "am", "in", "on", "at", "of", "for", "and", "or", "it", "you", "me", "my", "your", "we", "he", "she", "they"]);
 
-    // KAPSAMLI KISALTMA (CONTRACTIONS) SÖZLÜĞÜ VE DÖNÜŞTÜRÜCÜSÜ
     function expandContractions(text) {
       if (!text) return "";
-      let t = text.toLowerCase();
-
-      t = t.replace(/['’`]/g, "'");
+      let t = text.toLowerCase().replace(/['’`]/g, "'");
 
       const mapping = {
-        "what's": "what is", "whats": "what is",
-        "what'll": "what will", "whatll": "what will",
-        "what'd": "what would", "whatd": "what would",
-        
-        "where's": "where is", "wheres": "where is",
-        "when's": "when is", "whens": "when is",
-        "who's": "who is", "whos": "who is",
-        "who'll": "who will", "wholl": "who will",
-        "who'd": "who would", "whod": "who would",
-        "why's": "why is", "whys": "why is",
-        "how's": "how is", "hows": "how is",
-        
-        "that's": "that is", "thats": "that is",
-        "that'll": "that will", "thatll": "that will",
-        "that'd": "that would", "thatd": "that would",
-        
-        "there's": "there is", "theres": "there is",
-        "there'll": "there will", "therell": "there will",
-        "there'd": "there would", "thered": "there would",
-        
-        "i'm": "i am", "im": "i am",
-        "you're": "you are", "youre": "you are",
-        "he's": "he is", "hes": "he is",
-        "she's": "she is", "shes": "she is",
-        "it's": "it is", "its": "it is",
-        "we're": "we are",
-        "they're": "they are", "theyre": "they are",
-        
-        "i'll": "i will", "ill": "i will",
-        "you'll": "you will", "youll": "you will",
-        "he'll": "he will", "hell": "he will",
-        "she'll": "she will", "shell": "she will",
-        "it'll": "it will", "itll": "it will",
-        "we'll": "we will", "well": "we will",
-        "they'll": "they will", "theyll": "they will",
-        
-        "i'd": "i would", "id": "i would",
-        "you'd": "you would", "youd": "you would",
-        "he'd": "he would", "hed": "he would",
-        "she'd": "she would", "shed": "she would",
-        "it'd": "it would", "itd": "it would",
-        "we'd": "we would", "wed": "we would",
-        "they'd": "they would", "theyd": "they would",
-        
-        "i've": "i have", "ive": "i have",
-        "you've": "you have", "youve": "you have",
-        "we've": "we have", "weve": "we have",
-        "they've": "they have", "theyve": "they have",
-        
-        "don't": "do not", "dont": "do not",
-        "doesn't": "does not", "doesnt": "does not",
-        "didn't": "did not", "didnt": "did not",
-        "can't": "cannot", "cant": "cannot",
-        "couldn't": "could not", "couldnt": "could not",
-        "wouldn't": "would not", "wouldnt": "would not",
-        "shouldn't": "should not", "shouldnt": "should not",
-        "isn't": "is not", "isnt": "is not",
-        "aren't": "are not", "arent": "are not",
-        "wasn't": "was not", "wasnt": "was not",
-        "weren't": "were not", "werent": "were not",
-        "haven't": "have not", "havent": "have not",
-        "hasn't": "has not", "hasnt": "has not",
-        "hadn't": "had not", "hadnt": "had not",
-        "won't": "will not", "wont": "will not",
-        
-        "could've": "could have", "couldve": "could have",
-        "should've": "should have", "shouldve": "should have",
-        "would've": "would have", "wouldve": "would have",
-        "might've": "might have", "mightve": "might have",
-        "must've": "must have", "mustve": "must have",
-        
-        "let's": "let us", "lets": "let us"
+        "what's": "what is", "whats": "what is", "what'll": "what will", "whatll": "what will", "what'd": "what would", "whatd": "what would",
+        "where's": "where is", "wheres": "where is", "when's": "when is", "whens": "when is", "who's": "who is", "whos": "who is",
+        "who'll": "who will", "wholl": "who will", "who'd": "who would", "whod": "who would", "why's": "why is", "whys": "why is",
+        "how's": "how is", "hows": "how is", "that's": "that is", "thats": "that is", "that'll": "that will", "thatll": "that will",
+        "there's": "there is", "theres": "there is", "i'm": "i am", "im": "i am", "you're": "you are", "youre": "you are",
+        "he's": "he is", "hes": "he is", "she's": "she is", "shes": "she is", "it's": "it is", "its": "it is", "we're": "we are",
+        "they're": "they are", "theyre": "they are", "i'll": "i will", "ill": "i will", "you'll": "you will", "youll": "you will",
+        "he'll": "he will", "hell": "he will", "she'll": "she will", "shell": "she will", "we'll": "we will", "they'll": "they will",
+        "i'd": "i would", "id": "i would", "you'd": "you would", "youd": "you would", "he'd": "he would", "hed": "he would",
+        "she'd": "she would", "shed": "she would", "we'd": "we would", "they'd": "they would", "i've": "i have", "ive": "i have",
+        "you've": "you have", "youve": "you have", "we've": "we have", "they've": "they have", "don't": "do not", "dont": "do not",
+        "doesn't": "does not", "doesnt": "does not", "didn't": "did not", "didnt": "did not", "can't": "cannot", "cant": "cannot",
+        "couldn't": "could not", "couldnt": "could not", "wouldn't": "would not", "wouldnt": "would not", "shouldn't": "should not",
+        "isn't": "is not", "isnt": "is not", "aren't": "are not", "arent": "are not", "wasn't": "was not", "wasnt": "was not",
+        "weren't": "were not", "werent": "were not", "haven't": "have not", "hasn't": "has not", "hadn't": "had not", "won't": "will not",
+        "could've": "could have", "should've": "should have", "would've": "would have", "might've": "might have", "must've": "must have", "let's": "let us"
       };
 
       let cleanText = t.replace(/[^a-z0-9' ]/g, " ");
@@ -5149,9 +6660,7 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
 
     function loadSpeakingSentence() {
       stopRecording();
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
       const sentences = speakingBank[currentLevel];
       const item = sentences[currentSpeakingIndex];
@@ -5166,8 +6675,7 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
       document.getElementById('speaking-explanation-box').style.display = 'none';
       document.getElementById('btn-next-speaking').style.display = 'none';
 
-      const playUserBtn = document.getElementById('btn-play-user-audio');
-      playUserBtn.disabled = true;
+      document.getElementById('btn-play-user-audio').disabled = true;
       userAudioBlobUrl = null;
 
       const micBtn = document.getElementById('btn-mic-record');
@@ -5197,18 +6705,14 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
     }
 
     function toggleSpeechRecording() {
-      if (isRecording) {
-        stopRecording();
-      } else {
-        startRecording();
-      }
+      if (isRecording) stopRecording();
+      else startRecording();
     }
 
     function startRecording() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
       if (!SpeechRecognition) {
-        alert('Tarayıcınız Google Speech Recognition API desteklemiyor. Lütfen Google Chrome veya Edge kullanın.');
+        alert('Tarayıcınız Speech Recognition API desteklemiyor. Lütfen Google Chrome veya Edge kullanın.');
         return;
       }
 
@@ -5224,7 +6728,7 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
         isRecording = true;
         micBtn.classList.add('recording');
         micBtn.innerHTML = '<i class="fa-solid fa-square"></i>';
-        micLabel.innerText = '🎙️ Sizi dinliyoruz... Şimdi İngilizce cümleyi okuyun! (Sol üstteki tarayıcı kutusundan "İzin Ver" butonuna bastığınızdan emin olun)';
+        micLabel.innerText = '🎙️ Sizi dinliyoruz... Şimdi İngilizce cümleyi okuyun!';
       };
 
       recognition.onresult = (event) => {
@@ -5237,14 +6741,11 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
         stopRecording();
         const expBox = document.getElementById('speaking-explanation-box');
         expBox.className = 'explanation-box error';
-        expBox.innerHTML = `<strong>Ses Algılanamadı!</strong> Lütfen sol üstteki tarayıcı penceresinden 'İzin Ver' butonuna bastığınızdan ve mikrofona net konuştuğunuzdan emin olun. (${event.error})`;
+        expBox.innerHTML = `<strong>Ses Algılanamadı!</strong> Lütfen mikrofona izin verdiğinizden ve net konuştuğunuzdan emin olun. (${event.error})`;
         expBox.style.display = 'block';
       };
 
-      recognition.onend = () => {
-        stopRecording();
-      };
-
+      recognition.onend = () => { stopRecording(); };
       recognition.start();
 
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -5275,12 +6776,8 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
         micLabel.innerText = 'Mikrofona tıklayıp tekrar deneyebilirsiniz';
       }
 
-      if (recognition) {
-        try { recognition.stop(); } catch(e) {}
-      }
-      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-        try { mediaRecorder.stop(); } catch(e) {}
-      }
+      if (recognition) { try { recognition.stop(); } catch(e) {} }
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') { try { mediaRecorder.stop(); } catch(e) {} }
     }
 
     function calculateEditDistance(s1, s2) {
@@ -5326,9 +6823,7 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
         if (uWords.includes(word)) {
           matchedWeight += weight;
         } else {
-          if (!isStopWord) {
-            missingContentWords.push(word);
-          }
+          if (!isStopWord) missingContentWords.push(word);
         }
       });
 
@@ -5366,7 +6861,7 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
 
         let errorDetails = '';
         if (missingContentWords.length > 0) {
-          errorDetails = '<br><strong style="color: #fca5a5;">Eksik/Değiştirilen Anahtar Kelimeler:</strong> ' + missingContentWords.map(w => '<span style="text-decoration: underline; font-weight:700;">' + w + '</span>').join(', ');
+          errorDetails = '<br><strong style="color: #fca5a5;">Eksik/Değiştirilen Kelimeler:</strong> ' + missingContentWords.map(w => '<span style="text-decoration: underline; font-weight:700;">' + w + '</span>').join(', ');
         }
 
         expBox.className = 'explanation-box error';
@@ -5375,8 +6870,7 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
           <strong>Algılanan:</strong> "${userTranscript}"<br>
           <strong>Beklenen:</strong> "${targetText}"<br>
           Telaffuz Doğruluğu: %${finalScore} (Geçme Barajı: %80).
-          ${errorDetails}<br>
-          <small>Anlam akışını korumak için cümlenin anahtar kelimelerini eksiksiz ve doğru telaffuz etmelisiniz.</small>
+          ${errorDetails}
         `;
         expBox.style.display = 'block';
       }
@@ -5387,25 +6881,235 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
       currentSpeakingIndex++;
 
       if (currentSpeakingIndex >= sentences.length) {
-        const threshold = levelThresholds[currentLevel];
+        const threshold = 90; // 10 cümle x 15 XP = 150 max. 90 XP barajı (6 doğru)
         if (currentSpeakingXP >= threshold) {
-          unlockNextLevel(currentLevel);
-          alert(`🔥 TEBRİKLER! ${currentSpeakingXP} XP topladın ve Konuşma Barajını (${threshold} XP) geçtin. Sonraki seviye açıldı!`);
-          currentSpeakingIndex = 0;
-          currentSpeakingXP = 0;
-          loadSpeakingSentence();
+          completedModes[currentLevel]['speaking'] = true;
+          updateModeButtonsUI();
+          checkLevelUnlockStatus(currentLevel);
+          alert(`🎉 TEBRİKLER! Konuşma (Speaking) egzersizini başarıyla tamamladın! (${currentSpeakingXP} XP)
+${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`);
         } else {
-          alert(`💀 BAŞARISIZ! Barajı geçemedin.
-Gereken: ${threshold} XP
-Senin Puanın: ${currentSpeakingXP} XP
-Bu seviyenin konuşma testlerini tekrar çözmelisin!`);
-          currentSpeakingIndex = 0;
-          currentSpeakingXP = 0;
-          loadSpeakingSentence();
+          alert(`❌ BARAJ GEÇİLEMEDİ! Konuşma egzersizinde baraj puanına ulaşılamadı. (Senin Puanın: ${currentSpeakingXP} XP / Gereken: ${threshold} XP)
+İstediğiniz zaman tekrar deneyebilirsiniz!`);
         }
+        currentSpeakingIndex = 0;
+        currentSpeakingXP = 0;
+        loadSpeakingSentence();
         return;
       }
       loadSpeakingSentence();
+    }
+
+    /* ==========================================================================
+       GÖRSEL EŞLEŞTİRME MODU MANTIĞI
+       ========================================================================== */
+    let currentVisualIndex = 0;
+    let currentVisualXP = 0;
+    let isVisualAnswered = false;
+
+    function loadVisualQuestion() {
+      isVisualAnswered = false;
+      const questions = visualBank[currentLevel];
+      const q = questions[currentVisualIndex];
+
+      document.getElementById('visual-tracker').innerText = `Görsel Soru ${currentVisualIndex + 1} / ${questions.length} | Bölüm Puanı: ${currentVisualXP} XP`;
+      document.getElementById('visual-image-target').src = q.img;
+      document.getElementById('visual-prompt-text').innerText = q.prompt;
+
+      const progressPercent = ((currentVisualIndex + 1) / questions.length) * 100;
+      document.getElementById('visual-progress-fill').style.width = `${progressPercent}%`;
+
+      const optionsContainer = document.getElementById('visual-options-container');
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle"></i>`;
+        btn.onclick = (e) => handleVisualAnswer(idx, btn, e);
+        optionsContainer.appendChild(btn);
+      });
+
+      document.getElementById('visual-explanation-box').style.display = 'none';
+      document.getElementById('btn-next-visual').style.display = 'none';
+    }
+
+    function handleVisualAnswer(selectedIndex, btnElement, event) {
+      if (isVisualAnswered) return;
+      isVisualAnswered = true;
+
+      const questions = visualBank[currentLevel];
+      const qData = questions[currentVisualIndex];
+      const allButtons = document.querySelectorAll('#visual-options-container .option-btn');
+
+      allButtons.forEach(btn => btn.disabled = true);
+      const expBox = document.getElementById('visual-explanation-box');
+
+      if (selectedIndex === qData.correct) {
+        currentVisualXP += 15;
+        saveUserXP(15);
+        btnElement.classList.add('correct-anim');
+        btnElement.querySelector('i').className = 'fa-solid fa-circle-check';
+        expBox.className = 'explanation-box success';
+        expBox.innerHTML = `<strong>Tebrikler! +15 XP 🎉</strong><br>${qData.exp}`;
+        triggerFloatingXP(event.clientX, event.clientY, `+15 XP`);
+      } else {
+        currentVisualXP -= 5;
+        saveUserXP(-5);
+        btnElement.classList.add('wrong-anim');
+        btnElement.querySelector('i').className = 'fa-solid fa-circle-xmark';
+        allButtons[qData.correct].classList.add('correct-anim');
+        expBox.className = 'explanation-box error';
+        expBox.innerHTML = `<strong>Yanlış Cevap! -5 XP ❌</strong><br>${qData.exp}`;
+        triggerFloatingXP(event.clientX, event.clientY, `-5 XP`, '#ef4444');
+      }
+
+      expBox.style.display = 'block';
+
+      const nextBtn = document.getElementById('btn-next-visual');
+      if (currentVisualIndex === questions.length - 1) {
+        nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
+      } else {
+        nextBtn.innerHTML = 'Sonraki Görsel Soruya Geç <i class="fa-solid fa-arrow-right"></i>';
+      }
+      nextBtn.style.display = 'block';
+    }
+
+    function nextVisualQuestion() {
+      const questions = visualBank[currentLevel];
+      currentVisualIndex++;
+
+      if (currentVisualIndex >= questions.length) {
+        const threshold = Math.round(questions.length * 15 * 0.6); // %60 başarı barajı
+        if (currentVisualXP >= threshold) {
+          completedModes[currentLevel]['visual'] = true;
+          updateModeButtonsUI();
+          checkLevelUnlockStatus(currentLevel);
+          alert(`🎉 TEBRİKLER! Görsel Eşleştirme egzersizini başarıyla tamamladın! (${currentVisualXP} XP)
+${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`);
+        } else {
+          alert(`❌ BARAJ GEÇİLEMEDİ! Görsel Eşleştirme egzersizinde baraj puanına ulaşılamadı. (Senin Puanın: ${currentVisualXP} XP / Gereken: ${threshold} XP)
+İstediğiniz zaman tekrar deneyebilirsiniz!`);
+        }
+        currentVisualIndex = 0;
+        currentVisualXP = 0;
+        loadVisualQuestion();
+        return;
+      }
+      loadVisualQuestion();
+    }
+
+    /* ==========================================================================
+       YAZMA EGZERSİZLERİ MODU MANTIĞI (WRITING)
+       ========================================================================== */
+    let currentWritingIndex = 0;
+    let currentWritingXP = 0;
+    let isWritingAnswered = false;
+
+    function loadWritingQuestion() {
+      isWritingAnswered = false;
+      const questions = writingBank[currentLevel];
+      const q = questions[currentWritingIndex];
+
+      document.getElementById('writing-tracker').innerText = `Yazma Soru ${currentWritingIndex + 1} / ${questions.length} | Bölüm Puanı: ${currentWritingXP} XP`;
+      document.getElementById('writing-prompt-text').innerText = q.prompt;
+      
+      const inputEl = document.getElementById('writing-user-input');
+      inputEl.value = '';
+      inputEl.disabled = false;
+      inputEl.focus();
+
+      const progressPercent = ((currentWritingIndex + 1) / questions.length) * 100;
+      document.getElementById('writing-progress-fill').style.width = `${progressPercent}%`;
+
+      document.getElementById('writing-explanation-box').style.display = 'none';
+      document.getElementById('btn-next-writing').style.display = 'none';
+      document.getElementById('btn-submit-writing').disabled = false;
+    }
+
+    function submitWritingAnswer() {
+      if (isWritingAnswered) return;
+      
+      const inputEl = document.getElementById('writing-user-input');
+      const userVal = inputEl.value.trim();
+
+      if (!userVal) {
+        alert('Lütfen bir cevap yazın!');
+        return;
+      }
+
+      isWritingAnswered = true;
+      inputEl.disabled = true;
+      document.getElementById('btn-submit-writing').disabled = true;
+
+      const questions = writingBank[currentLevel];
+      const qData = questions[currentWritingIndex];
+
+      // Expand contractions and normalize both user input and target answers
+      const normUser = expandContractions(userVal);
+      const normAns = expandContractions(qData.answer);
+      const normAlt = qData.alt ? expandContractions(qData.alt) : null;
+
+      const isCorrect = (normUser === normAns) || (normAlt && normUser === normAlt) || (calculateEditDistance(normUser, normAns) <= 2);
+
+      const expBox = document.getElementById('writing-explanation-box');
+
+      if (isCorrect) {
+        currentWritingXP += 15;
+        saveUserXP(15);
+        triggerFloatingXP(window.innerWidth / 2, 250, '+15 XP');
+
+        expBox.className = 'explanation-box success';
+        expBox.innerHTML = `
+          <strong>Tebrikler! Doğru Cevap 🎉 (+15 XP)</strong><br>
+          <strong>Doğru Cevap:</strong> "${qData.answer}"
+        `;
+      } else {
+        currentWritingXP -= 5;
+        saveUserXP(-5);
+        triggerFloatingXP(window.innerWidth / 2, 250, '-5 XP', '#ef4444');
+
+        expBox.className = 'explanation-box error';
+        expBox.innerHTML = `
+          <strong>Yanlış Cevap! ❌ (-5 XP)</strong><br>
+          <strong>Sizin Cevabınız:</strong> "${userVal}"<br>
+          <strong>Doğru Cevap:</strong> "${qData.answer}"
+        `;
+      }
+
+      expBox.style.display = 'block';
+
+      const nextBtn = document.getElementById('btn-next-writing');
+      if (currentWritingIndex === questions.length - 1) {
+        nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
+      } else {
+        nextBtn.innerHTML = 'Sonraki Yazma Sorusuna Geç <i class="fa-solid fa-arrow-right"></i>';
+      }
+      nextBtn.style.display = 'block';
+    }
+
+    function nextWritingQuestion() {
+      const questions = writingBank[currentLevel];
+      currentWritingIndex++;
+
+      if (currentWritingIndex >= questions.length) {
+        const threshold = Math.round(questions.length * 15 * 0.6); // %60 barajı
+        if (currentWritingXP >= threshold) {
+          completedModes[currentLevel]['writing'] = true;
+          updateModeButtonsUI();
+          checkLevelUnlockStatus(currentLevel);
+          alert(`🎉 TEBRİKLER! Yazma Egzersizini başarıyla tamamladın! (${currentWritingXP} XP)
+${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`);
+        } else {
+          alert(`❌ BARAJ GEÇİLEMEDİ! Yazma egzersizinde baraj puanına ulaşılamadı. (Senin Puanın: ${currentWritingXP} XP / Gereken: ${threshold} XP)
+İstediğiniz zaman tekrar deneyebilirsiniz!`);
+        }
+        currentWritingIndex = 0;
+        currentWritingXP = 0;
+        loadWritingQuestion();
+        return;
+      }
+      loadWritingQuestion();
     }
 
     function triggerFloatingXP(x, y, text, color = '#4ade80') {
