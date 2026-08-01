@@ -47,7 +47,6 @@
       padding: 20px;
     }
 
-    /* Navbar Header */
     header {
       width: 100%;
       max-width: 1100px;
@@ -116,7 +115,6 @@
       border: 2px solid var(--accent-cyan);
     }
 
-    /* Ana Konteyner */
     .app-container {
       width: 100%;
       max-width: 900px;
@@ -125,9 +123,9 @@
       gap: 20px;
     }
 
-    /* Mod Seçici (Quiz / Drag & Match) */
     .mode-switcher {
       display: flex;
+      flex-wrap: wrap;
       gap: 12px;
       justify-content: center;
     }
@@ -136,14 +134,14 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       color: var(--text-muted);
-      padding: 12px 24px;
+      padding: 12px 20px;
       border-radius: 14px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       transition: all 0.2s ease;
     }
 
@@ -159,7 +157,6 @@
       box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
     }
 
-    /* Seviye Seçimi GRID */
     .level-selector {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -205,7 +202,6 @@
       margin-top: 4px;
     }
 
-    /* Soru / Eşleştirme Kartı */
     .quiz-card {
       background: var(--card-bg);
       backdrop-filter: blur(20px);
@@ -287,7 +283,6 @@
       transform: translateX(4px);
     }
 
-    /* Animasyonlu Geri Bildirim Sınıfları */
     .option-btn.correct-anim {
       background: rgba(34, 197, 94, 0.25) !important;
       border: 2px solid var(--success-green) !important;
@@ -314,7 +309,6 @@
       40%, 80% { transform: translateX(8px); }
     }
 
-    /* Drag & Match Özel Stiller */
     .match-instruction {
       background: rgba(56, 189, 248, 0.1);
       border: 1px solid rgba(56, 189, 248, 0.3);
@@ -333,12 +327,6 @@
       grid-template-columns: 1fr 1fr;
       gap: 16px;
       margin-bottom: 20px;
-    }
-
-    @media (max-width: 600px) {
-      .match-grid {
-        gap: 10px;
-      }
     }
 
     .match-column {
@@ -412,7 +400,128 @@
       border: 2px dashed var(--accent-cyan) !important;
     }
 
-    /* Açıklama Kutusu */
+    .speaking-target-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .speaking-en-text {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .speaking-tr-text {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .audio-controls-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-audio {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid var(--accent-cyan);
+      color: #7dd3fc;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-audio:hover {
+      background: rgba(56, 189, 248, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-audio-user {
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid var(--accent-purple);
+      color: #e9d5ff;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-audio-user:hover {
+      background: rgba(168, 85, 247, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-audio-user:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .mic-action-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .mic-btn {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      color: white;
+      font-size: 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .mic-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 15px 35px rgba(168, 85, 247, 0.6);
+    }
+
+    .mic-btn.recording {
+      background: linear-gradient(135deg, #ef4444, #f97316) !important;
+      animation: micPulse 1.2s infinite;
+    }
+
+    @keyframes micPulse {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    .mic-status-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
     .explanation-box {
       margin-top: 24px;
       padding: 16px 20px;
@@ -453,7 +562,6 @@
       transform: translateY(-2px);
     }
 
-    /* Yüzen XP Animasyon Etiketi */
     .floating-xp {
       position: absolute;
       font-size: 28px;
@@ -469,7 +577,6 @@
       100% { opacity: 0; transform: translateY(-60px) scale(1.3); }
     }
 
-    /* Modal / Bilgilendirme Banner */
     .firebase-alert {
       background: rgba(234, 179, 8, 0.15);
       border: 1px solid #eab308;
@@ -519,6 +626,9 @@
       </button>
       <button class="mode-btn" id="btn-mode-match" onclick="switchMode('match')">
         <i class="fa-solid fa-puzzle-piece"></i> Drag & Match (Eşleştirme)
+      </button>
+      <button class="mode-btn" id="btn-mode-speaking" onclick="switchMode('speaking')">
+        <i class="fa-solid fa-microphone"></i> Speaking Test (Konuşma & Telaffuz)
       </button>
     </div>
 
@@ -598,6 +708,43 @@
       <div class="explanation-box" id="match-explanation-box"></div>
 
       <button class="next-btn" id="btn-next-match" onclick="nextMatchSet()">Sonraki Eşleştirmeye Geç <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <!-- Speaking Test Kartı -->
+    <div class="quiz-card" id="speaking-card" style="display: none;">
+      <div class="quiz-header">
+        <span class="question-tracker" id="speaking-tracker">Cümle 1 / 10 | Bölüm Puanı: 0 XP</span>
+        <span class="question-tracker" id="speaking-level-badge" style="color: var(--accent-cyan); font-weight:700;">A1 SEVİYESİ</span>
+      </div>
+
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="speaking-progress-fill"></div>
+      </div>
+
+      <div class="speaking-target-box">
+        <div class="speaking-en-text" id="speaking-en-target">What do you do in your free time?</div>
+        <div class="speaking-tr-text" id="speaking-tr-target">Boş zamanlarında ne yaparsın?</div>
+
+        <div class="audio-controls-row">
+          <button class="btn-audio" onclick="playOriginalTTS()">
+            <i class="fa-solid fa-volume-high"></i> Orijinal Dinle
+          </button>
+          <button class="btn-audio-user" id="btn-play-user-audio" onclick="playUserRecordedAudio()" disabled>
+            <i class="fa-solid fa-play"></i> Sen (Kendi Sesin)
+          </button>
+        </div>
+      </div>
+
+      <div class="mic-action-area">
+        <button class="mic-btn" id="btn-mic-record" onclick="toggleSpeechRecording()">
+          <i class="fa-solid fa-microphone"></i>
+        </button>
+        <div class="mic-status-label" id="mic-status-label">Mikrofona tıklayıp yukarıdaki cümleyi yüksek sesle okuyun</div>
+      </div>
+
+      <div class="explanation-box" id="speaking-explanation-box"></div>
+
+      <button class="next-btn" id="btn-next-speaking" onclick="nextSpeakingSentence()">Sonraki Cümleye Geç <i class="fa-solid fa-arrow-right"></i></button>
     </div>
 
   </div>
@@ -751,24 +898,30 @@
     const unlockedLevels = { A1: true, A2: false, B1: false, B2: false, C1: false, C2: false };
     const levelThresholds = { A1: 220, A2: 220, B1: 220, B2: 220, C1: 440, C2: 440 };
 
-    let activeMode = 'quiz'; // 'quiz' or 'match'
+    let activeMode = 'quiz';
     let currentLevel = 'A1';
 
     function switchMode(mode) {
+      stopRecording();
       activeMode = mode;
       document.getElementById('btn-mode-quiz').classList.toggle('active', mode === 'quiz');
       document.getElementById('btn-mode-match').classList.toggle('active', mode === 'match');
+      document.getElementById('btn-mode-speaking').classList.toggle('active', mode === 'speaking');
+
+      document.getElementById('quiz-card').style.display = mode === 'quiz' ? 'block' : 'none';
+      document.getElementById('match-card').style.display = mode === 'match' ? 'block' : 'none';
+      document.getElementById('speaking-card').style.display = mode === 'speaking' ? 'block' : 'none';
 
       if (mode === 'quiz') {
-        document.getElementById('quiz-card').style.display = 'block';
-        document.getElementById('match-card').style.display = 'none';
         loadQuestion();
-      } else {
-        document.getElementById('quiz-card').style.display = 'none';
-        document.getElementById('match-card').style.display = 'block';
+      } else if (mode === 'match') {
         currentMatchIndex = 0;
         currentMatchXP = 0;
         loadMatchSet();
+      } else {
+        currentSpeakingIndex = 0;
+        currentSpeakingXP = 0;
+        loadSpeakingSentence();
       }
     }
 
@@ -778,6 +931,7 @@
         return;
       }
 
+      stopRecording();
       document.querySelectorAll('.level-card').forEach(card => card.classList.remove('active'));
       element.classList.add('active');
 
@@ -788,13 +942,19 @@
       currentMatchIndex = 0;
       currentMatchXP = 0;
 
+      currentSpeakingIndex = 0;
+      currentSpeakingXP = 0;
+
       document.getElementById('level-badge').innerText = `${level} SEVİYESİ`;
       document.getElementById('match-level-badge').innerText = `${level} SEVİYESİ`;
+      document.getElementById('speaking-level-badge').innerText = `${level} SEVİYESİ`;
 
       if (activeMode === 'quiz') {
         loadQuestion();
-      } else {
+      } else if (activeMode === 'match') {
         loadMatchSet();
+      } else {
+        loadSpeakingSentence();
       }
     }
 
@@ -950,7 +1110,7 @@
     };
 
     /* ==========================================================================
-       3. DRAG & MATCH KELİME BANKASI (A1:10, A2:10, B1:10, B2:10, C1:20, C2:20 SET)
+       3. DRAG & MATCH KELİME BANKASI
        ========================================================================== */
     const matchBank = {
   "A1": [
@@ -4328,7 +4488,265 @@
 };
 
     /* ==========================================================================
-       4. QUIZ MANTIĞI
+       4. SPEAKING TEST CÜMLE BANKASI
+       ========================================================================== */
+    const speakingBank = {
+  "A1": [
+    {
+      "en": "Hello, nice to meet you.",
+      "tr": "Merhaba, tanıştığımıza memnun oldum."
+    },
+    {
+      "en": "Where are you from?",
+      "tr": "Nerelisiniz?"
+    },
+    {
+      "en": "I would like a cup of coffee.",
+      "tr": "Bir fincan kahve almak istiyorum."
+    },
+    {
+      "en": "What is your name?",
+      "tr": "Adınız nedir?"
+    },
+    {
+      "en": "Today is a beautiful day.",
+      "tr": "Bugün güzel bir gün."
+    },
+    {
+      "en": "I love learning English.",
+      "tr": "İngilizce öğrenmeyi seviyorum."
+    },
+    {
+      "en": "See you tomorrow morning.",
+      "tr": "Yarın sabah görüşürüz."
+    },
+    {
+      "en": "Can you help me, please?",
+      "tr": "Bana yardım edebilir misiniz, lütfen?"
+    },
+    {
+      "en": "This book is very interesting.",
+      "tr": "Bu kitap çok ilginç."
+    },
+    {
+      "en": "What time is it right now?",
+      "tr": "Saat kaç acaba?"
+    }
+  ],
+  "A2": [
+    {
+      "en": "What do you like to do in your free time?",
+      "tr": "Boş zamanlarında ne yapmaktan hoşlanırsın?"
+    },
+    {
+      "en": "I usually go swimming on weekends.",
+      "tr": "Genellikle hafta sonları yüzmeye giderim."
+    },
+    {
+      "en": "Could you tell me how to get to the station?",
+      "tr": "İstasyona nasıl gideceğimi söyleyebilir misiniz?"
+    },
+    {
+      "en": "We had a wonderful vacation last summer.",
+      "tr": "Geçen yaz harika bir tatil geçirdik."
+    },
+    {
+      "en": "She works as a software developer in the city.",
+      "tr": "Şehirde yazılım geliştirici olarak çalışıyor."
+    },
+    {
+      "en": "I am looking for a comfortable pair of shoes.",
+      "tr": "Rahat bir çift ayakkabı arıyorum."
+    },
+    {
+      "en": "He promised to call me as soon as he arrived.",
+      "tr": "Varır varmaz beni arayacağına söz verdi."
+    },
+    {
+      "en": "What kind of music do you enjoy listening to?",
+      "tr": "Ne tür müzik dinlemekten hoşlanırsın?"
+    },
+    {
+      "en": "Don't forget to lock the door before leaving.",
+      "tr": "Çıkmadan önce kapıyı kilitlemeyi unutma."
+    },
+    {
+      "en": "It looks like it is going to rain this afternoon.",
+      "tr": "Bu öğleden sonra yağmur yağacak gibi görünüyor."
+    }
+  ],
+  "B1": [
+    {
+      "en": "In my opinion, technology has transformed the way we communicate.",
+      "tr": "Bence teknoloji iletişim kurma şeklimizi dönüştürdü."
+    },
+    {
+      "en": "If I had more free time, I would learn how to play the piano.",
+      "tr": "Daha fazla boş zamanım olsaydı, piyano çalmayı öğrenirdim."
+    },
+    {
+      "en": "Although it was raining heavily, we decided to continue our hike.",
+      "tr": "Şiddetli yağmur yağmasına rağmen yürüyüşümüze devam etmeye karar verdik."
+    },
+    {
+      "en": "She has been working on this project for over three months.",
+      "tr": "Üç aydan fazla süredir bu proje üzerinde çalışıyor."
+    },
+    {
+      "en": "It is essential to balance work and personal life effectively.",
+      "tr": "İş ve özel hayatı etkili bir şekilde dengelemek esastır."
+    },
+    {
+      "en": "Many scientists believe climate change is the biggest global challenge.",
+      "tr": "Birçok bilim insanı iklim değişikliğinin en büyük küresel zorluk olduğuna inanıyor."
+    },
+    {
+      "en": "Could you please clarify what you meant by that statement?",
+      "tr": "Lütfen bu ifadeyle ne demek istediğinizi açıklığa kavuşturabilir misiniz?"
+    },
+    {
+      "en": "Learning a new language requires patience and consistent practice.",
+      "tr": "Yeni bir dil öğrenmek sabır ve tutarlı pratik gerektirir."
+    },
+    {
+      "en": "We need to find a sustainable solution to this environmental problem.",
+      "tr": "Bu çevre sorununa sürdürülebilir bir çözüm bulmamız gerekiyor."
+    },
+    {
+      "en": "He managed to pass the exam despite not having studied much.",
+      "tr": "Çok çalışmamış olmasına rağmen sınavı geçmeyi başardı."
+    }
+  ],
+  "B2": [
+    {
+      "en": "The government has introduced new policies to boost economic growth.",
+      "tr": "Hükümet ekonomik büyümeyi teşvik etmek için yeni politikalar sundu."
+    },
+    {
+      "en": "Critical thinking is an indispensable skill for academic success.",
+      "tr": "Eleştirel düşünme, akademik başarı için vazgeçilmez bir beceridir."
+    },
+    {
+      "en": "By the time the conference starts, all preparations will have been completed.",
+      "tr": "Konferans başlayana kadar tüm hazırlıklar tamamlanmış olacak."
+    },
+    {
+      "en": "Had I known about the traffic jam, I would have taken a different route.",
+      "tr": "Trafik sıkışıklığını bilseydim farklı bir güzergah seçerdim."
+    },
+    {
+      "en": "Artificial intelligence is rapidly altering the job market globally.",
+      "tr": "Yapay zeka küresel ölçekte iş piyasasını hızla değiştiriyor."
+    },
+    {
+      "en": "She demonstrated exceptional leadership qualities during the crisis.",
+      "tr": "Kriz sırasında olağanüstü liderlik vasıfları sergiledi."
+    },
+    {
+      "en": "It is imperative that we address these security concerns immediately.",
+      "tr": "Bu güvenlik endişelerini derhal ele almamız son derece önemlidir."
+    },
+    {
+      "en": "Despite facing severe criticism, the team remained steadfast in their mission.",
+      "tr": "Ciddi eleştirilerle karşılaşmalarına rağmen ekip görevinde kararlı kaldı."
+    },
+    {
+      "en": "The study highlights a strong correlation between sleep and productivity.",
+      "tr": "Araştırma, uyku ile verimlilik arasında güçlü bir ilişkiyi vurguluyor."
+    },
+    {
+      "en": "Negotiations were deadlocked because neither side was willing to compromise.",
+      "tr": "İki taraf da taviz vermeye yanaşmadığı için müzakereler kilitlendi."
+    }
+  ],
+  "C1": [
+    {
+      "en": "Not until the audit was finalized did the financial discrepancies come to light.",
+      "tr": "Denetim tamamlanana kadar mali tutarsızlıklar gün yüzüne çıkmadı."
+    },
+    {
+      "en": "The speaker delivered a cogent argument that persuaded the entire audience.",
+      "tr": "Müşterek konuşmacı tüm dinleyicileri ikna eden güçlü bir argüman sundu."
+    },
+    {
+      "en": "It is crucial to mitigate potential risks before launching a large-scale enterprise.",
+      "tr": "Büyük ölçekli bir girişime başlamadan önce olası riskleri hafifletmek hayatidir."
+    },
+    {
+      "en": "Her profound understanding of philosophy astounded her university professors.",
+      "tr": "Derin felsefe anlayışı üniversite profesörlerini hayrete düşürdü."
+    },
+    {
+      "en": "The new legislation is expected to have a far-reaching impact on public health.",
+      "tr": "Yeni mevzuatın toplum sağlığı üzerinde geniş kapsamlı bir etki yaratması bekleniyor."
+    },
+    {
+      "en": "Rarely have we witnessed such a seamless integration of art and technology.",
+      "tr": "Sanat ve teknolojinin bu kadar pürüzsüz entegrasyonuna nadiren tanık olduk."
+    },
+    {
+      "en": "He maintains an insatiable appetite for acquiring knowledge across disciplines.",
+      "tr": "Disiplinler arası bilgi edinme konusunda doymak bilmez bir arzu duyuyor."
+    },
+    {
+      "en": "Under no circumstances should confidential client data be exposed publicly.",
+      "tr": "Gizli müşteri verileri hiçbir koşulda kamuoyuna ifşa edilmemelidir."
+    },
+    {
+      "en": "The resilience shown by the community in the aftermath of the storm was remarkable.",
+      "tr": "Fırtınanın ardından toplumun gösterdiği direnç olağanüstüydü."
+    },
+    {
+      "en": "Systemic reforms are essential to restore public trust in democratic institutions.",
+      "tr": "Demokratik kurumlara kamu güvenini yeniden kazandırmak için sistemsel reformlar şarttır."
+    }
+  ],
+  "C2": [
+    {
+      "en": "Her ephemeral beauty captivated the audience, leaving an indelible impression.",
+      "tr": "Fani güzelliği izleyicileri büyüledi ve silinmez bir iz bıraktı."
+    },
+    {
+      "en": "To suggest he acted maliciously is a gross miscarriage of justice.",
+      "tr": "Kötü niyetle hareket ettiğini öne sürmek adaletin açıkça tecelli etmemesidir."
+    },
+    {
+      "en": "The diplomat exercised remarkable circumlocution to navigate the delicate inquiry.",
+      "tr": "Diplomat, hassas sorgulamayı yönetmek için olağanüstü bir üslup kıvraklığı sergiledi."
+    },
+    {
+      "en": "Notwithstanding the initial setbacks, the project culminated in unequivocal success.",
+      "tr": "Başlangıçtaki aksiliklere rağmen proje açık bir başarıyla sonuçlandı."
+    },
+    {
+      "en": "His meticulous attention to detail ensured that no ambiguity plagued the contract.",
+      "tr": "Detaylara gösterdiği titiz özen, sözleşmede hiçbir muğlaklık kalmamasını sağladı."
+    },
+    {
+      "en": "The incessant noise from the industrial zone drove the residents up the wall.",
+      "tr": "Sanayi bölgesinden gelen aralıksız gürültü mahalle sakinlerini çıldırttı."
+    },
+    {
+      "en": "In the face of adversity, she remained steadfast and refused to eat humble pie.",
+      "tr": "Zorluklar karşısında sarsılmaz kaldı ve yenilgiyi kabul etmeyi reddetti."
+    },
+    {
+      "en": "Quantum mechanics poses a profound paradox that challenges conventional intuition.",
+      "tr": "Kuantum mekaniği, geleneksel sezgilere meydan okuyan derin bir paradoks sunar."
+    },
+    {
+      "en": "The board rejected the proposal outright due to its tenuous financial foundation.",
+      "tr": "Yönetim kurulu, zayıf finansal temeli nedeniyle teklifi tamamen reddetti."
+    },
+    {
+      "en": "A profound paradigm shift is underway across modern scientific research.",
+      "tr": "Modern bilimsel araştırmalarda derin bir paradigma değişimi yaşanıyor."
+    }
+  ]
+};
+
+    /* ==========================================================================
+       5. QUIZ MANTIĞI
        ========================================================================== */
     let currentQuestionIndex = 0;
     let isAnswered = false;
@@ -4427,7 +4845,7 @@ Bu seviyeyi tekrar çözmek zorundasın!`);
     }
 
     /* ==========================================================================
-       5. DRAG & MATCH MANTIĞI
+       6. DRAG & MATCH MANTIĞI
        ========================================================================== */
     let currentMatchIndex = 0;
     let currentMatchXP = 0;
@@ -4449,7 +4867,7 @@ Bu seviyeyi tekrar çözmek zorundasın!`);
       selectedTRCard = null;
 
       const sets = matchBank[currentLevel];
-      const setPairs = sets[currentMatchIndex]; // 10 pairs: [ [TR, EN], [TR, EN], ... ]
+      const setPairs = sets[currentMatchIndex];
 
       document.getElementById('match-tracker').innerText = `Eşleştirme Seti ${currentMatchIndex + 1} / ${sets.length} | Bölüm Puanı: ${currentMatchXP} XP`;
       
@@ -4465,15 +4883,12 @@ Bu seviyeyi tekrar çözmek zorundasın!`);
       trContainer.innerHTML = '';
       enContainer.innerHTML = '';
 
-      // Create list of items with unique pair ID
       const trItems = setPairs.map((pair, idx) => ({ text: pair[0], id: idx }));
       const enItems = setPairs.map((pair, idx) => ({ text: pair[1], id: idx }));
 
-      // Shuffle TR and EN lists independently
       const shuffledTR = shuffleArray(trItems);
       const shuffledEN = shuffleArray(enItems);
 
-      // Render TR Cards (Left)
       shuffledTR.forEach(item => {
         const card = document.createElement('div');
         card.className = 'match-card-item';
@@ -4482,10 +4897,7 @@ Bu seviyeyi tekrar çözmek zorundasın!`);
         card.setAttribute('data-side', 'tr');
         card.innerText = item.text;
 
-        // Click handler
         card.onclick = () => handleTRClick(card);
-
-        // Drag handlers
         card.ondragstart = (e) => {
           draggedPairId = item.id;
           e.dataTransfer.setData('text/plain', item.id);
@@ -4498,7 +4910,6 @@ Bu seviyeyi tekrar çözmek zorundasın!`);
         trContainer.appendChild(card);
       });
 
-      // Render EN Cards (Right)
       shuffledEN.forEach(item => {
         const card = document.createElement('div');
         card.className = 'match-card-item';
@@ -4506,10 +4917,7 @@ Bu seviyeyi tekrar çözmek zorundasın!`);
         card.setAttribute('data-side', 'en');
         card.innerText = item.text;
 
-        // Click handler
         card.onclick = () => handleENClick(card);
-
-        // Drop handlers
         card.ondragover = (e) => {
           e.preventDefault();
           if (!card.classList.contains('matched')) {
@@ -4564,7 +4972,6 @@ Bu seviyeyi tekrar çözmek zorundasın!`);
       const enId = enCard.getAttribute('data-id');
 
       if (trId === enId) {
-        // CORRECT MATCH
         trCard.classList.remove('selected');
         trCard.classList.add('matched');
         enCard.classList.add('matched');
@@ -4580,7 +4987,6 @@ Bu seviyeyi tekrar çözmek zorundasın!`);
         selectedTRCard = null;
 
         if (matchedPairsCount === 10) {
-          // ALL MATCHED IN THIS SET
           currentMatchXP += 50;
           saveUserXP(50);
 
@@ -4599,7 +5005,6 @@ Bu seviyeyi tekrar çözmek zorundasın!`);
           nextBtn.style.display = 'block';
         }
       } else {
-        // WRONG MATCH
         trCard.classList.add('wrong');
         enCard.classList.add('wrong');
 
@@ -4639,6 +5044,372 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
         return;
       }
       loadMatchSet();
+    }
+
+    /* ==========================================================================
+       7. GELİŞMİŞ SPEAKING TEST MANTIĞI & KISALTMA (CONTRACTIONS) DÖNÜŞTÜRÜCÜSÜ
+       ========================================================================== */
+    let currentSpeakingIndex = 0;
+    let currentSpeakingXP = 0;
+    let isRecording = false;
+    let recognition = null;
+    let mediaRecorder = null;
+    let recordedAudioChunks = [];
+    let userAudioBlobUrl = null;
+
+    const STOP_WORDS = new Set(["a", "an", "the", "to", "is", "are", "am", "in", "on", "at", "of", "for", "and", "or", "it", "you", "me", "my", "your", "we", "he", "she", "they"]);
+
+    // KAPSAMLI KISALTMA (CONTRACTION) AÇICI
+    function expandContractions(text) {
+      let t = text.toLowerCase();
+
+      const contractions = [
+        [/could[''’`]?ve/g, "could have"],
+        [/should[''’`]?ve/g, "should have"],
+        [/would[''’`]?ve/g, "would have"],
+        [/might[''’`]?ve/g, "might have"],
+        [/must[''’`]?ve/g, "must have"],
+
+        [/what[''’`]?ll/g, "what will"],
+        [/what[''’`]?d/g, "what would"],
+        [/what[''’`]?s/g, "what is"],
+
+        [/where[''’`]?s/g, "where is"],
+        [/when[''’`]?s/g, "when is"],
+
+        [/who[''’`]?ll/g, "who will"],
+        [/who[''’`]?d/g, "who would"],
+        [/who[''’`]?s/g, "who is"],
+
+        [/why[''’`]?s/g, "why is"],
+        [/how[''’`]?s/g, "how is"],
+
+        [/that[''’`]?ll/g, "that will"],
+        [/that[''’`]?d/g, "that would"],
+        [/that[''’`]?s/g, "that is"],
+
+        [/there[''’`]?ll/g, "there will"],
+        [/there[''’`]?d/g, "there would"],
+        [/there[''’`]?s/g, "there is"],
+
+        [/i[''’`]?m/g, "i am"],
+        [/you[''’`]?re/g, "you are"],
+        [/he[''’`]?s/g, "he is"],
+        [/she[''’`]?s/g, "she is"],
+        [/it[''’`]?s/g, "it is"],
+        [/we[''’`]?re/g, "we are"],
+        [/they[''’`]?re/g, "they are"],
+
+        [/i[''’`]?ll/g, "i will"],
+        [/you[''’`]?ll/g, "you will"],
+        [/he[''’`]?ll/g, "he will"],
+        [/she[''’`]?ll/g, "she will"],
+        [/it[''’`]?ll/g, "it will"],
+        [/we[''’`]?ll/g, "we will"],
+        [/they[''’`]?ll/g, "they will"],
+
+        [/i[''’`]?d/g, "i would"],
+        [/you[''’`]?d/g, "you would"],
+        [/he[''’`]?d/g, "he would"],
+        [/she[''’`]?d/g, "she would"],
+        [/it[''’`]?d/g, "it would"],
+        [/we[''’`]?d/g, "we would"],
+        [/they[''’`]?d/g, "they would"],
+
+        [/i[''’`]?ve/g, "i have"],
+        [/you[''’`]?ve/g, "you have"],
+        [/we[''’`]?ve/g, "we have"],
+        [/they[''’`]?ve/g, "they have"],
+
+        [/aren[''’`]?t/g, "are not"],
+        [/isn[''’`]?t/g, "is not"],
+        [/wasn[''’`]?t/g, "was not"],
+        [/weren[''’`]?t/g, "were not"],
+        [/don[''’`]?t/g, "do not"],
+        [/doesn[''’`]?t/g, "does not"],
+        [/didn[''’`]?t/g, "did not"],
+        [/haven[''’`]?t/g, "have not"],
+        [/hasn[''’`]?t/g, "has not"],
+        [/hadn[''’`]?t/g, "had not"],
+        [/won[''’`]?t/g, "will not"],
+        [/wouldn[''’`]?t/g, "would not"],
+        [/can[''’`]?t/g, "cannot"],
+        [/couldn[''’`]?t/g, "could not"],
+        [/shan[''’`]?t/g, "shall not"],
+        [/shouldn[''’`]?t/g, "should not"],
+        [/mustn[''’`]?t/g, "must not"],
+        [/mightn[''’`]?t/g, "might not"],
+
+        [/let[''’`]?s/g, "let us"]
+      ];
+
+      contractions.forEach(([regex, replacement]) => {
+        t = t.replace(regex, replacement);
+      });
+
+      return t.replace(/[^a-z0-9 ]/g, '').trim();
+    }
+
+    function loadSpeakingSentence() {
+      stopRecording();
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+
+      const sentences = speakingBank[currentLevel];
+      const item = sentences[currentSpeakingIndex];
+
+      document.getElementById('speaking-tracker').innerText = `Cümle ${currentSpeakingIndex + 1} / ${sentences.length} | Bölüm Puanı: ${currentSpeakingXP} XP`;
+      document.getElementById('speaking-en-target').innerText = item.en;
+      document.getElementById('speaking-tr-target').innerText = item.tr;
+
+      const progressPercent = ((currentSpeakingIndex + 1) / sentences.length) * 100;
+      document.getElementById('speaking-progress-fill').style.width = `${progressPercent}%`;
+
+      document.getElementById('speaking-explanation-box').style.display = 'none';
+      document.getElementById('btn-next-speaking').style.display = 'none';
+
+      const playUserBtn = document.getElementById('btn-play-user-audio');
+      playUserBtn.disabled = true;
+      userAudioBlobUrl = null;
+
+      const micBtn = document.getElementById('btn-mic-record');
+      micBtn.classList.remove('recording');
+      micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
+      document.getElementById('mic-status-label').innerText = 'Mikrofona tıklayıp yukarıdaki cümleyi yüksek sesle okuyun';
+    }
+
+    function playOriginalTTS() {
+      const targetText = document.getElementById('speaking-en-target').innerText;
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(targetText);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert('Tarayıcınız ses sentezleme (Text-to-Speech) özelliğini desteklemiyor.');
+      }
+    }
+
+    function playUserRecordedAudio() {
+      if (userAudioBlobUrl) {
+        const audio = new Audio(userAudioBlobUrl);
+        audio.play();
+      }
+    }
+
+    function toggleSpeechRecording() {
+      if (isRecording) {
+        stopRecording();
+      } else {
+        startRecording();
+      }
+    }
+
+    function startRecording() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (!SpeechRecognition) {
+        alert('Tarayıcınız Google Speech Recognition API desteklemiyor. Lütfen Google Chrome veya Edge kullanın.');
+        return;
+      }
+
+      recognition = new SpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      const micBtn = document.getElementById('btn-mic-record');
+      const micLabel = document.getElementById('mic-status-label');
+
+      recognition.onstart = () => {
+        isRecording = true;
+        micBtn.classList.add('recording');
+        micBtn.innerHTML = '<i class="fa-solid fa-square"></i>';
+        micLabel.innerText = '🎙️ Sizi dinliyoruz... Şimdi İngilizce cümleyi okuyun! (Sol üstteki tarayıcı kutusundan "İzin Ver" butonuna bastığınızdan emin olun)';
+      };
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        evaluatePronunciationAdvanced(transcript);
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Speech Recognition Error:', event.error);
+        stopRecording();
+        const expBox = document.getElementById('speaking-explanation-box');
+        expBox.className = 'explanation-box error';
+        expBox.innerHTML = `<strong>Ses Algılanamadı!</strong> Lütfen sol üstteki tarayıcı penceresinden 'İzin Ver' butonuna bastığınızdan ve mikrofona net konuştuğunuzdan emin olun. (${event.error})`;
+        expBox.style.display = 'block';
+      };
+
+      recognition.onend = () => {
+        stopRecording();
+      };
+
+      recognition.start();
+
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+          recordedAudioChunks = [];
+          mediaRecorder = new MediaRecorder(stream);
+          mediaRecorder.ondataavailable = e => recordedAudioChunks.push(e.data);
+          mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(recordedAudioChunks, { type: 'audio/mp3' });
+            userAudioBlobUrl = URL.createObjectURL(audioBlob);
+            document.getElementById('btn-play-user-audio').disabled = false;
+          };
+          mediaRecorder.start();
+        }).catch(err => console.error('Microphone Recording Error:', err));
+      }
+    }
+
+    function stopRecording() {
+      isRecording = false;
+      const micBtn = document.getElementById('btn-mic-record');
+      const micLabel = document.getElementById('mic-status-label');
+
+      if (micBtn) {
+        micBtn.classList.remove('recording');
+        micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
+      }
+      if (micLabel) {
+        micLabel.innerText = 'Mikrofona tıklayıp tekrar deneyebilirsiniz';
+      }
+
+      if (recognition) {
+        try { recognition.stop(); } catch(e) {}
+      }
+      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        try { mediaRecorder.stop(); } catch(e) {}
+      }
+    }
+
+    function calculateEditDistance(s1, s2) {
+      if (s1.length < s2.length) return calculateEditDistance(s2, s1);
+      if (s2.length === 0) return s1.length;
+
+      let previousRow = Array.from({ length: s2.length + 1 }, (_, i) => i);
+      for (let i = 0; i < s1.length; i++) {
+        let currentRow = [i + 1];
+        for (let j = 0; j < s2.length; j++) {
+          let insertions = previousRow[j + 1] + 1;
+          let deletions = currentRow[j] + 1;
+          let substitutions = previousRow[j] + (s1[i] !== s2[j] ? 1 : 0);
+          currentRow.push(Math.min(insertions, deletions, substitutions));
+        }
+        previousRow = currentRow;
+      }
+      return previousRow[previousRow.length - 1];
+    }
+
+    function evaluatePronunciationAdvanced(userTranscript) {
+      const targetText = document.getElementById('speaking-en-target').innerText;
+
+      // Hem kullanıcının söylediği hem de hedef cümle kısaltmalardan (contractions) arındırılır!
+      const uNorm = expandContractions(userTranscript);
+      const tNorm = expandContractions(targetText);
+
+      const charDist = calculateEditDistance(uNorm, tNorm);
+      const maxCharLen = Math.max(uNorm.length, tNorm.length);
+      const charSim = maxCharLen > 0 ? (1.0 - (charDist / maxCharLen)) * 100 : 0;
+
+      const uWords = uNorm.split(/\s+/);
+      const tWords = tNorm.split(/\s+/);
+
+      let totalWeight = 0;
+      let matchedWeight = 0;
+      let missingContentWords = [];
+
+      tWords.forEach(word => {
+        const isStopWord = STOP_WORDS.has(word);
+        const weight = isStopWord ? 1 : 3;
+        totalWeight += weight;
+
+        if (uWords.includes(word)) {
+          matchedWeight += weight;
+        } else {
+          if (!isStopWord) {
+            missingContentWords.push(word);
+          }
+        }
+      });
+
+      const wordSim = totalWeight > 0 ? (matchedWeight / totalWeight) * 100 : 0;
+      const finalScore = Math.round((charSim * 0.4) + (wordSim * 0.6));
+      const passed = finalScore >= 80 && missingContentWords.length === 0;
+
+      const expBox = document.getElementById('speaking-explanation-box');
+
+      if (passed) {
+        currentSpeakingXP += 15;
+        saveUserXP(15);
+        triggerFloatingXP(window.innerWidth / 2, 250, '+15 XP');
+
+        expBox.className = 'explanation-box success';
+        expBox.innerHTML = `
+          <strong>HARİKA! 🎉 (+15 XP)</strong><br>
+          <strong>Söylenen:</strong> "${userTranscript}"<br>
+          Telaffuz Doğruluğu: %${finalScore}
+        `;
+        expBox.style.display = 'block';
+
+        const nextBtn = document.getElementById('btn-next-speaking');
+        const sentences = speakingBank[currentLevel];
+        if (currentSpeakingIndex === sentences.length - 1) {
+          nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
+        } else {
+          nextBtn.innerHTML = 'Sonraki Cümleye Geç <i class="fa-solid fa-arrow-right"></i>';
+        }
+        nextBtn.style.display = 'block';
+      } else {
+        currentSpeakingXP -= 3;
+        saveUserXP(-3);
+        triggerFloatingXP(window.innerWidth / 2, 250, '-3 XP', '#ef4444');
+
+        let errorDetails = '';
+        if (missingContentWords.length > 0) {
+          errorDetails = '<br><strong style="color: #fca5a5;">Eksik/Değiştirilen Anahtar Kelimeler:</strong> ' + missingContentWords.map(w => '<span style="text-decoration: underline; font-weight:700;">' + w + '</span>').join(', ');
+        }
+
+        expBox.className = 'explanation-box error';
+        expBox.innerHTML = `
+          <strong>TEKRAR DENE! ❌ (-3 XP)</strong><br>
+          <strong>Algılanan:</strong> "${userTranscript}"<br>
+          <strong>Beklenen:</strong> "${targetText}"<br>
+          Telaffuz Doğruluğu: %${finalScore} (Geçme Barajı: %80).
+          ${errorDetails}<br>
+          <small>Anlam akışını korumak için cümlenin anahtar kelimelerini eksiksiz ve doğru telaffuz etmelisiniz.</small>
+        `;
+        expBox.style.display = 'block';
+      }
+    }
+
+    function nextSpeakingSentence() {
+      const sentences = speakingBank[currentLevel];
+      currentSpeakingIndex++;
+
+      if (currentSpeakingIndex >= sentences.length) {
+        const threshold = levelThresholds[currentLevel];
+        if (currentSpeakingXP >= threshold) {
+          unlockNextLevel(currentLevel);
+          alert(`🔥 TEBRİKLER! ${currentSpeakingXP} XP topladın ve Konuşma Barajını (${threshold} XP) geçtin. Sonraki seviye açıldı!`);
+          currentSpeakingIndex = 0;
+          currentSpeakingXP = 0;
+          loadSpeakingSentence();
+        } else {
+          alert(`💀 BAŞARISIZ! Barajı geçemedin.
+Gereken: ${threshold} XP
+Senin Puanın: ${currentSpeakingXP} XP
+Bu seviyenin konuşma testlerini tekrar çözmelisin!`);
+          currentSpeakingIndex = 0;
+          currentSpeakingXP = 0;
+          loadSpeakingSentence();
+        }
+        return;
+      }
+      loadSpeakingSentence();
     }
 
     function triggerFloatingXP(x, y, text, color = '#4ade80') {
