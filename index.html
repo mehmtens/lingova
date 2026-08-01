@@ -123,7 +123,6 @@
       gap: 20px;
     }
 
-    /* Lingo Maskot Widget */
     .mascot-container {
       display: flex;
       align-items: center;
@@ -990,7 +989,8 @@
     }
 
     function updateXPUI() {
-      document.getElementById('user-xp').innerText = `${userXP} XP`;
+      const el = document.getElementById('user-xp');
+      if (el) el.innerText = `${userXP} XP`;
     }
 
     function updateLevelCardsUI() {
@@ -1039,9 +1039,6 @@
       }
     }
 
-    loadLocalProgress();
-    initializeFirebase();
-
     function loginWithGoogle() {
       if (!isFirebaseInitialized) return;
       const provider = new firebase.auth.GoogleAuthProvider();
@@ -1054,20 +1051,24 @@
 
     function renderUserInfo(user) {
       const authContainer = document.getElementById('auth-container');
-      authContainer.innerHTML = `
-        <img src="${user.photoURL}" class="user-avatar" title="${user.displayName}">
-        <button class="btn-auth" onclick="logout()" style="padding: 8px 12px; font-size:12px;">Çıkış</button>
-      `;
+      if (authContainer) {
+        authContainer.innerHTML = `
+          <img src="${user.photoURL}" class="user-avatar" title="${user.displayName}">
+          <button class="btn-auth" onclick="logout()" style="padding: 8px 12px; font-size:12px;">Çıkış</button>
+        `;
+      }
     }
 
     function renderLoggedOutUI() {
       const authContainer = document.getElementById('auth-container');
-      authContainer.innerHTML = `
-        <button class="btn-auth" id="btn-login" onclick="loginWithGoogle()">
-          <i class="fa-brands fa-google"></i>
-          <span>Google ile Giriş</span>
-        </button>
-      `;
+      if (authContainer) {
+        authContainer.innerHTML = `
+          <button class="btn-auth" id="btn-login" onclick="loginWithGoogle()">
+            <i class="fa-brands fa-google"></i>
+            <span>Google ile Giriş</span>
+          </button>
+        `;
+      }
     }
 
     function loadUserData(uid) {
@@ -1104,6 +1105,8 @@
     function triggerLingoMascot(type = 'success', customText = null) {
       const avatar = document.getElementById('mascot-avatar');
       const textEl = document.getElementById('mascot-text');
+
+      if (!avatar || !textEl) return;
 
       if (customText) {
         textEl.innerText = customText;
@@ -1152,7 +1155,7 @@
 
       stopRecording();
       document.querySelectorAll('.level-card').forEach(card => card.classList.remove('active'));
-      element.classList.add('active');
+      if (element) element.classList.add('active');
 
       currentLevel = level;
       currentQuestionIndex = 0; currentLevelXP = 0;
@@ -1199,7 +1202,7 @@ ${currentLevel} Seviyesindeki tüm 5 egzersiz modunu (Çoktan Seçmeli, Drag & M
 
 Tebrikler! ${nextLvlName} seviyesinin kilidi açıldı. Artık ${nextLvlName} seviyesine geçebilirsiniz!`);
       } else {
-        triggerLingoMascot('success', `Tebrikler! ${modeLabel} modunu başarıyla tamamladın!🚀`);
+        triggerLingoMascot('success', `Tebrikler! ${modeLabel} modunu başarıyla tamamladın! 🚀`);
         alert(`🎉 TEBRİKLER!
 
 ${modeLabel} egzersizini başarıyla tamamladın!
@@ -6403,27 +6406,34 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
 
     function loadQuestion() {
       isAnswered = false;
-      const questions = questionBank[currentLevel];
+      const questions = questionBank[currentLevel] || questionBank['A1'];
       
-      document.getElementById('question-tracker').innerText = `Soru ${currentQuestionIndex + 1} / ${questions.length} | Bölüm Puanı: ${currentLevelXP} XP`;
-      document.getElementById('question-text').innerText = questions[currentQuestionIndex].q;
+      const trackerEl = document.getElementById('question-tracker');
+      const textEl = document.getElementById('question-text');
+      const fillEl = document.getElementById('progress-fill');
+
+      if (trackerEl) trackerEl.innerText = `Soru ${currentQuestionIndex + 1} / ${questions.length} | Bölüm Puanı: ${currentLevelXP} XP`;
+      if (textEl) textEl.innerText = questions[currentQuestionIndex].q;
       
       const progressPercent = ((currentQuestionIndex + 1) / questions.length) * 100;
-      document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+      if (fillEl) fillEl.style.width = `${progressPercent}%`;
 
       const optionsContainer = document.getElementById('options-container');
-      optionsContainer.innerHTML = '';
+      if (optionsContainer) {
+        optionsContainer.innerHTML = '';
+        questions[currentQuestionIndex].options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'option-btn';
+          btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle"></i>`;
+          btn.onclick = (e) => handleAnswer(idx, btn, e);
+          optionsContainer.appendChild(btn);
+        });
+      }
 
-      questions[currentQuestionIndex].options.forEach((opt, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle"></i>`;
-        btn.onclick = (e) => handleAnswer(idx, btn, e);
-        optionsContainer.appendChild(btn);
-      });
-
-      document.getElementById('explanation-box').style.display = 'none';
-      document.getElementById('btn-next').style.display = 'none';
+      const expBox = document.getElementById('explanation-box');
+      const nextBtn = document.getElementById('btn-next');
+      if (expBox) expBox.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
     }
 
     function handleAnswer(selectedIndex, btnElement, event) {
@@ -6442,8 +6452,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         saveUserXP(15);
         btnElement.classList.add('correct-anim');
         btnElement.querySelector('i').className = 'fa-solid fa-circle-check';
-        expBox.className = 'explanation-box success';
-        expBox.innerHTML = `<strong>Tebrikler! +15 XP 🎉</strong><br>${qData.exp}`;
+        if (expBox) {
+          expBox.className = 'explanation-box success';
+          expBox.innerHTML = `<strong>Tebrikler! +15 XP 🎉</strong><br>${qData.exp}`;
+        }
         triggerFloatingXP(event.clientX, event.clientY, `+15 XP`);
         triggerLingoMascot('success');
       } else {
@@ -6452,21 +6464,25 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         btnElement.classList.add('wrong-anim');
         btnElement.querySelector('i').className = 'fa-solid fa-circle-xmark';
         allButtons[qData.correct].classList.add('correct-anim');
-        expBox.className = 'explanation-box error';
-        expBox.innerHTML = `<strong>Yanlış Cevap! -5 XP ❌</strong><br>${qData.exp}`;
+        if (expBox) {
+          expBox.className = 'explanation-box error';
+          expBox.innerHTML = `<strong>Yanlış Cevap! -5 XP ❌</strong><br>${qData.exp}`;
+        }
         triggerFloatingXP(event.clientX, event.clientY, `-5 XP`, '#ef4444');
         triggerLingoMascot('error');
       }
 
-      expBox.style.display = 'block';
+      if (expBox) expBox.style.display = 'block';
       
       const nextBtn = document.getElementById('btn-next');
-      if (currentQuestionIndex === questions.length - 1) {
-        nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
-      } else {
-        nextBtn.innerHTML = 'Sonraki Soruya Geç <i class="fa-solid fa-arrow-right"></i>';
+      if (nextBtn) {
+        if (currentQuestionIndex === questions.length - 1) {
+          nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
+        } else {
+          nextBtn.innerHTML = 'Sonraki Soruya Geç <i class="fa-solid fa-arrow-right"></i>';
+        }
+        nextBtn.style.display = 'block';
       }
-      nextBtn.style.display = 'block';
     }
 
     function nextQuestion() {
@@ -6511,19 +6527,26 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       matchedPairsCount = 0;
       selectedTRCard = null;
 
-      const sets = matchBank[currentLevel];
+      const sets = matchBank[currentLevel] || matchBank['A1'];
       const setPairs = sets[currentMatchIndex];
 
-      document.getElementById('match-tracker').innerText = `Eşleştirme Seti ${currentMatchIndex + 1} / ${sets.length} | Bölüm Puanı: ${currentMatchXP} XP`;
+      const trackerEl = document.getElementById('match-tracker');
+      const fillEl = document.getElementById('match-progress-fill');
+      const expBox = document.getElementById('match-explanation-box');
+      const nextBtn = document.getElementById('btn-next-match');
+
+      if (trackerEl) trackerEl.innerText = `Eşleştirme Seti ${currentMatchIndex + 1} / ${sets.length} | Bölüm Puanı: ${currentMatchXP} XP`;
       
       const progressPercent = ((currentMatchIndex + 1) / sets.length) * 100;
-      document.getElementById('match-progress-fill').style.width = `${progressPercent}%`;
+      if (fillEl) fillEl.style.width = `${progressPercent}%`;
 
-      document.getElementById('match-explanation-box').style.display = 'none';
-      document.getElementById('btn-next-match').style.display = 'none';
+      if (expBox) expBox.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
 
       const trContainer = document.getElementById('tr-column');
       const enContainer = document.getElementById('en-column');
+
+      if (!trContainer || !enContainer) return;
 
       trContainer.innerHTML = '';
       enContainer.innerHTML = '';
@@ -6602,10 +6625,12 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
 
       if (!selectedTRCard) {
         const expBox = document.getElementById('match-explanation-box');
-        expBox.className = 'explanation-box error';
-        expBox.innerHTML = 'Önce sol taraftan bir Türkçe kelime seçin!';
-        expBox.style.display = 'block';
-        setTimeout(() => { expBox.style.display = 'none'; }, 1500);
+        if (expBox) {
+          expBox.className = 'explanation-box error';
+          expBox.innerHTML = 'Önce sol taraftan bir Türkçe kelime seçin!';
+          expBox.style.display = 'block';
+          setTimeout(() => { expBox.style.display = 'none'; }, 1500);
+        }
         return;
       }
 
@@ -6637,18 +6662,22 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
           saveUserXP(50);
 
           const expBox = document.getElementById('match-explanation-box');
-          expBox.className = 'explanation-box success';
-          expBox.innerHTML = `<strong>Tebrikler! Seti Başarıyla Tamamladın! 🎉 (+50 Bonus XP)</strong>`;
-          expBox.style.display = 'block';
+          if (expBox) {
+            expBox.className = 'explanation-box success';
+            expBox.innerHTML = `<strong>Tebrikler! Seti Başarıyla Tamamladın! 🎉 (+50 Bonus XP)</strong>`;
+            expBox.style.display = 'block';
+          }
 
           const nextBtn = document.getElementById('btn-next-match');
           const sets = matchBank[currentLevel];
-          if (currentMatchIndex === sets.length - 1) {
-            nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
-          } else {
-            nextBtn.innerHTML = 'Sonraki Eşleştirmeye Geç <i class="fa-solid fa-arrow-right"></i>';
+          if (nextBtn) {
+            if (currentMatchIndex === sets.length - 1) {
+              nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
+            } else {
+              nextBtn.innerHTML = 'Sonraki Eşleştirmeye Geç <i class="fa-solid fa-arrow-right"></i>';
+            }
+            nextBtn.style.display = 'block';
           }
-          nextBtn.style.display = 'block';
         }
       } else {
         trCard.classList.add('wrong');
@@ -6733,31 +6762,44 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       stopRecording();
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
-      const sentences = speakingBank[currentLevel];
+      const sentences = speakingBank[currentLevel] || speakingBank['A1'];
       const item = sentences[currentSpeakingIndex];
 
-      document.getElementById('speaking-tracker').innerText = `Cümle ${currentSpeakingIndex + 1} / ${sentences.length} | Bölüm Puanı: ${currentSpeakingXP} XP`;
-      document.getElementById('speaking-en-target').innerText = item.en;
-      document.getElementById('speaking-tr-target').innerText = item.tr;
+      const trackerEl = document.getElementById('speaking-tracker');
+      const enEl = document.getElementById('speaking-en-target');
+      const trEl = document.getElementById('speaking-tr-target');
+      const fillEl = document.getElementById('speaking-progress-fill');
+
+      if (trackerEl) trackerEl.innerText = `Cümle ${currentSpeakingIndex + 1} / ${sentences.length} | Bölüm Puanı: ${currentSpeakingXP} XP`;
+      if (enEl) enEl.innerText = item.en;
+      if (trEl) trEl.innerText = item.tr;
 
       const progressPercent = ((currentSpeakingIndex + 1) / sentences.length) * 100;
-      document.getElementById('speaking-progress-fill').style.width = `${progressPercent}%`;
+      if (fillEl) fillEl.style.width = `${progressPercent}%`;
 
-      document.getElementById('speaking-explanation-box').style.display = 'none';
-      document.getElementById('btn-next-speaking').style.display = 'none';
+      const expBox = document.getElementById('speaking-explanation-box');
+      const nextBtn = document.getElementById('btn-next-speaking');
+      const userAudioBtn = document.getElementById('btn-play-user-audio');
 
-      document.getElementById('btn-play-user-audio').disabled = true;
+      if (expBox) expBox.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
+      if (userAudioBtn) userAudioBtn.disabled = true;
+
       userAudioBlobUrl = null;
 
       const micBtn = document.getElementById('btn-mic-record');
-      micBtn.classList.remove('recording');
-      micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
-      document.getElementById('mic-status-label').innerText = 'Mikrofona tıklayıp yukarıdaki cümleyi yüksek sesle okuyun';
+      const micLabel = document.getElementById('mic-status-label');
+
+      if (micBtn) {
+        micBtn.classList.remove('recording');
+        micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
+      }
+      if (micLabel) micLabel.innerText = 'Mikrofona tıklayıp yukarıdaki cümleyi yüksek sesle okuyun';
     }
 
     function playOriginalTTS() {
-      const targetText = document.getElementById('speaking-en-target').innerText;
-      if ('speechSynthesis' in window) {
+      const targetText = document.getElementById('speaking-en-target') ? document.getElementById('speaking-en-target').innerText : '';
+      if ('speechSynthesis' in window && targetText) {
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(targetText);
         utterance.lang = 'en-US';
@@ -6797,9 +6839,11 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
 
       recognition.onstart = () => {
         isRecording = true;
-        micBtn.classList.add('recording');
-        micBtn.innerHTML = '<i class="fa-solid fa-square"></i>';
-        micLabel.innerText = '🎙️ Sizi dinliyoruz... Şimdi İngilizce cümleyi okuyun!';
+        if (micBtn) {
+          micBtn.classList.add('recording');
+          micBtn.innerHTML = '<i class="fa-solid fa-square"></i>';
+        }
+        if (micLabel) micLabel.innerText = '🎙️ Sizi dinliyoruz... Şimdi İngilizce cümleyi okuyun!';
       };
 
       recognition.onresult = (event) => {
@@ -6811,9 +6855,11 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         console.error('Speech Recognition Error:', event.error);
         stopRecording();
         const expBox = document.getElementById('speaking-explanation-box');
-        expBox.className = 'explanation-box error';
-        expBox.innerHTML = `<strong>Ses Algılanamadı!</strong> Lütfen mikrofona izin verdiğinizden ve net konuştuğunuzdan emin olun. (${event.error})`;
-        expBox.style.display = 'block';
+        if (expBox) {
+          expBox.className = 'explanation-box error';
+          expBox.innerHTML = `<strong>Ses Algılanamadı!</strong> Lütfen mikrofona izin verdiğinizden ve net konuştuğunuzdan emin olun. (${event.error})`;
+          expBox.style.display = 'block';
+        }
       };
 
       recognition.onend = () => { stopRecording(); };
@@ -6827,7 +6873,8 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
           mediaRecorder.onstop = () => {
             const audioBlob = new Blob(recordedAudioChunks, { type: 'audio/mp3' });
             userAudioBlobUrl = URL.createObjectURL(audioBlob);
-            document.getElementById('btn-play-user-audio').disabled = false;
+            const userAudioBtn = document.getElementById('btn-play-user-audio');
+            if (userAudioBtn) userAudioBtn.disabled = false;
           };
           mediaRecorder.start();
         }).catch(err => console.error('Microphone Recording Error:', err));
@@ -6870,7 +6917,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
     }
 
     function evaluatePronunciationAdvanced(userTranscript) {
-      const targetText = document.getElementById('speaking-en-target').innerText;
+      const targetText = document.getElementById('speaking-en-target') ? document.getElementById('speaking-en-target').innerText : '';
 
       const uNorm = expandContractions(userTranscript);
       const tNorm = expandContractions(targetText);
@@ -6910,22 +6957,26 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         triggerFloatingXP(window.innerWidth / 2, 250, '+15 XP');
         triggerLingoMascot('success');
 
-        expBox.className = 'explanation-box success';
-        expBox.innerHTML = `
-          <strong>HARİKA! 🎉 (+15 XP)</strong><br>
-          <strong>Söylenen:</strong> "${userTranscript}"<br>
-          Telaffuz Doğruluğu: %${finalScore}
-        `;
-        expBox.style.display = 'block';
+        if (expBox) {
+          expBox.className = 'explanation-box success';
+          expBox.innerHTML = `
+            <strong>HARİKA! 🎉 (+15 XP)</strong><br>
+            <strong>Söylenen:</strong> "${userTranscript}"<br>
+            Telaffuz Doğruluğu: %${finalScore}
+          `;
+          expBox.style.display = 'block';
+        }
 
         const nextBtn = document.getElementById('btn-next-speaking');
         const sentences = speakingBank[currentLevel];
-        if (currentSpeakingIndex === sentences.length - 1) {
-          nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
-        } else {
-          nextBtn.innerHTML = 'Sonraki Cümleye Geç <i class="fa-solid fa-arrow-right"></i>';
+        if (nextBtn) {
+          if (currentSpeakingIndex === sentences.length - 1) {
+            nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
+          } else {
+            nextBtn.innerHTML = 'Sonraki Cümleye Geç <i class="fa-solid fa-arrow-right"></i>';
+          }
+          nextBtn.style.display = 'block';
         }
-        nextBtn.style.display = 'block';
       } else {
         currentSpeakingXP -= 3;
         saveUserXP(-3);
@@ -6937,15 +6988,17 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
           errorDetails = '<br><strong style="color: #fca5a5;">Eksik/Değiştirilen Kelimeler:</strong> ' + missingContentWords.map(w => '<span style="text-decoration: underline; font-weight:700;">' + w + '</span>').join(', ');
         }
 
-        expBox.className = 'explanation-box error';
-        expBox.innerHTML = `
-          <strong>TEKRAR DENE! ❌ (-3 XP)</strong><br>
-          <strong>Algılanan:</strong> "${userTranscript}"<br>
-          <strong>Beklenen:</strong> "${targetText}"<br>
-          Telaffuz Doğruluğu: %${finalScore} (Geçme Barajı: %80).
-          ${errorDetails}
-        `;
-        expBox.style.display = 'block';
+        if (expBox) {
+          expBox.className = 'explanation-box error';
+          expBox.innerHTML = `
+            <strong>TEKRAR DENE! ❌ (-3 XP)</strong><br>
+            <strong>Algılanan:</strong> "${userTranscript}"<br>
+            <strong>Beklenen:</strong> "${targetText}"<br>
+            Telaffuz Doğruluğu: %${finalScore} (Geçme Barajı: %80).
+            ${errorDetails}
+          `;
+          expBox.style.display = 'block';
+        }
       }
     }
 
@@ -6978,29 +7031,37 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
 
     function loadVisualQuestion() {
       isVisualAnswered = false;
-      const questions = visualBank[currentLevel];
+      const questions = visualBank[currentLevel] || visualBank['A1'];
       const q = questions[currentVisualIndex];
 
-      document.getElementById('visual-tracker').innerText = `Görsel Soru ${currentVisualIndex + 1} / ${questions.length} | Bölüm Puanı: ${currentVisualXP} XP`;
-      document.getElementById('visual-image-target').src = q.img;
-      document.getElementById('visual-prompt-text').innerText = q.prompt;
+      const trackerEl = document.getElementById('visual-tracker');
+      const imgEl = document.getElementById('visual-image-target');
+      const promptEl = document.getElementById('visual-prompt-text');
+      const fillEl = document.getElementById('visual-progress-fill');
+
+      if (trackerEl) trackerEl.innerText = `Görsel Soru ${currentVisualIndex + 1} / ${questions.length} | Bölüm Puanı: ${currentVisualXP} XP`;
+      if (imgEl) imgEl.src = q.img;
+      if (promptEl) promptEl.innerText = q.prompt;
 
       const progressPercent = ((currentVisualIndex + 1) / questions.length) * 100;
-      document.getElementById('visual-progress-fill').style.width = `${progressPercent}%`;
+      if (fillEl) fillEl.style.width = `${progressPercent}%`;
 
       const optionsContainer = document.getElementById('visual-options-container');
-      optionsContainer.innerHTML = '';
+      if (optionsContainer) {
+        optionsContainer.innerHTML = '';
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'option-btn';
+          btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle"></i>`;
+          btn.onclick = (e) => handleVisualAnswer(idx, btn, e);
+          optionsContainer.appendChild(btn);
+        });
+      }
 
-      q.options.forEach((opt, idx) => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle"></i>`;
-        btn.onclick = (e) => handleVisualAnswer(idx, btn, e);
-        optionsContainer.appendChild(btn);
-      });
-
-      document.getElementById('visual-explanation-box').style.display = 'none';
-      document.getElementById('btn-next-visual').style.display = 'none';
+      const expBox = document.getElementById('visual-explanation-box');
+      const nextBtn = document.getElementById('btn-next-visual');
+      if (expBox) expBox.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
     }
 
     function handleVisualAnswer(selectedIndex, btnElement, event) {
@@ -7019,8 +7080,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         saveUserXP(15);
         btnElement.classList.add('correct-anim');
         btnElement.querySelector('i').className = 'fa-solid fa-circle-check';
-        expBox.className = 'explanation-box success';
-        expBox.innerHTML = `<strong>Tebrikler! +15 XP 🎉</strong><br>${qData.exp}`;
+        if (expBox) {
+          expBox.className = 'explanation-box success';
+          expBox.innerHTML = `<strong>Tebrikler! +15 XP 🎉</strong><br>${qData.exp}`;
+        }
         triggerFloatingXP(event.clientX, event.clientY, `+15 XP`);
         triggerLingoMascot('success');
       } else {
@@ -7029,21 +7092,25 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         btnElement.classList.add('wrong-anim');
         btnElement.querySelector('i').className = 'fa-solid fa-circle-xmark';
         allButtons[qData.correct].classList.add('correct-anim');
-        expBox.className = 'explanation-box error';
-        expBox.innerHTML = `<strong>Yanlış Cevap! -5 XP ❌</strong><br>${qData.exp}`;
+        if (expBox) {
+          expBox.className = 'explanation-box error';
+          expBox.innerHTML = `<strong>Yanlış Cevap! -5 XP ❌</strong><br>${qData.exp}`;
+        }
         triggerFloatingXP(event.clientX, event.clientY, `-5 XP`, '#ef4444');
         triggerLingoMascot('error');
       }
 
-      expBox.style.display = 'block';
+      if (expBox) expBox.style.display = 'block';
 
       const nextBtn = document.getElementById('btn-next-visual');
-      if (currentVisualIndex === questions.length - 1) {
-        nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
-      } else {
-        nextBtn.innerHTML = 'Sonraki Görsel Soruya Geç <i class="fa-solid fa-arrow-right"></i>';
+      if (nextBtn) {
+        if (currentVisualIndex === questions.length - 1) {
+          nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
+        } else {
+          nextBtn.innerHTML = 'Sonraki Görsel Soruya Geç <i class="fa-solid fa-arrow-right"></i>';
+        }
+        nextBtn.style.display = 'block';
       }
-      nextBtn.style.display = 'block';
     }
 
     function nextVisualQuestion() {
@@ -7075,30 +7142,40 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
 
     function loadWritingQuestion() {
       isWritingAnswered = false;
-      const questions = writingBank[currentLevel];
+      const questions = writingBank[currentLevel] || writingBank['A1'];
       const q = questions[currentWritingIndex];
 
-      document.getElementById('writing-tracker').innerText = `Yazma Soru ${currentWritingIndex + 1} / ${questions.length} | Bölüm Puanı: ${currentWritingXP} XP`;
-      document.getElementById('writing-prompt-text').innerText = q.prompt;
-      
+      const trackerEl = document.getElementById('writing-tracker');
+      const promptEl = document.getElementById('writing-prompt-text');
+      const fillEl = document.getElementById('writing-progress-fill');
       const inputEl = document.getElementById('writing-user-input');
-      inputEl.value = '';
-      inputEl.disabled = false;
-      inputEl.focus();
+
+      if (trackerEl) trackerEl.innerText = `Yazma Soru ${currentWritingIndex + 1} / ${questions.length} | Bölüm Puanı: ${currentWritingXP} XP`;
+      if (promptEl) promptEl.innerText = q.prompt;
+      
+      if (inputEl) {
+        inputEl.value = '';
+        inputEl.disabled = false;
+        inputEl.focus();
+      }
 
       const progressPercent = ((currentWritingIndex + 1) / questions.length) * 100;
-      document.getElementById('writing-progress-fill').style.width = `${progressPercent}%`;
+      if (fillEl) fillEl.style.width = `${progressPercent}%`;
 
-      document.getElementById('writing-explanation-box').style.display = 'none';
-      document.getElementById('btn-next-writing').style.display = 'none';
-      document.getElementById('btn-submit-writing').disabled = false;
+      const expBox = document.getElementById('writing-explanation-box');
+      const nextBtn = document.getElementById('btn-next-writing');
+      const submitBtn = document.getElementById('btn-submit-writing');
+
+      if (expBox) expBox.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
+      if (submitBtn) submitBtn.disabled = false;
     }
 
     function submitWritingAnswer() {
       if (isWritingAnswered) return;
       
       const inputEl = document.getElementById('writing-user-input');
-      const userVal = inputEl.value.trim();
+      const userVal = inputEl ? inputEl.value.trim() : '';
 
       if (!userVal) {
         alert('Lütfen bir cevap yazın!');
@@ -7106,8 +7183,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       }
 
       isWritingAnswered = true;
-      inputEl.disabled = true;
-      document.getElementById('btn-submit-writing').disabled = true;
+      if (inputEl) inputEl.disabled = true;
+      
+      const submitBtn = document.getElementById('btn-submit-writing');
+      if (submitBtn) submitBtn.disabled = true;
 
       const questions = writingBank[currentLevel];
       const qData = questions[currentWritingIndex];
@@ -7126,34 +7205,40 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         triggerFloatingXP(window.innerWidth / 2, 250, '+15 XP');
         triggerLingoMascot('success');
 
-        expBox.className = 'explanation-box success';
-        expBox.innerHTML = `
-          <strong>Tebrikler! Doğru Cevap 🎉 (+15 XP)</strong><br>
-          <strong>Doğru Cevap:</strong> "${qData.answer}"
-        `;
+        if (expBox) {
+          expBox.className = 'explanation-box success';
+          expBox.innerHTML = `
+            <strong>Tebrikler! Doğru Cevap 🎉 (+15 XP)</strong><br>
+            <strong>Doğru Cevap:</strong> "${qData.answer}"
+          `;
+          expBox.style.display = 'block';
+        }
       } else {
         currentWritingXP -= 5;
         saveUserXP(-5);
         triggerFloatingXP(window.innerWidth / 2, 250, '-5 XP', '#ef4444');
         triggerLingoMascot('error');
 
-        expBox.className = 'explanation-box error';
-        expBox.innerHTML = `
-          <strong>Yanlış Cevap! ❌ (-5 XP)</strong><br>
-          <strong>Sizin Cevabınız:</strong> "${userVal}"<br>
-          <strong>Doğru Cevap:</strong> "${qData.answer}"
-        `;
+        if (expBox) {
+          expBox.className = 'explanation-box error';
+          expBox.innerHTML = `
+            <strong>Yanlış Cevap! ❌ (-5 XP)</strong><br>
+            <strong>Sizin Cevabınız:</strong> "${userVal}"<br>
+            <strong>Doğru Cevap:</strong> "${qData.answer}"
+          `;
+          expBox.style.display = 'block';
+        }
       }
-
-      expBox.style.display = 'block';
 
       const nextBtn = document.getElementById('btn-next-writing');
-      if (currentWritingIndex === questions.length - 1) {
-        nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
-      } else {
-        nextBtn.innerHTML = 'Sonraki Yazma Sorusuna Geç <i class="fa-solid fa-arrow-right"></i>';
+      if (nextBtn) {
+        if (currentWritingIndex === questions.length - 1) {
+          nextBtn.innerHTML = 'Bölümü Tamamla <i class="fa-solid fa-flag-checkered"></i>';
+        } else {
+          nextBtn.innerHTML = 'Sonraki Yazma Sorusuna Geç <i class="fa-solid fa-arrow-right"></i>';
+        }
+        nextBtn.style.display = 'block';
       }
-      nextBtn.style.display = 'block';
     }
 
     function nextWritingQuestion() {
@@ -7187,8 +7272,16 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       setTimeout(() => { floatEl.remove(); }, 1000);
     }
 
-    window.onload = () => {
+    document.addEventListener('DOMContentLoaded', () => {
+      loadLocalProgress();
+      initializeFirebase();
       loadQuestion();
+    });
+
+    window.onload = () => {
+      if (document.getElementById('question-text') && document.getElementById('question-text').innerText === 'Soru yükleniyor...') {
+        loadQuestion();
+      }
     };
   </script>
 </body>
