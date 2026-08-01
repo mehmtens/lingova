@@ -123,6 +123,7 @@
       gap: 20px;
     }
 
+    /* Lingo Maskot Widget */
     .mascot-container {
       display: flex;
       align-items: center;
@@ -718,13 +719,13 @@
 
     <div class="firebase-alert" id="demo-alert">
       <i class="fa-solid fa-circle-info"></i>
-      <span><strong>Giriş durumu:</strong> İlerlemeniz tarayıcınızda otomatik kaydedilir. Google ile giriş yaptığınızda bulutta da eşitlenir.</span>
+      <span><strong>Giriş durumu:</strong> Kaldığınız soru, aktif mod ve tüm ilerlemeniz otomatik kaydedilir.</span>
     </div>
 
     <!-- Lingo Maskot Motivasyon Alanı -->
     <div class="mascot-container">
       <div class="mascot-avatar" id="mascot-avatar">🚀</div>
-      <div class="mascot-bubble" id="mascot-text">Selam! Ben Lingo. Bugün birlikte İngilizceyi fethetmeye hazır mısın?</div>
+      <div class="mascot-bubble" id="mascot-text">Selam! Ben Lingo. Kaldığın yerden İngilizceyi fethetmeye hazır mısın?</div>
     </div>
 
     <!-- Mod Seçici (5 Mod) -->
@@ -941,6 +942,16 @@
       C2: { quiz: false, match: false, speaking: false, visual: false, writing: false }
     };
 
+    let activeMode = 'quiz';
+    let currentLevel = 'A1';
+
+    // ANLIK KALDIĞI YER (SORU VE MOD İNDEX) KULLANICI İLERLEME DURUMU
+    let currentQuestionIndex = 0; let currentLevelXP = 0;
+    let currentMatchIndex = 0; let currentMatchXP = 0;
+    let currentSpeakingIndex = 0; let currentSpeakingXP = 0;
+    let currentVisualIndex = 0; let currentVisualXP = 0;
+    let currentWritingIndex = 0; let currentWritingXP = 0;
+
     function loadLocalProgress() {
       try {
         const savedXP = localStorage.getItem('lingova_xp');
@@ -951,6 +962,28 @@
 
         const savedComp = localStorage.getItem('lingova_completed');
         if (savedComp) completedModes = JSON.parse(savedComp);
+
+        const savedLvl = localStorage.getItem('lingova_current_level');
+        if (savedLvl && unlockedLevels[savedLvl]) currentLevel = savedLvl;
+
+        const savedMode = localStorage.getItem('lingova_active_mode');
+        if (savedMode) activeMode = savedMode;
+
+        // Anlık İndexler
+        const savedState = localStorage.getItem('lingova_exact_indices');
+        if (savedState) {
+          const st = JSON.parse(savedState);
+          if (st.qIdx !== undefined) currentQuestionIndex = st.qIdx;
+          if (st.qXP !== undefined) currentLevelXP = st.qXP;
+          if (st.mIdx !== undefined) currentMatchIndex = st.mIdx;
+          if (st.mXP !== undefined) currentMatchXP = st.mXP;
+          if (st.sIdx !== undefined) currentSpeakingIndex = st.sIdx;
+          if (st.sXP !== undefined) currentSpeakingXP = st.sXP;
+          if (st.vIdx !== undefined) currentVisualIndex = st.vIdx;
+          if (st.vXP !== undefined) currentVisualXP = st.vXP;
+          if (st.wIdx !== undefined) currentWritingIndex = st.wIdx;
+          if (st.wXP !== undefined) currentWritingXP = st.wXP;
+        }
 
         updateXPUI();
         updateLevelCardsUI();
@@ -965,10 +998,21 @@
       updateLevelCardsUI();
       updateModeButtonsUI();
 
+      const exactIndices = {
+        qIdx: currentQuestionIndex, qXP: currentLevelXP,
+        mIdx: currentMatchIndex, mXP: currentMatchXP,
+        sIdx: currentSpeakingIndex, sXP: currentSpeakingXP,
+        vIdx: currentVisualIndex, vXP: currentVisualXP,
+        wIdx: currentWritingIndex, wXP: currentWritingXP
+      };
+
       try {
         localStorage.setItem('lingova_xp', userXP);
         localStorage.setItem('lingova_unlocked', JSON.stringify(unlockedLevels));
         localStorage.setItem('lingova_completed', JSON.stringify(completedModes));
+        localStorage.setItem('lingova_current_level', currentLevel);
+        localStorage.setItem('lingova_active_mode', activeMode);
+        localStorage.setItem('lingova_exact_indices', JSON.stringify(exactIndices));
       } catch(e) {}
 
       if (isFirebaseInitialized && currentUser) {
@@ -977,6 +1021,9 @@
           xp: userXP,
           unlockedLevels: unlockedLevels,
           completedModes: completedModes,
+          currentLevel: currentLevel,
+          activeMode: activeMode,
+          exactIndices: exactIndices,
           updatedAt: new Date()
         }, { merge: true });
       }
@@ -999,6 +1046,7 @@
         if (card) {
           const isUnl = unlockedLevels[lvl];
           card.classList.toggle('locked', !isUnl);
+          card.classList.toggle('active', lvl === currentLevel);
         }
       });
     }
@@ -1010,6 +1058,7 @@
         if (btn) {
           const isComp = completedModes[currentLevel] && completedModes[currentLevel][mode];
           btn.classList.toggle('completed', isComp);
+          btn.classList.toggle('active', mode === activeMode);
         }
       });
     }
@@ -1079,7 +1128,23 @@
           if (data.xp !== undefined) userXP = Math.max(userXP, data.xp);
           if (data.unlockedLevels) unlockedLevels = { ...unlockedLevels, ...data.unlockedLevels };
           if (data.completedModes) completedModes = { ...completedModes, ...data.completedModes };
+          if (data.currentLevel) currentLevel = data.currentLevel;
+          if (data.activeMode) activeMode = data.activeMode;
+          if (data.exactIndices) {
+            const st = data.exactIndices;
+            if (st.qIdx !== undefined) currentQuestionIndex = st.qIdx;
+            if (st.qXP !== undefined) currentLevelXP = st.qXP;
+            if (st.mIdx !== undefined) currentMatchIndex = st.mIdx;
+            if (st.mXP !== undefined) currentMatchXP = st.mXP;
+            if (st.sIdx !== undefined) currentSpeakingIndex = st.sIdx;
+            if (st.sXP !== undefined) currentSpeakingXP = st.sXP;
+            if (st.vIdx !== undefined) currentVisualIndex = st.vIdx;
+            if (st.vXP !== undefined) currentVisualXP = st.vXP;
+            if (st.wIdx !== undefined) currentWritingIndex = st.wIdx;
+            if (st.wXP !== undefined) currentWritingXP = st.wXP;
+          }
           saveProgressData();
+          switchMode(activeMode);
         } else {
           saveProgressData();
         }
@@ -1123,9 +1188,6 @@
       }
     }
 
-    let activeMode = 'quiz';
-    let currentLevel = 'A1';
-
     function switchMode(mode) {
       stopRecording();
       activeMode = mode;
@@ -1138,13 +1200,13 @@
         if (card) card.style.display = (m === mode) ? 'block' : 'none';
       });
 
-      updateModeButtonsUI();
+      saveProgressData();
 
       if (mode === 'quiz') loadQuestion();
-      else if (mode === 'match') { currentMatchIndex = 0; currentMatchXP = 0; loadMatchSet(); }
-      else if (mode === 'speaking') { currentSpeakingIndex = 0; currentSpeakingXP = 0; loadSpeakingSentence(); }
-      else if (mode === 'visual') { currentVisualIndex = 0; currentVisualXP = 0; loadVisualQuestion(); }
-      else if (mode === 'writing') { currentWritingIndex = 0; currentWritingXP = 0; loadWritingQuestion(); }
+      else if (mode === 'match') loadMatchSet();
+      else if (mode === 'speaking') loadSpeakingSentence();
+      else if (mode === 'visual') loadVisualQuestion();
+      else if (mode === 'writing') loadWritingQuestion();
     }
 
     function changeLevel(level, element) {
@@ -1164,13 +1226,13 @@
       currentVisualIndex = 0; currentVisualXP = 0;
       currentWritingIndex = 0; currentWritingXP = 0;
 
+      saveProgressData();
+
       const levelLabels = ['level-badge', 'match-level-badge', 'speaking-level-badge', 'visual-level-badge', 'writing-level-badge'];
       levelLabels.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.innerText = `${level} SEVİYESİ`;
       });
-
-      updateModeButtonsUI();
 
       if (activeMode === 'quiz') loadQuestion();
       else if (activeMode === 'match') loadMatchSet();
@@ -6400,10 +6462,6 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
     /* ==========================================================================
        QUIZ MODU MANTIĞI
        ========================================================================== */
-    let currentQuestionIndex = 0;
-    let isAnswered = false;
-    let currentLevelXP = 0;
-
     function loadQuestion() {
       isAnswered = false;
       const questions = questionBank[currentLevel] || questionBank['A1'];
@@ -6434,6 +6492,8 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       const nextBtn = document.getElementById('btn-next');
       if (expBox) expBox.style.display = 'none';
       if (nextBtn) nextBtn.style.display = 'none';
+
+      saveProgressData();
     }
 
     function handleAnswer(selectedIndex, btnElement, event) {
@@ -6483,6 +6543,8 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         }
         nextBtn.style.display = 'block';
       }
+
+      saveProgressData();
     }
 
     function nextQuestion() {
@@ -6508,8 +6570,6 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
     /* ==========================================================================
        DRAG & MATCH MODU MANTIĞI
        ========================================================================== */
-    let currentMatchIndex = 0;
-    let currentMatchXP = 0;
     let matchedPairsCount = 0;
     let selectedTRCard = null;
     let draggedPairId = null;
@@ -6607,6 +6667,8 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
 
         enContainer.appendChild(card);
       });
+
+      saveProgressData();
     }
 
     function handleTRClick(card) {
@@ -6694,6 +6756,8 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
           selectedTRCard = null;
         }, 600);
       }
+
+      saveProgressData();
     }
 
     function nextMatchSet() {
@@ -6719,8 +6783,6 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
     /* ==========================================================================
        SPEAKING TEST MANTIĞI
        ========================================================================== */
-    let currentSpeakingIndex = 0;
-    let currentSpeakingXP = 0;
     let isRecording = false;
     let recognition = null;
     let mediaRecorder = null;
@@ -6795,6 +6857,8 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
       }
       if (micLabel) micLabel.innerText = 'Mikrofona tıklayıp yukarıdaki cümleyi yüksek sesle okuyun';
+
+      saveProgressData();
     }
 
     function playOriginalTTS() {
@@ -7000,6 +7064,8 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
           expBox.style.display = 'block';
         }
       }
+
+      saveProgressData();
     }
 
     function nextSpeakingSentence() {
@@ -7025,8 +7091,6 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
     /* ==========================================================================
        GÖRSEL EŞLEŞTİRME MODU MANTIĞI
        ========================================================================== */
-    let currentVisualIndex = 0;
-    let currentVisualXP = 0;
     let isVisualAnswered = false;
 
     function loadVisualQuestion() {
@@ -7062,6 +7126,8 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       const nextBtn = document.getElementById('btn-next-visual');
       if (expBox) expBox.style.display = 'none';
       if (nextBtn) nextBtn.style.display = 'none';
+
+      saveProgressData();
     }
 
     function handleVisualAnswer(selectedIndex, btnElement, event) {
@@ -7111,6 +7177,8 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         }
         nextBtn.style.display = 'block';
       }
+
+      saveProgressData();
     }
 
     function nextVisualQuestion() {
@@ -7136,8 +7204,6 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
     /* ==========================================================================
        YAZMA EGZERSİZLERİ MODU MANTIĞI (WRITING)
        ========================================================================== */
-    let currentWritingIndex = 0;
-    let currentWritingXP = 0;
     let isWritingAnswered = false;
 
     function loadWritingQuestion() {
@@ -7169,6 +7235,8 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       if (expBox) expBox.style.display = 'none';
       if (nextBtn) nextBtn.style.display = 'none';
       if (submitBtn) submitBtn.disabled = false;
+
+      saveProgressData();
     }
 
     function submitWritingAnswer() {
@@ -7239,6 +7307,8 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         }
         nextBtn.style.display = 'block';
       }
+
+      saveProgressData();
     }
 
     function nextWritingQuestion() {
@@ -7275,12 +7345,12 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
     document.addEventListener('DOMContentLoaded', () => {
       loadLocalProgress();
       initializeFirebase();
-      loadQuestion();
+      switchMode(activeMode);
     });
 
     window.onload = () => {
       if (document.getElementById('question-text') && document.getElementById('question-text').innerText === 'Soru yükleniyor...') {
-        loadQuestion();
+        switchMode(activeMode);
       }
     };
   </script>
