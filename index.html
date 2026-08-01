@@ -123,7 +123,46 @@
       gap: 20px;
     }
 
-    /* Mod Seçici (Quiz / Match / Speaking / Visual / Writing) */
+    /* Lingo Maskot Widget */
+    .mascot-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 16px;
+      padding: 14px 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .mascot-avatar {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: white;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+      flex-shrink: 0;
+      animation: floatMascot 3s ease-in-out infinite;
+    }
+
+    @keyframes floatMascot {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .mascot-bubble {
+      font-size: 15px;
+      font-weight: 700;
+      color: #7dd3fc;
+      line-height: 1.4;
+    }
+
     .mode-switcher {
       display: flex;
       flex-wrap: wrap;
@@ -403,7 +442,6 @@
       animation: shakeRed 0.4s ease-in-out;
     }
 
-    /* Speaking Test Stiller */
     .speaking-target-box {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--card-border);
@@ -526,7 +564,6 @@
       color: var(--text-muted);
     }
 
-    /* Görsel Eşleştirme Stilleri */
     .visual-image-container {
       width: 100%;
       max-height: 280px;
@@ -546,7 +583,6 @@
       object-fit: cover;
     }
 
-    /* Yazma Egzersizleri Stilleri */
     .writing-input-area {
       display: flex;
       flex-direction: column;
@@ -683,7 +719,13 @@
 
     <div class="firebase-alert" id="demo-alert">
       <i class="fa-solid fa-circle-info"></i>
-      <span><strong>Giriş durumu:</strong> Google girişini kullanmak için localhost/HTTPS ve Firebase Authentication ayarları gerekir.</span>
+      <span><strong>Giriş durumu:</strong> İlerlemeniz tarayıcınızda otomatik kaydedilir. Google ile giriş yaptığınızda bulutta da eşitlenir.</span>
+    </div>
+
+    <!-- Lingo Maskot Motivasyon Alanı -->
+    <div class="mascot-container">
+      <div class="mascot-avatar" id="mascot-avatar">🚀</div>
+      <div class="mascot-bubble" id="mascot-text">Selam! Ben Lingo. Bugün birlikte İngilizceyi fethetmeye hazır mısın?</div>
     </div>
 
     <!-- Mod Seçici (5 Mod) -->
@@ -832,7 +874,7 @@
       </div>
 
       <div class="visual-image-container">
-        <img id="visual-image-target" src="" alt="Görsel Soru">
+        <img id="visual-image-target" src="" alt="Görsel Soru" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Red_Apple.jpg/600px-Red_Apple.jpg'">
       </div>
 
       <div class="question-title" id="visual-prompt-text">Bu görseldeki nesne/kavram nedir?</div>
@@ -873,7 +915,7 @@
   
   <script>
     /* ==========================================================================
-       1. FIREBASE KONFİGÜRASYONU
+       1. FIREBASE & LOCALSTORAGE KALICI İLERLEME SİSTEMİ
        ========================================================================== */
     const firebaseConfig = {
       apiKey: "AIzaSyCyuUhh0pPgJXdrR3VM2UcCJIrzFrJPsnI",
@@ -889,40 +931,97 @@
     let currentUser = null;
     let userXP = 0;
 
-    function showAuthStatus(message, type = 'warning') {
-      const alertBox = document.getElementById('demo-alert');
-      if (!alertBox) return;
+    const levelSequence = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+    let unlockedLevels = { A1: true, A2: false, B1: false, B2: false, C1: false, C2: false };
+    let completedModes = {
+      A1: { quiz: false, match: false, speaking: false, visual: false, writing: false },
+      A2: { quiz: false, match: false, speaking: false, visual: false, writing: false },
+      B1: { quiz: false, match: false, speaking: false, visual: false, writing: false },
+      B2: { quiz: false, match: false, speaking: false, visual: false, writing: false },
+      C1: { quiz: false, match: false, speaking: false, visual: false, writing: false },
+      C2: { quiz: false, match: false, speaking: false, visual: false, writing: false }
+    };
 
-      alertBox.style.display = 'flex';
-      alertBox.innerHTML = `<i class="fa-solid ${type === 'error' ? 'fa-circle-xmark' : 'fa-circle-info'}"></i><span>${message}</span>`;
-      alertBox.style.borderColor = type === 'error' ? '#ef4444' : '#eab308';
-      alertBox.style.color = type === 'error' ? '#fca5a5' : '#fef08a';
-      alertBox.style.background = type === 'error' ? 'rgba(239, 68, 68, 0.15)' : 'rgba(234, 179, 8, 0.15)';
+    function loadLocalProgress() {
+      try {
+        const savedXP = localStorage.getItem('lingova_xp');
+        if (savedXP !== null) userXP = parseInt(savedXP, 10) || 0;
+
+        const savedUnlocked = localStorage.getItem('lingova_unlocked');
+        if (savedUnlocked) unlockedLevels = JSON.parse(savedUnlocked);
+
+        const savedComp = localStorage.getItem('lingova_completed');
+        if (savedComp) completedModes = JSON.parse(savedComp);
+
+        updateXPUI();
+        updateLevelCardsUI();
+        updateModeButtonsUI();
+      } catch (e) {
+        console.error('Local progress load error:', e);
+      }
+    }
+
+    function saveProgressData() {
+      updateXPUI();
+      updateLevelCardsUI();
+      updateModeButtonsUI();
+
+      try {
+        localStorage.setItem('lingova_xp', userXP);
+        localStorage.setItem('lingova_unlocked', JSON.stringify(unlockedLevels));
+        localStorage.setItem('lingova_completed', JSON.stringify(completedModes));
+      } catch(e) {}
+
+      if (isFirebaseInitialized && currentUser) {
+        const db = firebase.firestore();
+        db.collection('users').doc(currentUser.uid).set({
+          xp: userXP,
+          unlockedLevels: unlockedLevels,
+          completedModes: completedModes,
+          updatedAt: new Date()
+        }, { merge: true });
+      }
+    }
+
+    function saveUserXP(addedXP) {
+      userXP += addedXP;
+      if (userXP < 0) userXP = 0;
+      saveProgressData();
+    }
+
+    function updateXPUI() {
+      document.getElementById('user-xp').innerText = `${userXP} XP`;
+    }
+
+    function updateLevelCardsUI() {
+      levelSequence.forEach(lvl => {
+        const card = document.getElementById(`card-${lvl}`);
+        if (card) {
+          const isUnl = unlockedLevels[lvl];
+          card.classList.toggle('locked', !isUnl);
+        }
+      });
+    }
+
+    function updateModeButtonsUI() {
+      const modes = ['quiz', 'match', 'speaking', 'visual', 'writing'];
+      modes.forEach(mode => {
+        const btn = document.getElementById(`btn-mode-${mode}`);
+        if (btn) {
+          const isComp = completedModes[currentLevel] && completedModes[currentLevel][mode];
+          btn.classList.toggle('completed', isComp);
+        }
+      });
     }
 
     function initializeFirebase() {
       const isSecureOrigin = window.location.protocol === 'https:' || ['localhost', '127.0.0.1'].includes(window.location.hostname);
 
-      if (!isSecureOrigin) {
-        showAuthStatus('Google girişi yalnızca localhost veya HTTPS üzerinden çalışır. Lütfen bir sunucu üzerinden açın.', 'error');
-        return false;
-      }
-
-      if (typeof firebase === 'undefined' || !firebase.apps) {
-        showAuthStatus('Firebase kütüphanesi yüklenemedi. İnternet bağlantısını kontrol edin.', 'error');
-        return false;
-      }
+      if (typeof firebase === 'undefined' || !firebase.apps) return false;
 
       try {
-        if (!firebase.apps.length) {
-          firebase.initializeApp(firebaseConfig);
-        }
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         isFirebaseInitialized = true;
-
-        const alertBox = document.getElementById('demo-alert');
-        if (alertBox) {
-          alertBox.style.display = 'none';
-        }
 
         firebase.auth().onAuthStateChanged(user => {
           if (user) {
@@ -936,38 +1035,21 @@
         });
         return true;
       } catch (err) {
-        console.error('Firebase başlatma hatası:', err);
-        showAuthStatus(`Firebase başlatılamadı: ${err.message}`, 'error');
         return false;
       }
     }
 
+    loadLocalProgress();
     initializeFirebase();
 
     function loginWithGoogle() {
-      if (!isFirebaseInitialized) {
-        showAuthStatus('Firebase hazır değil. Lütfen localhost/HTTPS üzerinden tekrar açın.', 'error');
-        return;
-      }
-
+      if (!isFirebaseInitialized) return;
       const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider).catch(err => {
-        console.error('Giriş Hatası:', err);
-
-        if (err.code === 'auth/popup-blocked') {
-          showAuthStatus('Pop-up engellendi. Lütfen tarayıcı pop-up izinlerini açın.', 'error');
-        } else if (err.code === 'auth/unauthorized-domain') {
-          showAuthStatus('Bu alan Firebase Authentication için yetkilendirilmemiş. Firebase konsolundaki Authorized Domains alanına ekleyin.', 'error');
-        } else {
-          showAuthStatus(`Giriş yapılırken bir hata oluştu: ${err.message}`, 'error');
-        }
-      });
+      firebase.auth().signInWithPopup(provider).catch(err => console.error('Login error:', err));
     }
 
     function logout() {
-      if (isFirebaseInitialized) {
-        firebase.auth().signOut();
-      }
+      if (isFirebaseInitialized) firebase.auth().signOut();
     }
 
     function renderUserInfo(user) {
@@ -992,56 +1074,54 @@
       const db = firebase.firestore();
       db.collection('users').doc(uid).get().then(doc => {
         if (doc.exists) {
-          userXP = doc.data().xp || 0;
-          updateXPUI();
+          const data = doc.data();
+          if (data.xp !== undefined) userXP = Math.max(userXP, data.xp);
+          if (data.unlockedLevels) unlockedLevels = { ...unlockedLevels, ...data.unlockedLevels };
+          if (data.completedModes) completedModes = { ...completedModes, ...data.completedModes };
+          saveProgressData();
         } else {
-          db.collection('users').doc(uid).set({ xp: 0, createdAt: new Date() });
+          saveProgressData();
         }
       });
     }
 
-    function saveUserXP(addedXP) {
-      userXP += addedXP;
-      if (userXP < 0) userXP = 0;
-      updateXPUI();
-      if (isFirebaseInitialized && currentUser) {
-        const db = firebase.firestore();
-        db.collection('users').doc(currentUser.uid).update({
-          xp: firebase.firestore.FieldValue.increment(addedXP)
-        });
+    // LINGO MASKOT MOTİVASYON BİLDİRİMLERİ
+    const lingoQuotesSuccess = [
+      "Harikasın! Böyle devam et! 🚀",
+      "Muazzam ilerliyorsun! Dili fethediyorsun! 🌟",
+      "İşte bu! Adım adım zirveye! 🔥",
+      "Mükemmel telaffuz ve cevap! 👏",
+      "Süpersin! Lingo seninle gurur duyuyor! ⭐"
+    ];
+
+    const lingoQuotesWrong = [
+      "Hiç sorun değil, hatalardan öğreniyoruz! 💪",
+      "Tekrar deneyerek mükemmel olacaksın! 🚀",
+      "Pes etmek yok, Lingo sana inanıyor! ⭐",
+      "Odaklan ve tekrar dene, halledeceksin! 🔥"
+    ];
+
+    function triggerLingoMascot(type = 'success', customText = null) {
+      const avatar = document.getElementById('mascot-avatar');
+      const textEl = document.getElementById('mascot-text');
+
+      if (customText) {
+        textEl.innerText = customText;
+      } else if (type === 'success') {
+        const quote = lingoQuotesSuccess[Math.floor(Math.random() * lingoQuotesSuccess.length)];
+        textEl.innerText = quote;
+        avatar.innerText = '🚀';
+      } else if (type === 'error') {
+        const quote = lingoQuotesWrong[Math.floor(Math.random() * lingoQuotesWrong.length)];
+        textEl.innerText = quote;
+        avatar.innerText = '💡';
+      } else if (type === 'level_complete') {
+        avatar.innerText = '🎉';
       }
     }
 
-    function updateXPUI() {
-      document.getElementById('user-xp').innerText = `${userXP} XP`;
-    }
-
-    const levelSequence = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-    const unlockedLevels = { A1: true, A2: false, B1: false, B2: false, C1: false, C2: false };
-
-    // HER SEVİYE VE MOD İÇİN BAĞIMSIZ BAŞARI TAKİBİ
-    const completedModes = {
-      A1: { quiz: false, match: false, speaking: false, visual: false, writing: false },
-      A2: { quiz: false, match: false, speaking: false, visual: false, writing: false },
-      B1: { quiz: false, match: false, speaking: false, visual: false, writing: false },
-      B2: { quiz: false, match: false, speaking: false, visual: false, writing: false },
-      C1: { quiz: false, match: false, speaking: false, visual: false, writing: false },
-      C2: { quiz: false, match: false, speaking: false, visual: false, writing: false }
-    };
-
     let activeMode = 'quiz';
     let currentLevel = 'A1';
-
-    function updateModeButtonsUI() {
-      const modes = ['quiz', 'match', 'speaking', 'visual', 'writing'];
-      modes.forEach(mode => {
-        const btn = document.getElementById(`btn-mode-${mode}`);
-        if (btn) {
-          const isComp = completedModes[currentLevel][mode];
-          btn.classList.toggle('completed', isComp);
-        }
-      });
-    }
 
     function switchMode(mode) {
       stopRecording();
@@ -1057,25 +1137,11 @@
 
       updateModeButtonsUI();
 
-      if (mode === 'quiz') {
-        loadQuestion();
-      } else if (mode === 'match') {
-        currentMatchIndex = 0;
-        currentMatchXP = 0;
-        loadMatchSet();
-      } else if (mode === 'speaking') {
-        currentSpeakingIndex = 0;
-        currentSpeakingXP = 0;
-        loadSpeakingSentence();
-      } else if (mode === 'visual') {
-        currentVisualIndex = 0;
-        currentVisualXP = 0;
-        loadVisualQuestion();
-      } else if (mode === 'writing') {
-        currentWritingIndex = 0;
-        currentWritingXP = 0;
-        loadWritingQuestion();
-      }
+      if (mode === 'quiz') loadQuestion();
+      else if (mode === 'match') { currentMatchIndex = 0; currentMatchXP = 0; loadMatchSet(); }
+      else if (mode === 'speaking') { currentSpeakingIndex = 0; currentSpeakingXP = 0; loadSpeakingSentence(); }
+      else if (mode === 'visual') { currentVisualIndex = 0; currentVisualXP = 0; loadVisualQuestion(); }
+      else if (mode === 'writing') { currentWritingIndex = 0; currentWritingXP = 0; loadWritingQuestion(); }
     }
 
     function changeLevel(level, element) {
@@ -1089,20 +1155,11 @@
       element.classList.add('active');
 
       currentLevel = level;
-      currentQuestionIndex = 0;
-      currentLevelXP = 0;
-
-      currentMatchIndex = 0;
-      currentMatchXP = 0;
-
-      currentSpeakingIndex = 0;
-      currentSpeakingXP = 0;
-
-      currentVisualIndex = 0;
-      currentVisualXP = 0;
-
-      currentWritingIndex = 0;
-      currentWritingXP = 0;
+      currentQuestionIndex = 0; currentLevelXP = 0;
+      currentMatchIndex = 0; currentMatchXP = 0;
+      currentSpeakingIndex = 0; currentSpeakingXP = 0;
+      currentVisualIndex = 0; currentVisualXP = 0;
+      currentWritingIndex = 0; currentWritingXP = 0;
 
       const levelLabels = ['level-badge', 'match-level-badge', 'speaking-level-badge', 'visual-level-badge', 'writing-level-badge'];
       levelLabels.forEach(id => {
@@ -1119,13 +1176,35 @@
       else if (activeMode === 'writing') loadWritingQuestion();
     }
 
-    function checkLevelUnlockStatus(level) {
-      // En az 3 mod tamamlandıysa sonraki seviyeyi aç
-      const levelComp = completedModes[level];
-      const completedCount = Object.values(levelComp).filter(Boolean).length;
+    // SEVİYEDEKİ TÜM TESTLER BİTİNCE SEVİYE TAMAMLAMA KUTLAMASI
+    function markModeCompletedAndCheckLevel(modeName, modeLabel) {
+      completedModes[currentLevel][modeName] = true;
+      saveProgressData();
 
-      if (completedCount >= 3) {
-        unlockNextLevel(level);
+      const levelComp = completedModes[currentLevel];
+      const allDone = Object.values(levelComp).every(Boolean);
+
+      if (allDone) {
+        unlockNextLevel(currentLevel);
+        saveProgressData();
+
+        const nextLvlIndex = levelSequence.indexOf(currentLevel) + 1;
+        const nextLvlName = levelSequence[nextLvlIndex] || 'MASTER';
+
+        triggerLingoMascot('level_complete', `🏆 İNANILMAZ BAŞARI! ${currentLevel} seviyesindeki TÜM EGZERSİZLERİ başarıyla tamamladın! 🎉`);
+
+        alert(`🏆 MÜKEMMEL BAŞARI!
+
+${currentLevel} Seviyesindeki tüm 5 egzersiz modunu (Çoktan Seçmeli, Drag & Match, Speaking, Görsel Eşleştirme ve Yazma) başarıyla tamamladınız! 🎉
+
+Tebrikler! ${nextLvlName} seviyesinin kilidi açıldı. Artık ${nextLvlName} seviyesine geçebilirsiniz!`);
+      } else {
+        triggerLingoMascot('success', `Tebrikler! ${modeLabel} modunu başarıyla tamamladın!🚀`);
+        alert(`🎉 TEBRİKLER!
+
+${modeLabel} egzersizini başarıyla tamamladın!
+
+${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabilir ya da bu egzersizi dilediğiniz kadar tekrar edebilirsiniz!`);
       }
     }
 
@@ -1134,11 +1213,7 @@
       if (currentIndex !== -1 && currentIndex < levelSequence.length - 1) {
         const nextLevelName = levelSequence[currentIndex + 1];
         unlockedLevels[nextLevelName] = true;
-
-        const nextCard = document.getElementById(`card-${nextLevelName}`);
-        if (nextCard) {
-          nextCard.classList.remove('locked');
-        }
+        saveProgressData();
       }
     }
 
@@ -4911,7 +4986,7 @@
     const visualBank = {
   "A1": [
     {
-      "img": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/600px-Cat03.jpg",
       "prompt": "Bu görseldeki hayvan hangisidir?",
       "options": [
         "Cat (Kedi)",
@@ -4923,7 +4998,7 @@
       "exp": "Görselde bir kedi (Cat) görülmektedir."
     },
     {
-      "img": "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Collage_of_nine_dogs.jpg/600px-Collage_of_nine_dogs.jpg",
       "prompt": "Bu görseldeki hayvan hangisidir?",
       "options": [
         "Elephant (Fil)",
@@ -4932,10 +5007,10 @@
         "Horse (At)"
       ],
       "correct": 1,
-      "exp": "Görselde bir köpek (Dog) bulunmaktadır."
+      "exp": "Görselde köpekler (Dog) bulunmaktadır."
     },
     {
-      "img": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Red_Apple.jpg/600px-Red_Apple.jpg",
       "prompt": "Bu görseldeki meyve hangisidir?",
       "options": [
         "Banana (Muz)",
@@ -4947,7 +5022,7 @@
       "exp": "Görseldeki meyve elmadır (Apple)."
     },
     {
-      "img": "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/2017_Toyota_Camry_%28ASV70R%20XSE%20sedan%29_automobile_01.jpg/600px-2017_Toyota_Camry_%28ASV70R%20XSE%20sedan%29_automobile_01.jpg",
       "prompt": "Görseldeki nesne nedir?",
       "options": [
         "Car (Araba)",
@@ -4959,7 +5034,7 @@
       "exp": "Görselde kırmızı bir araba (Car) vardır."
     },
     {
-      "img": "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Gutenberg_Bible%2C_Lenox_Copy%2C_New_York_Public_Library%2C_2009._Pic_01.jpg/600px-Gutenberg_Bible%2C_Lenox_Copy%2C_New_York_Public_Library%2C_2009._Pic_01.jpg",
       "prompt": "Görseldeki nesne nedir?",
       "options": [
         "Notebook (Defter)",
@@ -4971,7 +5046,7 @@
       "exp": "Görseldeki nesne kitaptır (Book)."
     },
     {
-      "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Restaurant_NPS.jpg/600px-Restaurant_NPS.jpg",
       "prompt": "Bu mekan hangisidir?",
       "options": [
         "School (Okul)",
@@ -4983,7 +5058,7 @@
       "exp": "Görselde bir restoran (Restaurant) yer almaktadır."
     },
     {
-      "img": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/600px-A_small_cup_of_coffee.JPG",
       "prompt": "Görseldeki içecek nedir?",
       "options": [
         "Tea (Çay)",
@@ -4995,7 +5070,7 @@
       "exp": "Görseldeki sıcak içecek kahvedir (Coffee)."
     },
     {
-      "img": "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Clock_face.svg/600px-Clock_face.svg.png",
       "prompt": "Görseldeki nesne nedir?",
       "options": [
         "Clock (Saat)",
@@ -5004,10 +5079,10 @@
         "Guitar (Gitar)"
       ],
       "correct": 0,
-      "exp": "Görseldeki nesne duvardaki saattir (Clock)."
+      "exp": "Görseldeki nesne saattir (Clock)."
     },
     {
-      "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/The_Empire_State_Building.jpg/600px-The_Empire_State_Building.jpg",
       "prompt": "Görseldeki yapı nedir?",
       "options": [
         "House (Ev)",
@@ -5019,7 +5094,7 @@
       "exp": "Görselde yüksek bir bina (Building) görülmektedir."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Miyako_Yonaha_maehama_beach2010.jpg/600px-Miyako_Yonaha_maehama_beach2010.jpg",
       "prompt": "Bu doğa manzarası neresidir?",
       "options": [
         "Forest (Orman)",
@@ -5033,8 +5108,8 @@
   ],
   "A2": [
     {
-      "img": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500&q=80",
-      "prompt": "Görseldeki ulaşım aracı nedir?",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/A380_flight_deck.jpg/600px-A380_flight_deck.jpg",
+      "prompt": "Görseldeki ulaşım aracı mekanizması nedir?",
       "options": [
         "Airplane (Uçak)",
         "Train (Tren)",
@@ -5042,10 +5117,10 @@
         "Helicopter (Helikopter)"
       ],
       "correct": 0,
-      "exp": "Görselde uçak (Airplane) bulunmaktadır."
+      "exp": "Görselde uçak kokpiti (Airplane) bulunmaktadır."
     },
     {
-      "img": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Hospital_room.jpg/600px-Hospital_room.jpg",
       "prompt": "Görseldeki sağlık kurumu neresidir?",
       "options": [
         "Pharmacy (Eczane)",
@@ -5054,10 +5129,10 @@
         "Laboratory (Laboratuvar)"
       ],
       "correct": 1,
-      "exp": "Görselde bir hastane (Hospital) görülmektedir."
+      "exp": "Görselde bir hastane odası (Hospital) görülmektedir."
     },
     {
-      "img": "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Hopetoun_falls.jpg/600px-Hopetoun_falls.jpg",
       "prompt": "Bu doğa ortamı nedir?",
       "options": [
         "Forest (Orman)",
@@ -5066,10 +5141,10 @@
         "Cave (Mağara)"
       ],
       "correct": 0,
-      "exp": "Görselde sık ağaçlı bir orman (Forest) vardır."
+      "exp": "Görselde sık orman ve şelale (Forest) vardır."
     },
     {
-      "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "Görseldeki çalışma alanı nedir?",
       "options": [
         "Factory (Fabrika)",
@@ -5081,7 +5156,7 @@
       "exp": "Görselde modern bir ofis (Office) vardır."
     },
     {
-      "img": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Passport_and_ticket.jpg/600px-Passport_and_ticket.jpg",
       "prompt": "Eylem/Aktivite nedir?",
       "options": [
         "Shopping (Alışveriş)",
@@ -5093,7 +5168,7 @@
       "exp": "Görselde seyahat etmek (Travel) teması işlenmiştir."
     },
     {
-      "img": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Cinema_Auditorium.jpg/600px-Cinema_Auditorium.jpg",
       "prompt": "Bu eğlence mekanı neresidir?",
       "options": [
         "Cinema (Sinema)",
@@ -5105,7 +5180,7 @@
       "exp": "Görselde sinema salonu (Cinema) görülmektedir."
     },
     {
-      "img": "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/US_currency_stack.jpg/600px-US_currency_stack.jpg",
       "prompt": "Görseldeki finansal kavram nedir?",
       "options": [
         "Money (Para)",
@@ -5117,7 +5192,7 @@
       "exp": "Görselde kağıt paralar (Money) yer alır."
     },
     {
-      "img": "https://images.unsplash.com/photo-1517649763962-0c6232661a0b?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Runner_in_sprint.jpg/600px-Runner_in_sprint.jpg",
       "prompt": "Spor dalı hangisidir?",
       "options": [
         "Running (Koşu)",
@@ -5129,7 +5204,7 @@
       "exp": "Görseldeki sporcu koşu (Running) yapmaktadır."
     },
     {
-      "img": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Chef_cooking.jpg/600px-Chef_cooking.jpg",
       "prompt": "Mutfak eylemi nedir?",
       "options": [
         "Eating (Yemek yemek)",
@@ -5141,7 +5216,7 @@
       "exp": "Görselde yemek pişirme (Cooking) eylemi vardır."
     },
     {
-      "img": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Friends_hanging_out.jpg/600px-Friends_hanging_out.jpg",
       "prompt": "Kavram nedir?",
       "options": [
         "Friendship (Arkadaşlık)",
@@ -5155,7 +5230,7 @@
   ],
   "B1": [
     {
-      "img": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Hospital_room.jpg/600px-Hospital_room.jpg",
       "prompt": "Kavram nedir?",
       "options": [
         "Healthcare (Sağlık hizmeti)",
@@ -5167,7 +5242,7 @@
       "exp": "Görsel sağlık hizmetlerini (Healthcare) simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "Teknolojik kavram nedir?",
       "options": [
         "Database (Veritabanı)",
@@ -5179,7 +5254,7 @@
       "exp": "Görsel küresel iletişim ağını (Global Network) temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "İş dünyası kavramı nedir?",
       "options": [
         "Success (Başarı)",
@@ -5191,7 +5266,7 @@
       "exp": "Görselde liderlik (Leadership) vurgulanmıştır."
     },
     {
-      "img": "https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Recycling_symbol.svg/600px-Recycling_symbol.svg.png",
       "prompt": "Çevre kavramı nedir?",
       "options": [
         "Recycling (Geri dönüşüm)",
@@ -5203,7 +5278,7 @@
       "exp": "Görsel geri dönüşüm (Recycling) sembolüdür."
     },
     {
-      "img": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Gutenberg_Bible%2C_Lenox_Copy%2C_New_York_Public_Library%2C_2009._Pic_01.jpg/600px-Gutenberg_Bible%2C_Lenox_Copy%2C_New_York_Public_Library%2C_2009._Pic_01.jpg",
       "prompt": "Akademik kavram nedir?",
       "options": [
         "University Lecture (Üniversite Dersi)",
@@ -5212,10 +5287,10 @@
         "Workshop (Atölye)"
       ],
       "correct": 0,
-      "exp": "Görsel üniversite amfi dersini (University Lecture) gösterir."
+      "exp": "Görsel üniversite ve eğitimi gösterir."
     },
     {
-      "img": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/US_currency_stack.jpg/600px-US_currency_stack.jpg",
       "prompt": "Finansal/Analitik kavram nedir?",
       "options": [
         "Data Analysis (Veri Analizi)",
@@ -5224,10 +5299,10 @@
         "Budgeting (Bütçeleme)"
       ],
       "correct": 0,
-      "exp": "Görsel grafikleri ve veri analizini (Data Analysis) ifade eder."
+      "exp": "Görsel finansal analizleri ifade eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Friends_hanging_out.jpg/600px-Friends_hanging_out.jpg",
       "prompt": "Çalışma şekli nedir?",
       "options": [
         "Team Collaboration (Ekip Çalışması)",
@@ -5239,7 +5314,7 @@
       "exp": "Görseldeki ekip birlikte iş birliği yapmaktadır (Team Collaboration)."
     },
     {
-      "img": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Hopetoun_falls.jpg/600px-Hopetoun_falls.jpg",
       "prompt": "Çevre/İklim konusu nedir?",
       "options": [
         "Natural Habitat (Doğal Yaşam Alanı)",
@@ -5251,7 +5326,7 @@
       "exp": "Görsel el değmemiş doğal yaşam alanını (Natural Habitat) simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "Dijital kavram nedir?",
       "options": [
         "Online Communication (Dijital İletişim)",
@@ -5263,7 +5338,7 @@
       "exp": "Görsel çevrim içi iletişimi (Online Communication) tasvir eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Passport_and_ticket.jpg/600px-Passport_and_ticket.jpg",
       "prompt": "Sosyal eylem nedir?",
       "options": [
         "Agreement/Handshake (Anlaşma/El Sıkışma)",
@@ -5272,12 +5347,12 @@
         "Speech (Konuşma)"
       ],
       "correct": 0,
-      "exp": "Görsel anlaşmayı ve el sıkışmayı (Agreement/Handshake) temsil eder."
+      "exp": "Görsel anlaşmayı ve seyahat belgesini temsil eder."
     }
   ],
   "B2": [
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/600px-Cat03.jpg",
       "prompt": "Sanatsal/Soyut kavram nedir?",
       "options": [
         "Creativity & Art (Yaratıcılık ve Sanat)",
@@ -5286,10 +5361,10 @@
         "Draft (Taslak)"
       ],
       "correct": 0,
-      "exp": "Görsel yaratıcılık ve soyut sanatı (Creativity & Art) simgeler."
+      "exp": "Görsel yaratıcılık ve sanatı simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/The_Empire_State_Building.jpg/600px-The_Empire_State_Building.jpg",
       "prompt": "Mimari kavram nedir?",
       "options": [
         "Modern Architecture (Modern Mimari)",
@@ -5301,7 +5376,7 @@
       "exp": "Görsel modern mimariyi (Modern Architecture) gösterir."
     },
     {
-      "img": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "Siber kavram nedir?",
       "options": [
         "Cyber Security (Siber Güvenlik)",
@@ -5313,7 +5388,7 @@
       "exp": "Görsel siber güvenliği (Cyber Security) temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "Stratejik kavram nedir?",
       "options": [
         "Strategic Planning (Stratejik Planlama)",
@@ -5322,10 +5397,10 @@
         "Auditing (Denetim)"
       ],
       "correct": 0,
-      "exp": "Görsel stratejik planlama (Strategic Planning) sürecini gösterir."
+      "exp": "Görsel stratejik planlama sürecini gösterir."
     },
     {
-      "img": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Restaurant_NPS.jpg/600px-Restaurant_NPS.jpg",
       "prompt": "Hukuki sembol nedir?",
       "options": [
         "Justice & Law (Adalet ve Hukuk)",
@@ -5334,10 +5409,10 @@
         "Penalty (Ceza)"
       ],
       "correct": 0,
-      "exp": "Görsel adalet terazisini ve hukuku (Justice & Law) simgeler."
+      "exp": "Görsel adaleti ve hukuku simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "Yönetimsel durum nedir?",
       "options": [
         "Executive Decision (Yönetsel Karar)",
@@ -5346,10 +5421,10 @@
         "Consultation (Danışmanlık)"
       ],
       "correct": 0,
-      "exp": "Görsel üst düzey yönetimi ve kararları (Executive Decision) ifade eder."
+      "exp": "Görsel üst düzey yönetimi ve kararları ifade eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/US_currency_stack.jpg/600px-US_currency_stack.jpg",
       "prompt": "Ekonomik kavram nedir?",
       "options": [
         "Market Trend & Inflation (Piyasa Trendi ve Enflasyon)",
@@ -5361,7 +5436,7 @@
       "exp": "Görsel piyasa eğilimlerini ve finansal verileri gösterir."
     },
     {
-      "img": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Friends_hanging_out.jpg/600px-Friends_hanging_out.jpg",
       "prompt": "Toplumsal durum nedir?",
       "options": [
         "Diversity & Inclusion (Çeşitlilik ve Kapsayıcılık)",
@@ -5370,10 +5445,10 @@
         "Segregation (Ayrışma)"
       ],
       "correct": 0,
-      "exp": "Görsel toplumsal çeşitliliği (Diversity) simgeler."
+      "exp": "Görsel toplumsal çeşitliliği simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Gutenberg_Bible%2C_Lenox_Copy%2C_New_York_Public_Library%2C_2009._Pic_01.jpg/600px-Gutenberg_Bible%2C_Lenox_Copy%2C_New_York_Public_Library%2C_2009._Pic_01.jpg",
       "prompt": "Eğitimsel kavram nedir?",
       "options": [
         "Knowledge Sharing (Bilgi Paylaşımı)",
@@ -5382,10 +5457,10 @@
         "Assignment (Ödev)"
       ],
       "correct": 0,
-      "exp": "Görsel interaktif bilgi paylaşımını (Knowledge Sharing) gösterir."
+      "exp": "Görsel bilgi paylaşımını gösterir."
     },
     {
-      "img": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/A380_flight_deck.jpg/600px-A380_flight_deck.jpg",
       "prompt": "Yazılım kavramı nedir?",
       "options": [
         "Software Engineering (Yazılım Mühendisliği)",
@@ -5394,12 +5469,12 @@
         "Graphic Design (Grafik Tasarım)"
       ],
       "correct": 0,
-      "exp": "Görsel kodlama ve yazılım mühendisliğini (Software Engineering) temsil eder."
+      "exp": "Görsel yazılım ve teknoloji mühendisliğini temsil eder."
     }
   ],
   "C1": [
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #1",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5408,10 +5483,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 0,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #2",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5420,10 +5495,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 1,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #3",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5432,10 +5507,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 2,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #4",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5444,10 +5519,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 3,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #5",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5456,10 +5531,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 0,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #6",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5468,10 +5543,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 1,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #7",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5480,10 +5555,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 2,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #8",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5492,10 +5567,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 3,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #9",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5504,10 +5579,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 0,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #10",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5516,10 +5591,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 1,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #11",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5528,10 +5603,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 2,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #12",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5540,10 +5615,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 3,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #13",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5552,10 +5627,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 0,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #14",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5564,10 +5639,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 1,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #15",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5576,10 +5651,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 2,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #16",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5588,10 +5663,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 3,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #17",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5600,10 +5675,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 0,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #18",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5612,10 +5687,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 1,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #19",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5624,10 +5699,10 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 2,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     },
     {
-      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Global_network_connections.jpg/600px-Global_network_connections.jpg",
       "prompt": "C1 İleri Seviye Görsel Kavram #20",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5636,12 +5711,12 @@
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 3,
-      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
     }
   ],
   "C2": [
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #1",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5653,7 +5728,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #2",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5665,7 +5740,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #3",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5677,7 +5752,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #4",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5689,7 +5764,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #5",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5701,7 +5776,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #6",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5713,7 +5788,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #7",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5725,7 +5800,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #8",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5737,7 +5812,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #9",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5749,7 +5824,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #10",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5761,7 +5836,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #11",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5773,7 +5848,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #12",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5785,7 +5860,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #13",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5797,7 +5872,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #14",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5809,7 +5884,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #15",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5821,7 +5896,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #16",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5833,7 +5908,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #17",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5845,7 +5920,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #18",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5857,7 +5932,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #19",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5869,7 +5944,7 @@
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+      "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Office_space.jpg/600px-Office_space.jpg",
       "prompt": "C2 İleri Seviye Görsel Kavram #20",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -6370,6 +6445,7 @@
         expBox.className = 'explanation-box success';
         expBox.innerHTML = `<strong>Tebrikler! +15 XP 🎉</strong><br>${qData.exp}`;
         triggerFloatingXP(event.clientX, event.clientY, `+15 XP`);
+        triggerLingoMascot('success');
       } else {
         currentLevelXP -= 5;
         saveUserXP(-5);
@@ -6379,6 +6455,7 @@
         expBox.className = 'explanation-box error';
         expBox.innerHTML = `<strong>Yanlış Cevap! -5 XP ❌</strong><br>${qData.exp}`;
         triggerFloatingXP(event.clientX, event.clientY, `-5 XP`, '#ef4444');
+        triggerLingoMascot('error');
       }
 
       expBox.style.display = 'block';
@@ -6397,13 +6474,9 @@
       currentQuestionIndex++;
       
       if (currentQuestionIndex >= questions.length) {
-        const threshold = 180; // 300 üzerinden 180 XP barajı
+        const threshold = 180;
         if (currentLevelXP >= threshold) {
-            completedModes[currentLevel]['quiz'] = true;
-            updateModeButtonsUI();
-            checkLevelUnlockStatus(currentLevel);
-            alert(`🎉 TEBRİKLER! Çoktan Seçmeli Testi başarıyla tamamladın! (${currentLevelXP} XP)
-${currentLevel} seviyesini tamamen geçmek için diğer testlere de (Drag & Match, Speaking, Görsel, Yazma) göz atın!`);
+            markModeCompletedAndCheckLevel('quiz', 'Çoktan Seçmeli Test');
         } else {
             alert(`❌ BARAJ GEÇİLEMEDİ! Çoktan Seçmeli Testte baraj puanına ulaşılamadı. (Senin Puanın: ${currentLevelXP} XP / Gereken: ${threshold} XP)
 İstediğiniz zaman tekrar deneyebilirsiniz!`);
@@ -6554,6 +6627,7 @@ ${currentLevel} seviyesini tamamen geçmek için diğer testlere de (Drag & Matc
         currentMatchXP += 10;
         saveUserXP(10);
         triggerFloatingXP(window.innerWidth / 2, 250, '+10 XP');
+        triggerLingoMascot('success');
 
         matchedPairsCount++;
         selectedTRCard = null;
@@ -6583,6 +6657,7 @@ ${currentLevel} seviyesini tamamen geçmek için diğer testlere de (Drag & Matc
         currentMatchXP -= 2;
         saveUserXP(-2);
         triggerFloatingXP(window.innerWidth / 2, 250, '-2 XP', '#ef4444');
+        triggerLingoMascot('error');
 
         setTimeout(() => {
           trCard.classList.remove('wrong', 'selected');
@@ -6599,11 +6674,7 @@ ${currentLevel} seviyesini tamamen geçmek için diğer testlere de (Drag & Matc
       if (currentMatchIndex >= sets.length) {
         const threshold = 400;
         if (currentMatchXP >= threshold) {
-          completedModes[currentLevel]['match'] = true;
-          updateModeButtonsUI();
-          checkLevelUnlockStatus(currentLevel);
-          alert(`🎉 TEBRİKLER! Drag & Match egzersizini başarıyla tamamladın! (${currentMatchXP} XP)
-${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`);
+          markModeCompletedAndCheckLevel('match', 'Drag & Match Eşleştirme');
         } else {
           alert(`❌ BARAJ GEÇİLEMEDİ! Drag & Match egzersizinde baraj puanına ulaşılamadı. (Senin Puanın: ${currentMatchXP} XP / Gereken: ${threshold} XP)
 İstediğiniz zaman tekrar deneyebilirsiniz!`);
@@ -6837,6 +6908,7 @@ ${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`
         currentSpeakingXP += 15;
         saveUserXP(15);
         triggerFloatingXP(window.innerWidth / 2, 250, '+15 XP');
+        triggerLingoMascot('success');
 
         expBox.className = 'explanation-box success';
         expBox.innerHTML = `
@@ -6858,6 +6930,7 @@ ${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`
         currentSpeakingXP -= 3;
         saveUserXP(-3);
         triggerFloatingXP(window.innerWidth / 2, 250, '-3 XP', '#ef4444');
+        triggerLingoMascot('error');
 
         let errorDetails = '';
         if (missingContentWords.length > 0) {
@@ -6881,15 +6954,11 @@ ${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`
       currentSpeakingIndex++;
 
       if (currentSpeakingIndex >= sentences.length) {
-        const threshold = 90; // 10 cümle x 15 XP = 150 max. 90 XP barajı (6 doğru)
+        const threshold = 90;
         if (currentSpeakingXP >= threshold) {
-          completedModes[currentLevel]['speaking'] = true;
-          updateModeButtonsUI();
-          checkLevelUnlockStatus(currentLevel);
-          alert(`🎉 TEBRİKLER! Konuşma (Speaking) egzersizini başarıyla tamamladın! (${currentSpeakingXP} XP)
-${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`);
+          markModeCompletedAndCheckLevel('speaking', 'Speaking Test');
         } else {
-          alert(`❌ BARAJ GEÇİLEMEDİ! Konuşma egzersizinde baraj puanına ulaşılamadı. (Senin Puanın: ${currentSpeakingXP} XP / Gereken: ${threshold} XP)
+          alert(`❌ BARAJ GEÇİLEMEDİ! Speaking testinde baraj puanına ulaşılamadı. (Senin Puanın: ${currentSpeakingXP} XP / Gereken: ${threshold} XP)
 İstediğiniz zaman tekrar deneyebilirsiniz!`);
         }
         currentSpeakingIndex = 0;
@@ -6953,6 +7022,7 @@ ${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`
         expBox.className = 'explanation-box success';
         expBox.innerHTML = `<strong>Tebrikler! +15 XP 🎉</strong><br>${qData.exp}`;
         triggerFloatingXP(event.clientX, event.clientY, `+15 XP`);
+        triggerLingoMascot('success');
       } else {
         currentVisualXP -= 5;
         saveUserXP(-5);
@@ -6962,6 +7032,7 @@ ${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`
         expBox.className = 'explanation-box error';
         expBox.innerHTML = `<strong>Yanlış Cevap! -5 XP ❌</strong><br>${qData.exp}`;
         triggerFloatingXP(event.clientX, event.clientY, `-5 XP`, '#ef4444');
+        triggerLingoMascot('error');
       }
 
       expBox.style.display = 'block';
@@ -6980,13 +7051,9 @@ ${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`
       currentVisualIndex++;
 
       if (currentVisualIndex >= questions.length) {
-        const threshold = Math.round(questions.length * 15 * 0.6); // %60 başarı barajı
+        const threshold = Math.round(questions.length * 15 * 0.6);
         if (currentVisualXP >= threshold) {
-          completedModes[currentLevel]['visual'] = true;
-          updateModeButtonsUI();
-          checkLevelUnlockStatus(currentLevel);
-          alert(`🎉 TEBRİKLER! Görsel Eşleştirme egzersizini başarıyla tamamladın! (${currentVisualXP} XP)
-${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`);
+          markModeCompletedAndCheckLevel('visual', 'Görsel Eşleştirme');
         } else {
           alert(`❌ BARAJ GEÇİLEMEDİ! Görsel Eşleştirme egzersizinde baraj puanına ulaşılamadı. (Senin Puanın: ${currentVisualXP} XP / Gereken: ${threshold} XP)
 İstediğiniz zaman tekrar deneyebilirsiniz!`);
@@ -7045,7 +7112,6 @@ ${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`
       const questions = writingBank[currentLevel];
       const qData = questions[currentWritingIndex];
 
-      // Expand contractions and normalize both user input and target answers
       const normUser = expandContractions(userVal);
       const normAns = expandContractions(qData.answer);
       const normAlt = qData.alt ? expandContractions(qData.alt) : null;
@@ -7058,6 +7124,7 @@ ${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`
         currentWritingXP += 15;
         saveUserXP(15);
         triggerFloatingXP(window.innerWidth / 2, 250, '+15 XP');
+        triggerLingoMascot('success');
 
         expBox.className = 'explanation-box success';
         expBox.innerHTML = `
@@ -7068,6 +7135,7 @@ ${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`
         currentWritingXP -= 5;
         saveUserXP(-5);
         triggerFloatingXP(window.innerWidth / 2, 250, '-5 XP', '#ef4444');
+        triggerLingoMascot('error');
 
         expBox.className = 'explanation-box error';
         expBox.innerHTML = `
@@ -7093,13 +7161,9 @@ ${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`
       currentWritingIndex++;
 
       if (currentWritingIndex >= questions.length) {
-        const threshold = Math.round(questions.length * 15 * 0.6); // %60 barajı
+        const threshold = Math.round(questions.length * 15 * 0.6);
         if (currentWritingXP >= threshold) {
-          completedModes[currentLevel]['writing'] = true;
-          updateModeButtonsUI();
-          checkLevelUnlockStatus(currentLevel);
-          alert(`🎉 TEBRİKLER! Yazma Egzersizini başarıyla tamamladın! (${currentWritingXP} XP)
-${currentLevel} seviyesini tamamen geçmek için diğer testlere de göz atın!`);
+          markModeCompletedAndCheckLevel('writing', 'Yazma Egzersizi');
         } else {
           alert(`❌ BARAJ GEÇİLEMEDİ! Yazma egzersizinde baraj puanına ulaşılamadı. (Senin Puanın: ${currentWritingXP} XP / Gereken: ${threshold} XP)
 İstediğiniz zaman tekrar deneyebilirsiniz!`);
