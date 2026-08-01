@@ -3,28 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lingova - AI Destekli İngilizce Öğrenme Platformu</title>
+  <title>Lingova Modern Dil Öğrenme Platformu</title>
   
+  <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+  <!-- Confetti Library for Celebrations -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <!-- Firebase compatibility SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
   <style>
     :root {
-      --bg-dark: #0f172a;
-      --card-bg: rgba(30, 41, 59, 0.7);
-      --card-border: rgba(255, 255, 255, 0.1);
+      --bg-dark: #090d16;
+      --card-bg: rgba(21, 29, 46, 0.75);
+      --card-border: rgba(255, 255, 255, 0.12);
       --accent-cyan: #38bdf8;
       --accent-purple: #a855f7;
+      --accent-gold: #facc15;
       --success-green: #22c55e;
+      --success-btn: #16a34a;
       --error-red: #ef4444;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
+      --duo-green: #58cc02;
+      --duo-green-shadow: #46a302;
+      --duo-blue: #1cb0f6;
+      --duo-blue-shadow: #1899d6;
     }
 
     * {
@@ -37,38 +48,42 @@
     body {
       background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.12) 0px, transparent 50%);
+        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 45%),
+        radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.15) 0px, transparent 45%);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
+      padding: 16px;
+      overflow-x: hidden;
     }
 
     header {
       width: 100%;
-      max-width: 1100px;
+      max-width: 960px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 24px;
+      padding: 14px 24px;
       background: var(--card-bg);
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(20px);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
+      border-radius: 20px;
       margin-bottom: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--accent-cyan);
+      font-size: 26px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
     }
 
     .user-panel {
@@ -77,90 +92,103 @@
       gap: 16px;
     }
 
-    .xp-badge {
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(168, 85, 247, 0.2));
-      border: 1px solid var(--accent-cyan);
+    .stat-badge {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
       padding: 8px 16px;
-      border-radius: 20px;
-      font-weight: 700;
-      color: #7dd3fc;
+      border-radius: 24px;
+      font-weight: 800;
+      font-size: 14px;
       display: flex;
       align-items: center;
       gap: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
+
+    .stat-badge.xp { color: var(--accent-gold); border-color: rgba(250, 204, 21, 0.4); }
+    .stat-badge.streak { color: #f97316; border-color: rgba(249, 115, 22, 0.4); }
 
     .btn-auth {
       background: #ffffff;
       color: #0f172a;
       border: none;
       padding: 10px 18px;
-      border-radius: 10px;
-      font-weight: 700;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 13px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.2s;
+      box-shadow: 0 4px 0 #cbd5e1;
+      transition: all 0.1s ease;
     }
 
-    .btn-auth:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+    .btn-auth:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #cbd5e1;
     }
 
     .user-avatar {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       border: 2px solid var(--accent-cyan);
     }
 
+    /* MAIN LAYOUT CONTAINER */
     .app-container {
       width: 100%;
-      max-width: 900px;
+      max-width: 960px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
     }
 
-    /* Lingo Maskot Widget */
-    .mascot-container {
+    /* MASCOT WIDGET (Lingo the Rocket Owl) */
+    .mascot-card {
       display: flex;
       align-items: center;
-      gap: 16px;
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      border-radius: 16px;
-      padding: 14px 20px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
+      gap: 18px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 16px 22px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      position: relative;
     }
 
     .mascot-avatar {
-      width: 54px;
-      height: 54px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      background: linear-gradient(135deg, var(--duo-blue), var(--accent-purple));
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
+      font-size: 32px;
       color: white;
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
       flex-shrink: 0;
       animation: floatMascot 3s ease-in-out infinite;
     }
 
     @keyframes floatMascot {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(3deg); }
     }
 
-    .mascot-bubble {
+    .mascot-speech-bubble {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 12px 18px;
+      border-radius: 16px;
+      border-bottom-left-radius: 4px;
       font-size: 15px;
       font-weight: 700;
       color: #7dd3fc;
       line-height: 1.4;
+      flex-grow: 1;
     }
 
     .mode-switcher {
@@ -174,36 +202,38 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       color: var(--text-muted);
-      padding: 10px 18px;
-      border-radius: 14px;
-      font-size: 13px;
-      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: 16px;
+      font-size: 14px;
+      font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-      position: relative;
+      gap: 10px;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+      transition: all 0.15s ease;
     }
 
     .mode-btn:hover {
-      border-color: var(--accent-cyan);
       color: var(--text-main);
+      border-color: var(--accent-cyan);
+      transform: translateY(-2px);
     }
 
     .mode-btn.active {
       background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(168, 85, 247, 0.25));
       border: 2px solid var(--accent-cyan);
       color: var(--accent-cyan);
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+      box-shadow: 0 4px 0 var(--duo-blue-shadow);
     }
 
     .mode-btn.completed::after {
       content: " ✓";
       color: var(--success-green);
-      font-weight: 800;
+      font-weight: 900;
     }
 
+    /* LEVEL SELECTOR (A1-C2) */
     .level-selector {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -213,15 +243,15 @@
     .level-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 16px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.2s ease;
-      position: relative;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+      transition: all 0.15s ease;
     }
 
-    .level-card:hover {
+    .level-card:hover:not(.locked) {
       border-color: var(--accent-cyan);
       transform: translateY(-3px);
     }
@@ -229,33 +259,35 @@
     .level-card.active {
       background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(168, 85, 247, 0.25));
       border: 2px solid var(--accent-cyan);
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+      box-shadow: 0 4px 0 var(--duo-blue-shadow);
     }
 
     .level-card.locked {
-      opacity: 0.5;
+      opacity: 0.45;
       cursor: not-allowed;
     }
 
     .level-card h3 {
       font-size: 22px;
-      font-weight: 800;
+      font-weight: 900;
       color: var(--accent-cyan);
     }
 
     .level-card p {
       font-size: 12px;
+      font-weight: 600;
       color: var(--text-muted);
       margin-top: 4px;
     }
 
-    .quiz-card {
+    /* QUIZ / EXERCISE CARD */
+    .exercise-card {
       background: var(--card-bg);
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(24px);
       border: 1px solid var(--card-border);
-      border-radius: 20px;
+      border-radius: 24px;
       padding: 36px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
       position: relative;
       overflow: hidden;
     }
@@ -269,37 +301,38 @@
 
     .question-tracker {
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-muted);
     }
 
     .progress-bar-bg {
       width: 100%;
-      height: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
       overflow: hidden;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
 
     .progress-bar-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
-      transition: width 0.3s ease;
+      background: linear-gradient(90deg, var(--duo-blue), var(--duo-green));
+      border-radius: 12px;
+      transition: width 0.4s ease;
     }
 
     .question-title {
-      font-size: 22px;
-      font-weight: 700;
-      line-height: 1.5;
-      margin-bottom: 24px;
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.4;
+      margin-bottom: 28px;
     }
 
     .options-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 12px;
+      gap: 14px;
     }
 
     @media (min-width: 640px) {
@@ -310,59 +343,79 @@
 
     .option-btn {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
+      border: 2px solid var(--card-border);
       color: var(--text-main);
-      padding: 16px 20px;
-      border-radius: 12px;
+      padding: 18px 22px;
+      border-radius: 18px;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 700;
       text-align: left;
       cursor: pointer;
-      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+      transition: all 0.15s ease;
     }
 
     .option-btn:hover:not(:disabled) {
       background: rgba(255, 255, 255, 0.12);
       border-color: rgba(255, 255, 255, 0.3);
-      transform: translateX(4px);
+      transform: translateY(-2px);
+    }
+
+    .option-btn:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
     }
 
     .option-btn.correct-anim {
       background: rgba(34, 197, 94, 0.25) !important;
-      border: 2px solid var(--success-green) !important;
+      border-color: var(--success-green) !important;
       color: #86efac !important;
+      box-shadow: 0 4px 0 var(--success-btn) !important;
       animation: pulseGreen 0.5s ease-in-out;
     }
 
     .option-btn.wrong-anim {
       background: rgba(239, 68, 68, 0.25) !important;
-      border: 2px solid var(--error-red) !important;
+      border-color: var(--error-red) !important;
       color: #fca5a5 !important;
+      box-shadow: 0 4px 0 #b91c1c !important;
       animation: shakeRed 0.4s ease-in-out;
     }
 
     @keyframes pulseGreen {
       0% { transform: scale(1); }
-      50% { transform: scale(1.03); box-shadow: 0 0 25px rgba(34, 197, 94, 0.6); }
+      50% { transform: scale(1.02); }
       100% { transform: scale(1); }
     }
 
     @keyframes shakeRed {
       0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-8px); }
-      40%, 80% { transform: translateX(8px); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
     }
 
+    .key-badge {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    /* DRAG & MATCH STYLES */
     .match-instruction {
       background: rgba(56, 189, 248, 0.1);
       border: 1px solid rgba(56, 189, 248, 0.3);
       color: #7dd3fc;
       padding: 12px 18px;
-      border-radius: 12px;
+      border-radius: 14px;
       font-size: 14px;
+      font-weight: 700;
       margin-bottom: 20px;
       display: flex;
       align-items: center;
@@ -379,12 +432,12 @@
     .match-column {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .match-column-title {
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--accent-cyan);
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -394,21 +447,21 @@
 
     .match-card-item {
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
+      border: 2px solid var(--card-border);
       color: var(--text-main);
-      padding: 14px 16px;
-      border-radius: 12px;
+      padding: 16px;
+      border-radius: 16px;
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 700;
       text-align: center;
       cursor: grab;
       user-select: none;
-      transition: all 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 52px;
-      word-break: break-word;
+      min-height: 54px;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.3);
+      transition: all 0.15s ease;
     }
 
     .match-card-item:hover:not(.matched) {
@@ -419,50 +472,52 @@
 
     .match-card-item.selected {
       background: rgba(168, 85, 247, 0.25) !important;
-      border: 2px solid var(--accent-purple) !important;
+      border-color: var(--accent-purple) !important;
       color: #e9d5ff !important;
-      box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+      box-shadow: 0 4px 0 #7e22ce !important;
       transform: scale(1.02);
     }
 
     .match-card-item.matched {
       background: rgba(34, 197, 94, 0.2) !important;
-      border: 2px solid var(--success-green) !important;
+      border-color: var(--success-green) !important;
       color: #86efac !important;
+      box-shadow: 0 2px 0 var(--success-btn) !important;
       cursor: default;
-      opacity: 0.85;
-      transform: scale(0.98);
+      opacity: 0.8;
       pointer-events: none;
     }
 
     .match-card-item.wrong {
       background: rgba(239, 68, 68, 0.25) !important;
-      border: 2px solid var(--error-red) !important;
+      border-color: var(--error-red) !important;
       color: #fca5a5 !important;
       animation: shakeRed 0.4s ease-in-out;
     }
 
+    /* SPEAKING TEST STYLES */
     .speaking-target-box {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 24px;
+      border-radius: 20px;
+      padding: 28px;
       text-align: center;
       margin-bottom: 24px;
     }
 
     .speaking-en-text {
-      font-size: 26px;
-      font-weight: 800;
+      font-size: 28px;
+      font-weight: 900;
       color: var(--accent-cyan);
       margin-bottom: 8px;
-      line-height: 1.4;
+      line-height: 1.3;
     }
 
     .speaking-tr-text {
       font-size: 16px;
       color: var(--text-muted);
-      margin-bottom: 20px;
+      font-weight: 600;
+      margin-bottom: 22px;
     }
 
     .audio-controls-row {
@@ -474,17 +529,18 @@
 
     .btn-audio {
       background: rgba(56, 189, 248, 0.15);
-      border: 1px solid var(--accent-cyan);
+      border: 2px solid var(--accent-cyan);
       color: #7dd3fc;
-      padding: 10px 20px;
-      border-radius: 12px;
+      padding: 12px 22px;
+      border-radius: 16px;
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
+      gap: 10px;
+      box-shadow: 0 4px 0 var(--duo-blue-shadow);
+      transition: all 0.15s ease;
     }
 
     .btn-audio:hover {
@@ -494,17 +550,18 @@
 
     .btn-audio-user {
       background: rgba(168, 85, 247, 0.15);
-      border: 1px solid var(--accent-purple);
+      border: 2px solid var(--accent-purple);
       color: #e9d5ff;
-      padding: 10px 20px;
-      border-radius: 12px;
+      padding: 12px 22px;
+      border-radius: 16px;
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
+      gap: 10px;
+      box-shadow: 0 4px 0 #7e22ce;
+      transition: all 0.15s ease;
     }
 
     .btn-audio-user:hover {
@@ -516,6 +573,7 @@
       opacity: 0.4;
       cursor: not-allowed;
       transform: none;
+      box-shadow: none;
     }
 
     .mic-action-area {
@@ -527,148 +585,170 @@
     }
 
     .mic-btn {
-      width: 80px;
-      height: 80px;
+      width: 88px;
+      height: 88px;
       border-radius: 50%;
       border: none;
-      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      background: linear-gradient(135deg, var(--duo-blue), var(--accent-purple));
       color: white;
-      font-size: 32px;
+      font-size: 36px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
-      transition: all 0.3s ease;
+      box-shadow: 0 8px 0 var(--duo-blue-shadow), 0 10px 25px rgba(56, 189, 248, 0.4);
+      transition: all 0.15s ease;
     }
 
     .mic-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 15px 35px rgba(168, 85, 247, 0.6);
+      transform: scale(1.06);
     }
 
     .mic-btn.recording {
       background: linear-gradient(135deg, #ef4444, #f97316) !important;
+      box-shadow: 0 8px 0 #b91c1c, 0 0 30px rgba(239, 68, 68, 0.8) !important;
       animation: micPulse 1.2s infinite;
     }
 
     @keyframes micPulse {
-      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-      70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
     }
 
     .mic-status-label {
       font-size: 15px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-muted);
     }
 
+    /* VISUAL MATCHING STYLES */
     .visual-image-container {
       width: 100%;
       max-height: 280px;
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
-      margin-bottom: 20px;
-      border: 1px solid var(--card-border);
+      margin-bottom: 24px;
+      border: 2px solid var(--card-border);
       display: flex;
       justify-content: center;
       align-items: center;
       background: #000;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
     }
 
     .visual-image-container img {
       width: 100%;
       max-height: 280px;
       object-fit: cover;
+      transition: transform 0.3s ease;
     }
 
+    .visual-image-container:hover img {
+      transform: scale(1.03);
+    }
+
+    /* WRITING EXERCISE STYLES */
     .writing-input-area {
       display: flex;
       flex-direction: column;
       gap: 16px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     .writing-input {
       width: 100%;
-      padding: 16px 20px;
-      border-radius: 12px;
+      padding: 18px 22px;
+      border-radius: 16px;
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
+      border: 2px solid var(--card-border);
       color: var(--text-main);
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 700;
       outline: none;
       transition: all 0.2s;
     }
 
     .writing-input:focus {
       border-color: var(--accent-cyan);
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
       background: rgba(255, 255, 255, 0.08);
     }
 
     .btn-submit-writing {
-      padding: 16px;
-      border-radius: 12px;
+      padding: 18px;
+      border-radius: 16px;
       border: none;
-      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      background: linear-gradient(135deg, var(--duo-green), var(--accent-cyan));
       color: white;
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 17px;
+      font-weight: 800;
       cursor: pointer;
-      transition: transform 0.2s;
+      box-shadow: 0 4px 0 var(--duo-green-shadow);
+      transition: all 0.15s ease;
     }
 
     .btn-submit-writing:hover {
       transform: translateY(-2px);
     }
 
+    .btn-submit-writing:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 var(--duo-green-shadow);
+    }
+
+    /* EXPLANATION BOX & NEXT BUTTON */
     .explanation-box {
       margin-top: 24px;
-      padding: 16px 20px;
-      border-radius: 12px;
+      padding: 18px 22px;
+      border-radius: 16px;
       display: none;
       font-size: 15px;
+      font-weight: 600;
       line-height: 1.5;
     }
 
     .explanation-box.success {
       background: rgba(34, 197, 94, 0.15);
-      border: 1px solid var(--success-green);
+      border: 2px solid var(--success-green);
       color: #86efac;
     }
 
     .explanation-box.error {
       background: rgba(239, 68, 68, 0.15);
-      border: 1px solid var(--error-red);
+      border: 2px solid var(--error-red);
       color: #fca5a5;
     }
 
     .next-btn {
       margin-top: 24px;
       width: 100%;
-      padding: 16px;
+      padding: 18px;
       border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--duo-green), var(--duo-blue));
       color: white;
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 900;
       cursor: pointer;
       display: none;
-      transition: transform 0.2s;
+      box-shadow: 0 5px 0 var(--duo-green-shadow);
+      transition: all 0.15s ease;
     }
 
     .next-btn:hover {
       transform: translateY(-2px);
     }
 
+    .next-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 var(--duo-green-shadow);
+    }
+
     .floating-xp {
       position: absolute;
-      font-size: 28px;
-      font-weight: 800;
+      font-size: 32px;
+      font-weight: 900;
       color: #4ade80;
       pointer-events: none;
       animation: floatUp 1s forwards ease-out;
@@ -677,7 +757,7 @@
 
     @keyframes floatUp {
       0% { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(-60px) scale(1.3); }
+      100% { opacity: 0; transform: translateY(-70px) scale(1.3); }
     }
 
     .firebase-alert {
@@ -685,8 +765,9 @@
       border: 1px solid #eab308;
       color: #fef08a;
       padding: 12px 20px;
-      border-radius: 12px;
+      border-radius: 14px;
       font-size: 13px;
+      font-weight: 600;
       margin-bottom: 16px;
       display: flex;
       align-items: center;
@@ -702,14 +783,18 @@
       <span>Lingova</span>
     </div>
     <div class="user-panel">
-      <div class="xp-badge">
-        <i class="fa-solid fa-bolt" style="color: #facc15;"></i>
+      <div class="stat-badge xp">
+        <i class="fa-solid fa-bolt"></i>
         <span id="user-xp">0 XP</span>
+      </div>
+      <div class="stat-badge streak">
+        <i class="fa-solid fa-fire"></i>
+        <span id="user-streak">1 Gün</span>
       </div>
       <div id="auth-container">
         <button class="btn-auth" id="btn-login" onclick="loginWithGoogle()">
           <i class="fa-brands fa-google"></i>
-          <span>Google ile Giriş</span>
+          <span>Giriş Yap</span>
         </button>
       </div>
     </div>
@@ -719,13 +804,13 @@
 
     <div class="firebase-alert" id="demo-alert">
       <i class="fa-solid fa-circle-info"></i>
-      <span><strong>Giriş durumu:</strong> Kaldığınız soru, aktif mod ve tüm ilerlemeniz otomatik kaydedilir.</span>
+      <span><strong>Kullanıcı İlerlemesi:</strong> Kaldığınız soru ve seviye anlık kaydedilir. Google ile giriş yaparak buluta eşitleyebilirsiniz.</span>
     </div>
 
     <!-- Lingo Maskot Motivasyon Alanı -->
-    <div class="mascot-container">
+    <div class="mascot-card">
       <div class="mascot-avatar" id="mascot-avatar">🚀</div>
-      <div class="mascot-bubble" id="mascot-text">Selam! Ben Lingo. Kaldığın yerden İngilizceyi fethetmeye hazır mısın?</div>
+      <div class="mascot-speech-bubble" id="mascot-text">Selam! Ben Lingo. Bugün birlikte İngilizceyi fethetmeye hazır mısın?</div>
     </div>
 
     <!-- Mod Seçici (5 Mod) -->
@@ -775,10 +860,10 @@
     </div>
 
     <!-- 1. Soru Kartı (Quiz Modu) -->
-    <div class="quiz-card" id="quiz-card">
+    <div class="exercise-card" id="quiz-card">
       <div class="quiz-header">
         <span class="question-tracker" id="question-tracker">Soru 1 / 20</span>
-        <span class="question-tracker" id="level-badge" style="color: var(--accent-cyan); font-weight:700;">A1 SEVİYESİ</span>
+        <span class="question-tracker" id="level-badge" style="color: var(--accent-cyan); font-weight:800;">A1 SEVİYESİ</span>
       </div>
 
       <div class="progress-bar-bg">
@@ -795,10 +880,10 @@
     </div>
 
     <!-- 2. Drag & Match Kartı -->
-    <div class="quiz-card" id="match-card" style="display: none;">
+    <div class="exercise-card" id="match-card" style="display: none;">
       <div class="quiz-header">
         <span class="question-tracker" id="match-tracker">Eşleştirme Seti 1 / 10 | Bölüm Puanı: 0 XP</span>
-        <span class="question-tracker" id="match-level-badge" style="color: var(--accent-cyan); font-weight:700;">A1 SEVİYESİ</span>
+        <span class="question-tracker" id="match-level-badge" style="color: var(--accent-cyan); font-weight:800;">A1 SEVİYESİ</span>
       </div>
 
       <div class="progress-bar-bg">
@@ -826,10 +911,10 @@
     </div>
 
     <!-- 3. Speaking Test Kartı -->
-    <div class="quiz-card" id="speaking-card" style="display: none;">
+    <div class="exercise-card" id="speaking-card" style="display: none;">
       <div class="quiz-header">
         <span class="question-tracker" id="speaking-tracker">Cümle 1 / 10 | Bölüm Puanı: 0 XP</span>
-        <span class="question-tracker" id="speaking-level-badge" style="color: var(--accent-cyan); font-weight:700;">A1 SEVİYESİ</span>
+        <span class="question-tracker" id="speaking-level-badge" style="color: var(--accent-cyan); font-weight:800;">A1 SEVİYESİ</span>
       </div>
 
       <div class="progress-bar-bg">
@@ -863,10 +948,10 @@
     </div>
 
     <!-- 4. Görsel Eşleştirme Kartı -->
-    <div class="quiz-card" id="visual-card" style="display: none;">
+    <div class="exercise-card" id="visual-card" style="display: none;">
       <div class="quiz-header">
         <span class="question-tracker" id="visual-tracker">Görsel Soru 1 / 10 | Bölüm Puanı: 0 XP</span>
-        <span class="question-tracker" id="visual-level-badge" style="color: var(--accent-cyan); font-weight:700;">A1 SEVİYESİ</span>
+        <span class="question-tracker" id="visual-level-badge" style="color: var(--accent-cyan); font-weight:800;">A1 SEVİYESİ</span>
       </div>
 
       <div class="progress-bar-bg">
@@ -887,10 +972,10 @@
     </div>
 
     <!-- 5. Yazma Egzersizleri Kartı -->
-    <div class="quiz-card" id="writing-card" style="display: none;">
+    <div class="exercise-card" id="writing-card" style="display: none;">
       <div class="quiz-header">
         <span class="question-tracker" id="writing-tracker">Yazma Soru 1 / 10 | Bölüm Puanı: 0 XP</span>
-        <span class="question-tracker" id="writing-level-badge" style="color: var(--accent-cyan); font-weight:700;">A1 SEVİYESİ</span>
+        <span class="question-tracker" id="writing-level-badge" style="color: var(--accent-cyan); font-weight:800;">A1 SEVİYESİ</span>
       </div>
 
       <div class="progress-bar-bg">
@@ -945,7 +1030,6 @@
     let activeMode = 'quiz';
     let currentLevel = 'A1';
 
-    // ANLIK KALDIĞI YER (SORU VE MOD İNDEX) KULLANICI İLERLEME DURUMU
     let currentQuestionIndex = 0; let currentLevelXP = 0;
     let currentMatchIndex = 0; let currentMatchXP = 0;
     let currentSpeakingIndex = 0; let currentSpeakingXP = 0;
@@ -969,7 +1053,6 @@
         const savedMode = localStorage.getItem('lingova_active_mode');
         if (savedMode) activeMode = savedMode;
 
-        // Anlık İndexler
         const savedState = localStorage.getItem('lingova_exact_indices');
         if (savedState) {
           const st = JSON.parse(savedState);
@@ -1064,8 +1147,6 @@
     }
 
     function initializeFirebase() {
-      const isSecureOrigin = window.location.protocol === 'https:' || ['localhost', '127.0.0.1'].includes(window.location.hostname);
-
       if (typeof firebase === 'undefined' || !firebase.apps) return false;
 
       try {
@@ -1114,7 +1195,7 @@
         authContainer.innerHTML = `
           <button class="btn-auth" id="btn-login" onclick="loginWithGoogle()">
             <i class="fa-brands fa-google"></i>
-            <span>Google ile Giriş</span>
+            <span>Giriş Yap</span>
           </button>
         `;
       }
@@ -1188,6 +1269,16 @@
       }
     }
 
+    function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
     function switchMode(mode) {
       stopRecording();
       activeMode = mode;
@@ -1241,13 +1332,14 @@
       else if (activeMode === 'writing') loadWritingQuestion();
     }
 
-    // SEVİYEDEKİ TÜM TESTLER BİTİNCE SEVİYE TAMAMLAMA KUTLAMASI
     function markModeCompletedAndCheckLevel(modeName, modeLabel) {
       completedModes[currentLevel][modeName] = true;
       saveProgressData();
 
       const levelComp = completedModes[currentLevel];
       const allDone = Object.values(levelComp).every(Boolean);
+
+      triggerConfetti();
 
       if (allDone) {
         unlockNextLevel(currentLevel);
@@ -6479,10 +6571,11 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       const optionsContainer = document.getElementById('options-container');
       if (optionsContainer) {
         optionsContainer.innerHTML = '';
+        const keyLabels = ['1', '2', '3', '4'];
         questions[currentQuestionIndex].options.forEach((opt, idx) => {
           const btn = document.createElement('button');
           btn.className = 'option-btn';
-          btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle"></i>`;
+          btn.innerHTML = `<span><span class="key-badge" style="margin-right:8px;">${keyLabels[idx]}</span>${opt}</span> <i class="fa-regular fa-circle"></i>`;
           btn.onclick = (e) => handleAnswer(idx, btn, e);
           optionsContainer.appendChild(btn);
         });
@@ -7113,10 +7206,11 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       const optionsContainer = document.getElementById('visual-options-container');
       if (optionsContainer) {
         optionsContainer.innerHTML = '';
+        const keyLabels = ['1', '2', '3', '4'];
         q.options.forEach((opt, idx) => {
           const btn = document.createElement('button');
           btn.className = 'option-btn';
-          btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle"></i>`;
+          btn.innerHTML = `<span><span class="key-badge" style="margin-right:8px;">${keyLabels[idx]}</span>${opt}</span> <i class="fa-regular fa-circle"></i>`;
           btn.onclick = (e) => handleVisualAnswer(idx, btn, e);
           optionsContainer.appendChild(btn);
         });
@@ -7341,6 +7435,20 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       document.body.appendChild(floatEl);
       setTimeout(() => { floatEl.remove(); }, 1000);
     }
+
+    // KEYBOARD SHORTCUTS SUPPORT (1, 2, 3, 4)
+    document.addEventListener('keydown', (e) => {
+      if (['1', '2', '3', '4'].includes(e.key)) {
+        const idx = parseInt(e.key, 10) - 1;
+        if (activeMode === 'quiz') {
+          const btns = document.querySelectorAll('#options-container .option-btn');
+          if (btns[idx] && !btns[idx].disabled) btns[idx].click();
+        } else if (activeMode === 'visual') {
+          const btns = document.querySelectorAll('#visual-options-container .option-btn');
+          if (btns[idx] && !btns[idx].disabled) btns[idx].click();
+        }
+      }
+    });
 
     document.addEventListener('DOMContentLoaded', () => {
       loadLocalProgress();
