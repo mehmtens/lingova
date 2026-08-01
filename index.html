@@ -5059,95 +5059,92 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
 
     const STOP_WORDS = new Set(["a", "an", "the", "to", "is", "are", "am", "in", "on", "at", "of", "for", "and", "or", "it", "you", "me", "my", "your", "we", "he", "she", "they"]);
 
-    // KAPSAMLI KISALTMA (CONTRACTION) AÇICI
+    // KAPSAMLI KISALTMA (CONTRACTIONS) SÖZLÜĞÜ VE DÖNÜŞTÜRÜCÜSÜ
     function expandContractions(text) {
+      if (!text) return "";
       let t = text.toLowerCase();
 
-      const contractions = [
-        [/could[''’`]?ve/g, "could have"],
-        [/should[''’`]?ve/g, "should have"],
-        [/would[''’`]?ve/g, "would have"],
-        [/might[''’`]?ve/g, "might have"],
-        [/must[''’`]?ve/g, "must have"],
+      t = t.replace(/['’`]/g, "'");
 
-        [/what[''’`]?ll/g, "what will"],
-        [/what[''’`]?d/g, "what would"],
-        [/what[''’`]?s/g, "what is"],
+      const mapping = {
+        "what's": "what is", "whats": "what is",
+        "what'll": "what will", "whatll": "what will",
+        "what'd": "what would", "whatd": "what would",
+        
+        "where's": "where is", "wheres": "where is",
+        "when's": "when is", "whens": "when is",
+        "who's": "who is", "whos": "who is",
+        "who'll": "who will", "wholl": "who will",
+        "who'd": "who would", "whod": "who would",
+        "why's": "why is", "whys": "why is",
+        "how's": "how is", "hows": "how is",
+        
+        "that's": "that is", "thats": "that is",
+        "that'll": "that will", "thatll": "that will",
+        "that'd": "that would", "thatd": "that would",
+        
+        "there's": "there is", "theres": "there is",
+        "there'll": "there will", "therell": "there will",
+        "there'd": "there would", "thered": "there would",
+        
+        "i'm": "i am", "im": "i am",
+        "you're": "you are", "youre": "you are",
+        "he's": "he is", "hes": "he is",
+        "she's": "she is", "shes": "she is",
+        "it's": "it is", "its": "it is",
+        "we're": "we are",
+        "they're": "they are", "theyre": "they are",
+        
+        "i'll": "i will", "ill": "i will",
+        "you'll": "you will", "youll": "you will",
+        "he'll": "he will", "hell": "he will",
+        "she'll": "she will", "shell": "she will",
+        "it'll": "it will", "itll": "it will",
+        "we'll": "we will", "well": "we will",
+        "they'll": "they will", "theyll": "they will",
+        
+        "i'd": "i would", "id": "i would",
+        "you'd": "you would", "youd": "you would",
+        "he'd": "he would", "hed": "he would",
+        "she'd": "she would", "shed": "she would",
+        "it'd": "it would", "itd": "it would",
+        "we'd": "we would", "wed": "we would",
+        "they'd": "they would", "theyd": "they would",
+        
+        "i've": "i have", "ive": "i have",
+        "you've": "you have", "youve": "you have",
+        "we've": "we have", "weve": "we have",
+        "they've": "they have", "theyve": "they have",
+        
+        "don't": "do not", "dont": "do not",
+        "doesn't": "does not", "doesnt": "does not",
+        "didn't": "did not", "didnt": "did not",
+        "can't": "cannot", "cant": "cannot",
+        "couldn't": "could not", "couldnt": "could not",
+        "wouldn't": "would not", "wouldnt": "would not",
+        "shouldn't": "should not", "shouldnt": "should not",
+        "isn't": "is not", "isnt": "is not",
+        "aren't": "are not", "arent": "are not",
+        "wasn't": "was not", "wasnt": "was not",
+        "weren't": "were not", "werent": "were not",
+        "haven't": "have not", "havent": "have not",
+        "hasn't": "has not", "hasnt": "has not",
+        "hadn't": "had not", "hadnt": "had not",
+        "won't": "will not", "wont": "will not",
+        
+        "could've": "could have", "couldve": "could have",
+        "should've": "should have", "shouldve": "should have",
+        "would've": "would have", "wouldve": "would have",
+        "might've": "might have", "mightve": "might have",
+        "must've": "must have", "mustve": "must have",
+        
+        "let's": "let us", "lets": "let us"
+      };
 
-        [/where[''’`]?s/g, "where is"],
-        [/when[''’`]?s/g, "when is"],
-
-        [/who[''’`]?ll/g, "who will"],
-        [/who[''’`]?d/g, "who would"],
-        [/who[''’`]?s/g, "who is"],
-
-        [/why[''’`]?s/g, "why is"],
-        [/how[''’`]?s/g, "how is"],
-
-        [/that[''’`]?ll/g, "that will"],
-        [/that[''’`]?d/g, "that would"],
-        [/that[''’`]?s/g, "that is"],
-
-        [/there[''’`]?ll/g, "there will"],
-        [/there[''’`]?d/g, "there would"],
-        [/there[''’`]?s/g, "there is"],
-
-        [/i[''’`]?m/g, "i am"],
-        [/you[''’`]?re/g, "you are"],
-        [/he[''’`]?s/g, "he is"],
-        [/she[''’`]?s/g, "she is"],
-        [/it[''’`]?s/g, "it is"],
-        [/we[''’`]?re/g, "we are"],
-        [/they[''’`]?re/g, "they are"],
-
-        [/i[''’`]?ll/g, "i will"],
-        [/you[''’`]?ll/g, "you will"],
-        [/he[''’`]?ll/g, "he will"],
-        [/she[''’`]?ll/g, "she will"],
-        [/it[''’`]?ll/g, "it will"],
-        [/we[''’`]?ll/g, "we will"],
-        [/they[''’`]?ll/g, "they will"],
-
-        [/i[''’`]?d/g, "i would"],
-        [/you[''’`]?d/g, "you would"],
-        [/he[''’`]?d/g, "he would"],
-        [/she[''’`]?d/g, "she would"],
-        [/it[''’`]?d/g, "it would"],
-        [/we[''’`]?d/g, "we would"],
-        [/they[''’`]?d/g, "they would"],
-
-        [/i[''’`]?ve/g, "i have"],
-        [/you[''’`]?ve/g, "you have"],
-        [/we[''’`]?ve/g, "we have"],
-        [/they[''’`]?ve/g, "they have"],
-
-        [/aren[''’`]?t/g, "are not"],
-        [/isn[''’`]?t/g, "is not"],
-        [/wasn[''’`]?t/g, "was not"],
-        [/weren[''’`]?t/g, "were not"],
-        [/don[''’`]?t/g, "do not"],
-        [/doesn[''’`]?t/g, "does not"],
-        [/didn[''’`]?t/g, "did not"],
-        [/haven[''’`]?t/g, "have not"],
-        [/hasn[''’`]?t/g, "has not"],
-        [/hadn[''’`]?t/g, "had not"],
-        [/won[''’`]?t/g, "will not"],
-        [/wouldn[''’`]?t/g, "would not"],
-        [/can[''’`]?t/g, "cannot"],
-        [/couldn[''’`]?t/g, "could not"],
-        [/shan[''’`]?t/g, "shall not"],
-        [/shouldn[''’`]?t/g, "should not"],
-        [/mustn[''’`]?t/g, "must not"],
-        [/mightn[''’`]?t/g, "might not"],
-
-        [/let[''’`]?s/g, "let us"]
-      ];
-
-      contractions.forEach(([regex, replacement]) => {
-        t = t.replace(regex, replacement);
-      });
-
-      return t.replace(/[^a-z0-9 ]/g, '').trim();
+      let cleanText = t.replace(/[^a-z0-9' ]/g, " ");
+      let words = cleanText.split(/\s+/);
+      let expanded = words.map(w => mapping[w] || w);
+      return expanded.join(' ').trim();
     }
 
     function loadSpeakingSentence() {
@@ -5307,7 +5304,6 @@ Bu seviyenin eşleştirmelerini tekrar çözmelisin!`);
     function evaluatePronunciationAdvanced(userTranscript) {
       const targetText = document.getElementById('speaking-en-target').innerText;
 
-      // Hem kullanıcının söylediği hem de hedef cümle kısaltmalardan (contractions) arındırılır!
       const uNorm = expandContractions(userTranscript);
       const tNorm = expandContractions(targetText);
 
@@ -5423,7 +5419,6 @@ Bu seviyenin konuşma testlerini tekrar çözmelisin!`);
       setTimeout(() => { floatEl.remove(); }, 1000);
     }
 
-    // Başlangıç Yüklemesi
     window.onload = () => {
       loadQuestion();
     };
