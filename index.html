@@ -962,7 +962,7 @@
       </div>
 
       <div class="visual-image-container">
-        <img id="visual-image-target" src="" alt="Görsel Soru" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Red_Apple.jpg/600px-Red_Apple.jpg'">
+        <img id="visual-image-target" src="" alt="Görsel Soru" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.src='https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=600&q=80'">
       </div>
 
       <div class="question-title" id="visual-prompt-text">Bu görseldeki nesne/kavram nedir?</div>
@@ -5146,7 +5146,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
     const visualBank = {
   "A1": [
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_374%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%230284c7%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%237c3aed%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_374%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%90%B1%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ECAT%20/%20KED%C4%B0%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=600&q=80",
       "prompt": "Bu görseldeki hayvan hangisidir?",
       "options": [
         "Cat (Kedi)",
@@ -5158,7 +5158,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görselde bir kedi (Cat) görülmektedir."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_5891%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23f97316%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23e11d48%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_5891%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%90%B6%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EDOG%20/%20K%C3%96PEK%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=600&q=80",
       "prompt": "Bu görseldeki hayvan hangisidir?",
       "options": [
         "Elephant (Fil)",
@@ -5167,10 +5167,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Horse (At)"
       ],
       "correct": 1,
-      "exp": "Görselde köpek (Dog) bulunmaktadır."
+      "exp": "Görselde bir köpek (Dog) bulunmaktadır."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_8402%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23dc2626%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23991b1b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_8402%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8D%8E%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EAPPLE%20/%20ELMA%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=600&q=80",
       "prompt": "Bu görseldeki meyve hangisidir?",
       "options": [
         "Banana (Muz)",
@@ -5182,7 +5182,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görseldeki meyve elmadır (Apple)."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_5495%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%232563eb%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231d4ed8%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_5495%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%9A%97%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ECAR%20/%20ARABA%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=600&q=80",
       "prompt": "Görseldeki nesne nedir?",
       "options": [
         "Car (Araba)",
@@ -5191,10 +5191,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Airplane (Uçak)"
       ],
       "correct": 0,
-      "exp": "Görselde bir araba (Car) vardır."
+      "exp": "Görselde kırmızı bir araba (Car) vardır."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_604%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23059669%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23047857%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_604%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%93%9A%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EBOOK%20/%20K%C4%B0TAP%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=600&q=80",
       "prompt": "Görseldeki nesne nedir?",
       "options": [
         "Notebook (Defter)",
@@ -5206,7 +5206,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görseldeki nesne kitaptır (Book)."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_1632%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23d97706%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23b45309%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_1632%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8D%BD%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ERESTAURANT%20/%20RESTORAN%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80",
       "prompt": "Bu mekan hangisidir?",
       "options": [
         "School (Okul)",
@@ -5218,7 +5218,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görselde bir restoran (Restaurant) yer almaktadır."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_2521%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%2378350f%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23451a03%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_2521%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%E2%98%95%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ECOFFEE%20/%20KAHVE%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=80",
       "prompt": "Görseldeki içecek nedir?",
       "options": [
         "Tea (Çay)",
@@ -5230,7 +5230,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görseldeki sıcak içecek kahvedir (Coffee)."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_7634%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%239333ea%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%236b21a8%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_7634%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%E2%8F%B0%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ECLOCK%20/%20SAAT%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=600&q=80",
       "prompt": "Görseldeki nesne nedir?",
       "options": [
         "Clock (Saat)",
@@ -5239,10 +5239,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Guitar (Gitar)"
       ],
       "correct": 0,
-      "exp": "Görseldeki nesne saattir (Clock)."
+      "exp": "Görseldeki nesne duvardaki saattir (Clock)."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_2740%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_2740%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%A2%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EBUILDING%20/%20B%C4%B0NA%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
       "prompt": "Görseldeki yapı nedir?",
       "options": [
         "House (Ev)",
@@ -5254,7 +5254,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görselde yüksek bir bina (Building) görülmektedir."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_1110%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%230ea5e9%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%230369a1%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_1110%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%96%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EBEACH%20/%20PLAJ%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
       "prompt": "Bu doğa manzarası neresidir?",
       "options": [
         "Forest (Orman)",
@@ -5268,7 +5268,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
   ],
   "A2": [
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_742%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%230284c7%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e3a8a%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_742%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%E2%9C%88%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EAIRPLANE%20/%20U%C3%87AK%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80",
       "prompt": "Görseldeki ulaşım aracı nedir?",
       "options": [
         "Airplane (Uçak)",
@@ -5280,7 +5280,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görselde uçak (Airplane) bulunmaktadır."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_2191%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23dc2626%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23991b1b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_2191%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%A5%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EHOSPITAL%20/%20HASTANE%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80",
       "prompt": "Görseldeki sağlık kurumu neresidir?",
       "options": [
         "Pharmacy (Eczane)",
@@ -5292,7 +5292,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görselde bir hastane (Hospital) görülmektedir."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_5037%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%2315803d%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%2314532d%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_5037%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8C%B2%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EFOREST%20/%20ORMAN%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=600&q=80",
       "prompt": "Bu doğa ortamı nedir?",
       "options": [
         "Forest (Orman)",
@@ -5301,10 +5301,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Cave (Mağara)"
       ],
       "correct": 0,
-      "exp": "Görselde orman (Forest) vardır."
+      "exp": "Görselde sık ağaçlı bir orman (Forest) vardır."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_8549%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%233b82f6%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231d4ed8%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_8549%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%A2%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EOFFICE%20/%20OF%C4%B0S%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
       "prompt": "Görseldeki çalışma alanı nedir?",
       "options": [
         "Factory (Fabrika)",
@@ -5316,7 +5316,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görselde modern bir ofis (Office) vardır."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_6115%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23f97316%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23c2410c%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_6115%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A7%B3%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ETRAVEL%20/%20SEYAHAT%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80",
       "prompt": "Eylem/Aktivite nedir?",
       "options": [
         "Shopping (Alışveriş)",
@@ -5328,7 +5328,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görselde seyahat etmek (Travel) teması işlenmiştir."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_1277%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%238b5cf6%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%236d28d9%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_1277%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8E%AC%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ECINEMA%20/%20S%C4%B0NEMA%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=600&q=80",
       "prompt": "Bu eğlence mekanı neresidir?",
       "options": [
         "Cinema (Sinema)",
@@ -5340,7 +5340,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görselde sinema salonu (Cinema) görülmektedir."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_75%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%2316a34a%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%2315803d%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_75%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%92%B5%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EMONEY%20/%20PARA%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=600&q=80",
       "prompt": "Görseldeki finansal kavram nedir?",
       "options": [
         "Money (Para)",
@@ -5349,10 +5349,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Gold (Altın)"
       ],
       "correct": 0,
-      "exp": "Görselde para (Money) yer alır."
+      "exp": "Görselde kağıt paralar (Money) yer alır."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_8272%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23ea580c%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%239a3412%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_8272%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%83%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ERUNNING%20/%20KO%C5%9EU%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1517649763962-0c6232661a0b?auto=format&fit=crop&w=600&q=80",
       "prompt": "Spor dalı hangisidir?",
       "options": [
         "Running (Koşu)",
@@ -5364,7 +5364,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görseldeki sporcu koşu (Running) yapmaktadır."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_7718%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23eab308%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23ca8a04%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_7718%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8D%B3%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ECOOKING%20/%20YEMEK%20P%C4%B0%C5%9E%C4%B0RME%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80",
       "prompt": "Mutfak eylemi nedir?",
       "options": [
         "Eating (Yemek yemek)",
@@ -5376,7 +5376,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görselde yemek pişirme (Cooking) eylemi vardır."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_8147%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23ec4899%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23be185d%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_8147%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A4%9D%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EFRIENDSHIP%20/%20ARKADA%C5%9ELIK%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80",
       "prompt": "Kavram nedir?",
       "options": [
         "Friendship (Arkadaşlık)",
@@ -5390,7 +5390,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
   ],
   "B1": [
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_6868%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%230284c7%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%230369a1%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_6868%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A9%BA%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EHEALTHCARE%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=600&q=80",
       "prompt": "Kavram nedir?",
       "options": [
         "Healthcare (Sağlık hizmeti)",
@@ -5402,7 +5402,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel sağlık hizmetlerini (Healthcare) simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_6329%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%236366f1%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%234338ca%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_6329%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8C%90%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20NETWORK%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "Teknolojik kavram nedir?",
       "options": [
         "Database (Veritabanı)",
@@ -5414,7 +5414,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel küresel iletişim ağını (Global Network) temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_4452%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23ef4444%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23b91c1c%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_4452%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8E%AF%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ELEADERSHIP%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80",
       "prompt": "İş dünyası kavramı nedir?",
       "options": [
         "Success (Başarı)",
@@ -5426,7 +5426,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görselde liderlik (Leadership) vurgulanmıştır."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_9747%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%2322c55e%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%2315803d%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_9747%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%E2%99%BB%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ERECYCLING%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0?auto=format&fit=crop&w=600&q=80",
       "prompt": "Çevre kavramı nedir?",
       "options": [
         "Recycling (Geri dönüşüm)",
@@ -5438,7 +5438,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel geri dönüşüm (Recycling) sembolüdür."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_3747%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23a855f7%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_3747%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8E%93%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EUNIVERSITY%20LECTURE%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80",
       "prompt": "Akademik kavram nedir?",
       "options": [
         "University Lecture (Üniversite Dersi)",
@@ -5447,10 +5447,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Workshop (Atölye)"
       ],
       "correct": 0,
-      "exp": "Görsel üniversite ve eğitimi gösterir."
+      "exp": "Görsel üniversite amfi dersini (University Lecture) gösterir."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_1200%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%233b82f6%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231d4ed8%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_1200%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%93%8A%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EDATA%20ANALYSIS%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
       "prompt": "Finansal/Analitik kavram nedir?",
       "options": [
         "Data Analysis (Veri Analizi)",
@@ -5459,10 +5459,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Budgeting (Bütçeleme)"
       ],
       "correct": 0,
-      "exp": "Görsel veri analizini ifade eder."
+      "exp": "Görsel grafikleri ve veri analizini (Data Analysis) ifade eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_1821%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%2306b6d4%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%230e7490%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_1821%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%91%A5%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ETEAM%20COLLABORATION%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80",
       "prompt": "Çalışma şekli nedir?",
       "options": [
         "Team Collaboration (Ekip Çalışması)",
@@ -5474,7 +5474,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görseldeki ekip birlikte iş birliği yapmaktadır (Team Collaboration)."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_5132%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%2310b981%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23047857%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_5132%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9E%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ENATURAL%20HABITAT%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80",
       "prompt": "Çevre/İklim konusu nedir?",
       "options": [
         "Natural Habitat (Doğal Yaşam Alanı)",
@@ -5486,7 +5486,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel el değmemiş doğal yaşam alanını (Natural Habitat) simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_4180%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%238b5cf6%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%236d28d9%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_4180%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%92%AC%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EONLINE%20COMMUNICATION%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80",
       "prompt": "Dijital kavram nedir?",
       "options": [
         "Online Communication (Dijital İletişim)",
@@ -5498,21 +5498,21 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel çevrim içi iletişimi (Online Communication) tasvir eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_2047%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23f59e0b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23b45309%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_2047%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%A4%9D%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EAGREEMENT%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=600&q=80",
       "prompt": "Sosyal eylem nedir?",
       "options": [
-        "Agreement/Handshake (Anlaşma)",
+        "Agreement/Handshake (Anlaşma/El Sıkışma)",
         "Conflict (Çatışma)",
         "Debate (Münazara)",
         "Speech (Konuşma)"
       ],
       "correct": 0,
-      "exp": "Görsel anlaşmayı ve el sıkışmayı temsil eder."
+      "exp": "Görsel anlaşmayı ve el sıkışmayı (Agreement/Handshake) temsil eder."
     }
   ],
   "B2": [
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_8406%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23ec4899%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23be185d%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_8406%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8E%A8%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ECREATIVITY%20%26%20ART%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "Sanatsal/Soyut kavram nedir?",
       "options": [
         "Creativity & Art (Yaratıcılık ve Sanat)",
@@ -5521,10 +5521,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Draft (Taslak)"
       ],
       "correct": 0,
-      "exp": "Görsel yaratıcılık ve sanatı simgeler."
+      "exp": "Görsel yaratıcılık ve soyut sanatı (Creativity & Art) simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_6380%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%2364748b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23334155%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_6380%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%99%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EMODERN%20ARCHITECTURE%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
       "prompt": "Mimari kavram nedir?",
       "options": [
         "Modern Architecture (Modern Mimari)",
@@ -5536,7 +5536,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel modern mimariyi (Modern Architecture) gösterir."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_1181%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%230284c7%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e3a8a%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_1181%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%92%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ECYBER%20SECURITY%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80",
       "prompt": "Siber kavram nedir?",
       "options": [
         "Cyber Security (Siber Güvenlik)",
@@ -5548,7 +5548,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel siber güvenliği (Cyber Security) temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_3610%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%238b5cf6%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%235b21b6%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_3610%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%93%8B%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ESTRATEGIC%20PLANNING%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80",
       "prompt": "Stratejik kavram nedir?",
       "options": [
         "Strategic Planning (Stratejik Planlama)",
@@ -5557,10 +5557,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Auditing (Denetim)"
       ],
       "correct": 0,
-      "exp": "Görsel stratejik planlama sürecini gösterir."
+      "exp": "Görsel stratejik planlama (Strategic Planning) sürecini gösterir."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_3300%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23eab308%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23854d0e%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_3300%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%E2%9A%96%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EJUSTICE%20%26%20LAW%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80",
       "prompt": "Hukuki sembol nedir?",
       "options": [
         "Justice & Law (Adalet ve Hukuk)",
@@ -5569,10 +5569,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Penalty (Ceza)"
       ],
       "correct": 0,
-      "exp": "Görsel adaleti ve hukuku simgeler."
+      "exp": "Görsel adalet terazisini ve hukuku (Justice & Law) simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_4906%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%230f172a%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_4906%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%91%94%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEXECUTIVE%20DECISION%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80",
       "prompt": "Yönetimsel durum nedir?",
       "options": [
         "Executive Decision (Yönetsel Karar)",
@@ -5581,13 +5581,13 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Consultation (Danışmanlık)"
       ],
       "correct": 0,
-      "exp": "Görsel üst düzey yönetimi ve kararları ifade eder."
+      "exp": "Görsel üst düzey yönetimi ve kararları (Executive Decision) ifade eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_8128%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%2316a34a%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%2314532d%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_8128%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%93%88%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EMARKET%20TREND%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
       "prompt": "Ekonomik kavram nedir?",
       "options": [
-        "Market Trend & Inflation (Piyasa Trendi)",
+        "Market Trend & Inflation (Piyasa Trendi ve Enflasyon)",
         "Bankruptcy (İflas)",
         "Taxation (Vergilendirme)",
         "Auditing (Denetim)"
@@ -5596,19 +5596,19 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel piyasa eğilimlerini ve finansal verileri gösterir."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_9680%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%230ea5e9%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%230369a1%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_9680%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8C%90%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EDIVERSITY%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=600&q=80",
       "prompt": "Toplumsal durum nedir?",
       "options": [
-        "Diversity & Inclusion (Çeşitlilik)",
+        "Diversity & Inclusion (Çeşitlilik ve Kapsayıcılık)",
         "Isolation (Yalnızlaşma)",
         "Assimilation (Asimilasyon)",
         "Segregation (Ayrışma)"
       ],
       "correct": 0,
-      "exp": "Görsel toplumsal çeşitliliği simgeler."
+      "exp": "Görsel toplumsal çeşitliliği (Diversity) simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_3442%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23f59e0b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%23d97706%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_3442%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%92%A1%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EKNOWLEDGE%20SHARING%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80",
       "prompt": "Eğitimsel kavram nedir?",
       "options": [
         "Knowledge Sharing (Bilgi Paylaşımı)",
@@ -5617,10 +5617,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Assignment (Ödev)"
       ],
       "correct": 0,
-      "exp": "Görsel bilgi paylaşımını gösterir."
+      "exp": "Görsel interaktif bilgi paylaşımını (Knowledge Sharing) gösterir."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_3090%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%233b82f6%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231d4ed8%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_3090%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%92%BB%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3ESOFTWARE%20ENGINEERING%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80",
       "prompt": "Yazılım kavramı nedir?",
       "options": [
         "Software Engineering (Yazılım Mühendisliği)",
@@ -5629,12 +5629,12 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Graphic Design (Grafik Tasarım)"
       ],
       "correct": 0,
-      "exp": "Görsel yazılım ve teknoloji mühendisliğini temsil eder."
+      "exp": "Görsel kodlama ve yazılım mühendisliğini (Software Engineering) temsil eder."
     }
   ],
   "C1": [
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_9532%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_9532%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%231%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #1",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5643,10 +5643,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 0,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_2781%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_2781%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%232%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #2",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5655,10 +5655,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 1,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_1617%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_1617%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%233%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #3",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5667,10 +5667,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 2,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_6737%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_6737%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%234%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #4",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5679,10 +5679,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 3,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_4871%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_4871%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%235%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #5",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5691,10 +5691,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 0,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_1313%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_1313%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%236%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #6",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5703,10 +5703,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 1,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_5587%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_5587%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%237%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #7",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5715,10 +5715,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 2,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_7863%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_7863%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%238%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #8",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5727,10 +5727,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 3,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_8766%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_8766%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%239%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #9",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5739,10 +5739,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 0,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_212%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_212%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%2310%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #10",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5751,10 +5751,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 1,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_3495%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_3495%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%2311%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #11",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5763,10 +5763,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 2,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_8583%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_8583%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%2312%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #12",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5775,10 +5775,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 3,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_2219%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_2219%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%2313%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #13",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5787,10 +5787,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 0,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_4662%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_4662%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%2314%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #14",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5799,10 +5799,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 1,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_9156%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_9156%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%2315%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #15",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5811,10 +5811,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 2,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_1059%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_1059%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%2316%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #16",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5823,10 +5823,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 3,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_4036%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_4036%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%2317%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #17",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5835,10 +5835,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 0,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_8552%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_8552%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%2318%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #18",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5847,10 +5847,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 1,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_4184%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_4184%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%2319%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #19",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5859,10 +5859,10 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 2,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_4025%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%23475569%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%231e293b%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_4025%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EGLOBAL%20GOVERNANCE%20%2320%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80",
       "prompt": "C1 İleri Seviye Görsel Kavram #20",
       "options": [
         "Global Governance (Küresel Yönetişim)",
@@ -5871,12 +5871,12 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
         "Fiscal Policy (Mali Politika)"
       ],
       "correct": 3,
-      "exp": "Görsel ileri düzey yönetimsel kavramları simgeler."
+      "exp": "Görsel ileri düzey yönetimsel ve politik kavramları simgeler."
     }
   ],
   "C2": [
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_8681%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_8681%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%231%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #1",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5888,7 +5888,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_5365%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_5365%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%232%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #2",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5900,7 +5900,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_7731%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_7731%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%233%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #3",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5912,7 +5912,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_2829%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_2829%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%234%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #4",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5924,7 +5924,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_75%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_75%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%235%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #5",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5936,7 +5936,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_4473%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_4473%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%236%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #6",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5948,7 +5948,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_450%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_450%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%237%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #7",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5960,7 +5960,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_6689%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_6689%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%238%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #8",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5972,7 +5972,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_9879%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_9879%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%239%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #9",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5984,7 +5984,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_8972%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_8972%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%2310%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #10",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -5996,7 +5996,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_7938%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_7938%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%2311%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #11",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -6008,7 +6008,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_1281%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_1281%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%2312%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #12",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -6020,7 +6020,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_7214%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_7214%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%2313%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #13",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -6032,7 +6032,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_727%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_727%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%2314%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #14",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -6044,7 +6044,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_441%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_441%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%2315%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #15",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -6056,7 +6056,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_5413%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_5413%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%2316%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #16",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -6068,7 +6068,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_4889%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_4889%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%2317%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #17",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -6080,7 +6080,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_2029%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_2029%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%2318%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #18",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -6092,7 +6092,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_6657%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_6657%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%2319%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #19",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
@@ -6104,7 +6104,7 @@ ${currentLevel} seviyesini tamamen bitirmek için diğer modlara da göz atabili
       "exp": "Görsel C2 akademik ve soyut kavramları temsil eder."
     },
     {
-      "img": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22600%22%20height%3D%22350%22%20viewBox%3D%220%200%20600%20350%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g_4459%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%22100%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20style%3D%22stop-color%3A%237e22ce%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20style%3D%22stop-color%3A%233b0764%3Bstop-opacity%3A1%22%20/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%20%20%3C/defs%3E%0A%20%20%3Crect%20width%3D%22600%22%20height%3D%22350%22%20fill%3D%22url%28%23g_4459%29%22%20rx%3D%2224%22/%3E%0A%20%20%3Ccircle%20cx%3D%22300%22%20cy%3D%22150%22%20r%3D%2290%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.12%29%22/%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22180%22%20font-size%3D%22110%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22central%22%3E%F0%9F%94%AE%3C/text%3E%0A%20%20%3Ctext%20x%3D%22300%22%20y%3D%22285%22%20font-family%3D%22%27Plus%20Jakarta%20Sans%27%2C%20system-ui%2C%20sans-serif%22%20font-size%3D%2226%22%20font-weight%3D%22800%22%20fill%3D%22%23ffffff%22%20text-anchor%3D%22middle%22%20letter-spacing%3D%221%22%3EEPHEMERAL%20PARADOX%20%2320%3C/text%3E%0A%3C/svg%3E",
+      "img": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
       "prompt": "C2 İleri Seviye Görsel Kavram #20",
       "options": [
         "Ephemeral Paradox (Fani Paradoks)",
