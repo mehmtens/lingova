@@ -802,7 +802,7 @@
       </div>
       <div class="stat-badge streak">
         <i class="fa-solid fa-fire"></i>
-        <span id="user-streak">1 Gün</span>
+        <span id="user-streak">0 Gün</span>
       </div>
       <div id="auth-container">
         <button class="btn-auth" id="btn-login" onclick="loginWithGoogle()">
@@ -1028,6 +1028,8 @@
     let isFirebaseInitialized = false;
     let currentUser = null;
     let userXP = 0;
+    let userStreak = 0;
+    let lastActiveDate = null;
 
     const levelSequence = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
     let unlockedLevels = { A1: true, A2: false, B1: false, B2: false, C1: false, C2: false };
@@ -1053,6 +1055,10 @@
       try {
         const savedXP = localStorage.getItem('lingova_xp');
         if (savedXP !== null) userXP = parseInt(savedXP, 10) || 0;
+
+        userStreak = parseInt(localStorage.getItem('lingova_streak'), 10) || 0;
+        lastActiveDate = localStorage.getItem('lingova_last_active_date');
+        refreshExpiredStreak();
 
         const savedUnlocked = localStorage.getItem('lingova_unlocked');
         if (savedUnlocked) unlockedLevels = JSON.parse(savedUnlocked);
@@ -1082,6 +1088,7 @@
         }
 
         updateXPUI();
+        updateStreakUI();
         updateLevelCardsUI();
         updateModeButtonsUI();
       } catch (e) {
@@ -1091,6 +1098,7 @@
 
     function saveProgressData() {
       updateXPUI();
+      updateStreakUI();
       updateLevelCardsUI();
       updateModeButtonsUI();
 
@@ -1104,6 +1112,8 @@
 
       try {
         localStorage.setItem('lingova_xp', userXP);
+        localStorage.setItem('lingova_streak', userStreak);
+        if (lastActiveDate) localStorage.setItem('lingova_last_active_date', lastActiveDate);
         localStorage.setItem('lingova_unlocked', JSON.stringify(unlockedLevels));
         localStorage.setItem('lingova_completed', JSON.stringify(completedModes));
         localStorage.setItem('lingova_current_level', currentLevel);
@@ -1115,6 +1125,8 @@
         const db = firebase.firestore();
         db.collection('users').doc(currentUser.uid).set({
           xp: userXP,
+          streak: userStreak,
+          lastActiveDate: lastActiveDate,
           unlockedLevels: unlockedLevels,
           completedModes: completedModes,
           currentLevel: currentLevel,
@@ -1128,12 +1140,49 @@
     function saveUserXP(addedXP) {
       userXP += addedXP;
       if (userXP < 0) userXP = 0;
+      if (addedXP > 0) recordDailyActivity();
       saveProgressData();
     }
 
     function updateXPUI() {
       const el = document.getElementById('user-xp');
       if (el) el.innerText = `${userXP} XP`;
+    }
+
+    function getLocalDateKey(date = new Date()) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function daysBetween(dateKeyA, dateKeyB) {
+      const [yearA, monthA, dayA] = dateKeyA.split('-').map(Number);
+      const [yearB, monthB, dayB] = dateKeyB.split('-').map(Number);
+      const utcA = Date.UTC(yearA, monthA - 1, dayA);
+      const utcB = Date.UTC(yearB, monthB - 1, dayB);
+      return Math.round((utcB - utcA) / 86400000);
+    }
+
+    function refreshExpiredStreak() {
+      if (lastActiveDate && daysBetween(lastActiveDate, getLocalDateKey()) > 1) {
+        userStreak = 0;
+      }
+    }
+
+    function recordDailyActivity() {
+      const today = getLocalDateKey();
+      if (lastActiveDate === today) return;
+
+      userStreak = lastActiveDate && daysBetween(lastActiveDate, today) === 1
+        ? userStreak + 1
+        : 1;
+      lastActiveDate = today;
+    }
+
+    function updateStreakUI() {
+      const el = document.getElementById('user-streak');
+      if (el) el.innerText = `${userStreak} Gün`;
     }
 
     function updateLevelCardsUI() {
@@ -1182,10 +1231,25 @@
       }
     }
 
-    function loginWithGoogle() {
-      if (!isFirebaseInitialized) return;
+    async function loginWithGoogle() {
+      if (!isFirebaseInitialized) {
+        alert('Giriş sistemi başlatılamadı. Lütfen sayfayı yenileyin.');
+        return;
+      }
+
       const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider).catch(err => console.error('Login error:', err));
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      try {
+        if (isMobile) {
+          await firebase.auth().signInWithRedirect(provider);
+        } else {
+          await firebase.auth().signInWithPopup(provider);
+        }
+      } catch (err) {
+        console.error('Login error:', err);
+        alert(`Google giriş hatası: ${err.message}`);
+      }
     }
 
     function logout() {
@@ -1220,6 +1284,13 @@
         if (doc.exists) {
           const data = doc.data();
           if (data.xp !== undefined) userXP = Math.max(userXP, data.xp);
+          if (data.lastActiveDate && (!lastActiveDate || data.lastActiveDate > lastActiveDate)) {
+            lastActiveDate = data.lastActiveDate;
+            userStreak = Number(data.streak) || 0;
+          } else if (data.lastActiveDate === lastActiveDate && data.streak !== undefined) {
+            userStreak = Math.max(userStreak, Number(data.streak) || 0);
+          }
+          refreshExpiredStreak();
           if (data.unlockedLevels) unlockedLevels = { ...unlockedLevels, ...data.unlockedLevels };
           if (data.completedModes) completedModes = { ...completedModes, ...data.completedModes };
           if (data.currentLevel) currentLevel = data.currentLevel;
